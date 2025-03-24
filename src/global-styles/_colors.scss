@@ -1,0 +1,52 @@
+$light-background: #f5f5f5;
+$light-primary: #90ee90;
+$light-secondary: #87ceeb;
+
+$middle-primary: #bb00ff;
+
+$dark-background: #292929;
+$dark-background-secondary: #454545;
+// $dark-primary: ;                 ??
+// $dark-secondary: ;               ??
+
+$beige: #fff0db;
+
+$form-input-color: #dbb1b1;
+$active-option-field: #f0f0f0;
+$selected-option-field: #99c8ff;
+
+$menu-border: #adff2f;
+$menu-background: rgba(231, 231, 231, 0.7);
+
+// bright and vivid
+$cyan: #00ffff;
+$electric-blue: #7df9ff;
+$bright-turquoise: #40e0d0;
+$lime-green: #32cd32;
+
+// soft and muted
+$soft-white: #f5f5f5;
+$light-gray: #b0b0b0;
+$lavender: #e6e6fa;
+$pale-blue: #afeeee;
+
+// pastel colors
+$pastel-yellow: #ffff99;
+$pastel-green: #77dd77;
+$pastel-pink: #ffb6c1;
+$pastel-orange: #ffd580;
+
+// High contrast
+$bright-red: #ff4500;
+$bright-orange: #ffa500;
+$bright-yellow: #ffd700;
+$bright-purple: #dda0dd;
+
+// gradients
+$bw-backgr: rgb(0, 0, 0);
+$bw-backgr-gradient: linear-gradient(
+  311deg,
+  rgba(0, 0, 0, 1) 0%,
+  rgba(149, 149, 149, 1) 57%,
+  rgba(255, 255, 255, 1) 91%
+);
