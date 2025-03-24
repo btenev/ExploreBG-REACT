@@ -7,7 +7,7 @@ $breakpoints: (
   // 1024px
   display: 80em,
   // 1280px
-  L-display: 90.625em // 1450px,
+  L-display: 90.625em // 1450px,,,
 );
 
 @mixin display($size) {
