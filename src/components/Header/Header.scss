@@ -1,0 +1,100 @@
+@use '../../global-styles/main' as gs;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 100%;
+  height: 5rem;
+  @include gs.flex(none, space-around, center);
+  background-color: transparent;
+  border-bottom: 1px solid gs.$light-primary;
+  backdrop-filter: blur(0.5rem);
+  animation: showHeader 1.7s forwards;
+
+  @include gs.display(mobile) {
+    flex-direction: column;
+  }
+
+  @media (max-height: 34rem) and (orientation: landscape) {
+    height: 3.5rem;
+  }
+
+  &__nav {
+    @include gs.flex(none, none, center);
+
+    & > svg {
+      font-size: 1.5rem;
+      cursor: pointer;
+
+      @include gs.display(tablet) {
+        margin-right: 2rem;
+      }
+
+      @include gs.display(mobile) {
+        margin-right: 1rem;
+        font-size: 1.15rem;
+      }
+    }
+
+    &__search {
+      position: absolute;
+      top: 5rem;
+      left: 0;
+      border: 1px solid black;
+      width: 100%;
+      backdrop-filter: blur(0.5rem);
+    }
+
+    &__theme-lang {
+      @include gs.flex(column, none, none);
+      gap: 0.5rem;
+
+      @include gs.display(tablet) {
+        @include gs.flex(row-reverse, none, center);
+        gap: 1.5rem;
+      }
+
+      @include gs.display(mobile) {
+        gap: 1rem;
+      }
+
+      &__theme {
+        cursor: pointer;
+
+        &__moon {
+          transition: all 1s ease;
+
+          &:hover {
+            color: yellow;
+            transform: scale(1.25);
+          }
+        }
+
+        &__sun {
+          transition: all 1.5s ease;
+
+          &:hover {
+            color: orange;
+            transform: scale(1.75);
+          }
+        }
+      }
+    }
+  }
+}
+
+[data-theme='dark'] .header {
+  color: gs.$bright-turquoise;
+}
+
+@keyframes showHeader {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

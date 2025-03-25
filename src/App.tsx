@@ -1,12 +1,11 @@
-import Logo from './components/Logo/Logo';
+import Header from './components/Header';
+import './global-styles/main.scss';
 
 function App() {
   return (
-    <>
-      <h1>Hi ExploreBg!</h1>
-      <p>Some text</p>
-      <Logo />
-    </>
+    <div className="container">
+      <Header />
+    </div>
   );
 }
 
