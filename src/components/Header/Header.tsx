@@ -9,8 +9,6 @@ const Header = () => {
   const [isSearchOpen, setSearchOpen] = useState<boolean>(false);
   const prevScrollPosition = useRef<number>(0);
 
-  // TODO: Optimize - solution in obsidian
-
   useEffect(() => {
     const handleScroll = () => {
       requestAnimationFrame(() => {
