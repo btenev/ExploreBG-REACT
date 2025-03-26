@@ -1,0 +1,215 @@
+@use '../../global-styles/main' as gs;
+
+.home {
+  background-attachment: fixed;
+  background-image: url('../../assets/images/background.png');
+  background-position: center;
+  background-size: cover;
+
+  &__top {
+    max-width: 68.75rem;
+    min-height: 100vh;
+    @include gs.flex(column, center, center);
+
+    @include gs.display(tablet) {
+      padding: 0 3rem;
+    }
+
+    @media (max-height: 770px) and (orientation: landscape) {
+      padding-top: 6rem;
+      padding-bottom: 1rem;
+    }
+
+    & > h1,
+    & > h2 {
+      margin-bottom: 2rem;
+      @include gs.titles();
+    }
+
+    [data-theme='dark'] & > h1,
+    [data-theme='dark'] & > h2 {
+      @include gs.titles-dark();
+    }
+
+    &__images {
+      display: flex;
+      gap: 1vmin;
+      overflow: hidden;
+      padding: 0.75rem;
+      margin-bottom: 2rem;
+
+      & > img {
+        max-width: 20vmin;
+        height: 36vmin;
+        border: 2px solid green;
+        border-radius: 0.5rem;
+        box-shadow: 3px 3px 6px gray;
+        filter: contrast(75%);
+        transition: all 1s ease;
+
+        @include gs.display(tablet) {
+          max-width: 25vmin;
+          height: 40vmin;
+        }
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        &:nth-child(5),
+        &:nth-child(6) {
+          @include gs.display(display) {
+            display: none;
+          }
+        }
+
+        &:nth-child(4) {
+          @include gs.display(tablet) {
+            display: none;
+          }
+        }
+      }
+    }
+
+    & > blockquote {
+      width: 100%;
+      text-align: right;
+      font-style: italic;
+
+      @include gs.display(tablet) {
+        text-align: unset;
+      }
+
+      & > p::before {
+        content: '\201C';
+      }
+
+      & > p::after {
+        content: '\201D';
+      }
+    }
+  }
+
+  &__section-wrapper {
+    width: 100%;
+    max-width: 68.75rem;
+    min-height: 100vh;
+    @include gs.flex(column, center, center);
+    background-attachment: fixed;
+    background-image: url('../../assets/images/bridge.jpg');
+    background-position: center;
+    background-size: cover;
+    row-gap: 4rem;
+    filter: contrast(75%);
+    border-radius: 0.5rem;
+    box-shadow: 0.25rem 0.25rem 1rem black;
+
+    & > h2,
+    & > p {
+      padding: 0 5rem;
+      text-shadow: 4px 4px 2px black;
+      color: white;
+    }
+  }
+
+  [data-theme='dark'] &__section-wrapper {
+    box-shadow: 0 0 1.5rem white;
+  }
+
+  &__section-buffer {
+    width: 100%;
+    min-height: 30vh;
+  }
+
+  &__section-title {
+    margin-bottom: 2rem;
+  }
+
+  &__section-links {
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 68.75rem;
+    @include gs.flex(none, flex-end, none);
+    gap: 1rem;
+
+    @include gs.display(display) {
+      padding-right: 2rem;
+    }
+
+    @include gs.display(mobile) {
+      padding-right: unset;
+      justify-content: center;
+    }
+
+    & > a {
+      @include gs.glow-on-hover-button();
+    }
+
+    [data-theme='dark'] & > a {
+      border: 1px solid white;
+    }
+  }
+
+  &__section-cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    padding: 6rem 1rem;
+    gap: 1.6rem;
+  }
+}
+
+[data-theme='dark'] .home {
+  background-image: url('../../assets/images/dark-background.png');
+}
+
+.destinations {
+  background-image: url('../../assets/images/home-destinations-background.jpg');
+
+  & > .img-info-icon {
+    bottom: 0.5rem;
+    backdrop-filter: unset;
+  }
+}
+
+.trails {
+  background-image: url('../../assets/images/5.avif');
+}
+
+.hikes {
+  background-image: url('../../assets/images/6.avif');
+}
+
+.accommodations {
+  background-image: url('../../assets/images/home-accommodations-background.jpg');
+
+  & > .img-info-icon {
+    bottom: 0.5rem;
+    backdrop-filter: unset;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  filter: blur(0.25rem);
+  transform: translateX(-100%);
+  transition: all 1.5s;
+}
+
+.show {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
+}
+
+.home .card {
+  & > figure {
+    height: 25vh;
+  }
+
+  &:last-child {
+    @include gs.display(mobile) {
+      display: none;
+    }
+  }
+}
