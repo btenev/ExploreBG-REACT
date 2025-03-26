@@ -1,33 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import './Header.scss';
 import Logo from '../Logo';
 
 const Header = () => {
-  const [prevScrollPosition, setPrevScrollPosition] = useState<number>(0);
   const [isHeaderVisible, setHeaderVisible] = useState<boolean>(true);
-  const [isSearchOpen, setSearchOpen] = useState<boolean>(true);
+  const [isSearchOpen, setSearchOpen] = useState<boolean>(false);
+  const prevScrollPosition = useRef<number>(0);
 
   // TODO: Optimize - solution in obsidian
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPosition = window.pageXOffset;
-      const isVisible =
-        prevScrollPosition > currentScrollPosition ||
-        currentScrollPosition < 10;
+      requestAnimationFrame(() => {
+        const currentScrollPosition = window.scrollY;
+        const isVisible =
+          prevScrollPosition.current > currentScrollPosition ||
+          currentScrollPosition < 10;
 
-      setPrevScrollPosition(currentScrollPosition);
-      setHeaderVisible(isVisible);
+        prevScrollPosition.current = currentScrollPosition;
+        setHeaderVisible(isVisible);
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [prevScrollPosition]);
+  }, []);
 
   return (
     <header
