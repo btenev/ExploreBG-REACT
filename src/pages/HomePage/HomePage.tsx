@@ -1,23 +1,10 @@
 import './HomePage.scss';
 import IntersectionObserverComponent from '../../components/IntersectionObserverComponent';
+import HomeDestinationSection from '../../components/HomeDestinationSection';
 import { homeContent } from './home';
 import { homeTopImages } from './home';
-import useRandomDestinations from '../../hooks/useRandomDestionations';
 
 const HomePage = () => {
-  /*TODO: fetch token from local storage if available*/
-  const { data, isLoading, error } = useRandomDestinations();
-
-  if (isLoading) return <p>Loadding...</p>;
-
-  if (error) {
-    console.log(error);
-  }
-
-  if (data) {
-    console.log(data);
-  }
-
   return (
     <main className="home">
       <IntersectionObserverComponent />
@@ -52,6 +39,10 @@ const HomePage = () => {
       </section>
 
       <section className="home__section-buffer"></section>
+
+      <HomeDestinationSection
+        destinationContent={homeContent['section-destinations']}
+      />
     </main>
   );
 };

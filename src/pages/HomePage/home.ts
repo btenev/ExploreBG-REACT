@@ -19,6 +19,12 @@ export const homeContent = {
     title: "The Devil's bridge",
     text: "In the picturesque gorge of the Arda River near the village of Dyadovtsi stands an architectural masterpiece, feared for the legends surrounding its creation and alluring with its beauty. This is the Devil's Bridge, also known as Shaytan Kypriya. For nearly 500 years, the waters of the Arda have crashed against its foundations, yet it stands proudly and majestically, untouched by the ravages of time. Even today, the secret of the master who built this strong and stable structure, seemingly impervious to the forces of nature and the changes over the centuries, remains undiscovered.",
   },
+
+  'section-destinations': {
+    title: 'Discover unforgettable destinations',
+    'backgr-img-info': 'Old town - Nessebar',
+    'btn-view-all': 'View all destinations',
+  },
 };
 
 export const homeTopImages = [img5, img2, img3, img6, img1, img4];
