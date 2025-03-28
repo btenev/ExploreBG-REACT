@@ -1,4 +1,5 @@
 import IntersectionObserverComponent from '../IntersectionObserverComponent';
+import HikeCard from '../HikeCard';
 import { useRandomHikes } from '../../hooks/useRandomHikes';
 
 interface Props {
@@ -26,7 +27,7 @@ const HomeHikesSection = ({ hikeContent }: Props) => {
 
           {data.map((hike) => (
             <article key={hike.id} className="card hidden">
-              {/* <HikeCard card={hike} /> */}
+              <HikeCard card={hike} />
             </article>
           ))}
         </section>
