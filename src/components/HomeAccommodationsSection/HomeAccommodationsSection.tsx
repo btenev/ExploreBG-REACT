@@ -1,5 +1,6 @@
 import IntersectionObserverComponent from '../IntersectionObserverComponent';
 import { useRandomAccommodations } from '../../hooks/useRandomAccommodations';
+import AccommodationCard from '../AccommodationCard/AccommodationCard';
 
 interface Props {
   accommodationContent: {
@@ -29,7 +30,7 @@ const HomeAccommodationsSection = ({ accommodationContent }: Props) => {
 
           {data.map((accommodation) => (
             <article key={accommodation.id} className="card hidden">
-              {/* <AccommodationCard card={accommodation} /> */}
+              <AccommodationCard card={accommodation} />
             </article>
           ))}
 
