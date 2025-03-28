@@ -5,8 +5,11 @@ import HomeTrailsSection from '../../components/HomeTrailsSection';
 import HomeHikesSection from '../../components/HomeHikesSection';
 import { homeContent } from './home';
 import { homeTopImages } from './home';
+import { useRandomAccommodations } from '../../hooks/useRandomAccommodations';
 
 const HomePage = () => {
+  const { data } = useRandomAccommodations();
+
   return (
     <main className="home">
       <IntersectionObserverComponent />
