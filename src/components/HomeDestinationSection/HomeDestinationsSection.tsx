@@ -1,4 +1,4 @@
-import useRandomDestinations from '../../hooks/useRandomDestionations';
+import { useRandomDestinations } from '../../hooks/useRandomDestinations';
 import DestinationCard from '../DestinationCard';
 import IntersectionObserverComponent from '../IntersectionObserverComponent';
 
@@ -10,7 +10,7 @@ interface Props {
   };
 }
 
-const HomeDestinationSection = ({ destinationContent }: Props) => {
+const HomeDestinationsSection = ({ destinationContent }: Props) => {
   /*TODO: fetch token from local storage if available*/
   const { data: destinations, isLoading, error } = useRandomDestinations();
 
@@ -41,7 +41,7 @@ const HomeDestinationSection = ({ destinationContent }: Props) => {
   );
 };
 
-export default HomeDestinationSection;
+export default HomeDestinationsSection;
 
 // const HomeDestinationsSection: React.FC<HomeDestinationsSectionProps> = async () => {
 //     const t = useTranslations('home');

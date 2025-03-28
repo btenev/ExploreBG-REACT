@@ -1,4 +1,4 @@
-class ApiClient {
+export class ApiClient {
   private baseUrl: string = import.meta.env.VITE_API_BASE_URL + '/api';
 
   constructor() {
@@ -51,5 +51,3 @@ class ApiClient {
   delete = <T>(endpoint: string, sessionToken: string) =>
     this.request<T>('DELETE', endpoint, sessionToken, undefined);
 }
-
-export default ApiClient;

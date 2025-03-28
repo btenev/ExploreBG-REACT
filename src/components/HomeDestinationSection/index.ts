@@ -1,2 +1,2 @@
-import HomeDestinationSection from './HomeDestinationSection';
-export default HomeDestinationSection;
+import HomeDestinationsSection from './HomeDestinationsSection';
+export default HomeDestinationsSection;
