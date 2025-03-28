@@ -1,5 +1,6 @@
 import IntersectionObserverComponent from '../IntersectionObserverComponent';
 import { useRandomTrails } from '../../hooks/useRandomTrails';
+import TrailCard from '../TrailCard';
 
 interface Props {
   trailContent: {
@@ -26,7 +27,7 @@ const HomeTrailsSection = ({ trailContent }: Props) => {
 
           {data.map((trail) => (
             <article key={trail.id} className="card hidden">
-              {/* <TrailCard card={trail} /> */}
+              <TrailCard card={trail} />
             </article>
           ))}
         </section>
