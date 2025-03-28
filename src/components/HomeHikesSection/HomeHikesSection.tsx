@@ -11,6 +11,7 @@ interface Props {
 }
 
 const HomeHikesSection = ({ hikeContent }: Props) => {
+  /*TODO: fetch token from local storage if available*/
   const { data, isLoading, error } = useRandomHikes();
 
   if (isLoading) return <p>Loading...</p>;

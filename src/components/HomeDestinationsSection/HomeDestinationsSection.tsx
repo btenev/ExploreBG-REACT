@@ -12,14 +12,14 @@ interface Props {
 
 const HomeDestinationsSection = ({ destinationContent }: Props) => {
   /*TODO: fetch token from local storage if available*/
-  const { data: destinations, isLoading, error } = useRandomDestinations();
+  const { data, isLoading, error } = useRandomDestinations();
 
   if (isLoading) return <p>Loading...</p>;
 
   if (error) throw error;
 
   return (
-    destinations && (
+    data && (
       <>
         <h2 className="home__section-title">{destinationContent.title}</h2>
 
@@ -28,7 +28,7 @@ const HomeDestinationsSection = ({ destinationContent }: Props) => {
         >
           <IntersectionObserverComponent />
 
-          {destinations.map((destination) => (
+          {data.map((destination) => (
             <article key={destination.id} className="card hidden">
               <DestinationCard card={destination} />
             </article>

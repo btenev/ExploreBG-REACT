@@ -1,15 +1,13 @@
 import './HomePage.scss';
 import IntersectionObserverComponent from '../../components/IntersectionObserverComponent';
-import HomeDestinationsSection from '../../components/HomeDestinationSection';
+import HomeDestinationsSection from '../../components/HomeDestinationsSection';
 import HomeTrailsSection from '../../components/HomeTrailsSection';
 import HomeHikesSection from '../../components/HomeHikesSection';
+import HomeAccommodationsSection from '../../components/HomeAccommodationsSection';
 import { homeContent } from './home';
 import { homeTopImages } from './home';
-import { useRandomAccommodations } from '../../hooks/useRandomAccommodations';
 
 const HomePage = () => {
-  const { data } = useRandomAccommodations();
-
   return (
     <main className="home">
       <IntersectionObserverComponent />
@@ -52,6 +50,10 @@ const HomePage = () => {
       <HomeTrailsSection trailContent={homeContent['section-trails']} />
 
       <HomeHikesSection hikeContent={homeContent['section-hikes']} />
+
+      <HomeAccommodationsSection
+        accommodationContent={homeContent['section-accommodations']}
+      />
     </main>
   );
 };

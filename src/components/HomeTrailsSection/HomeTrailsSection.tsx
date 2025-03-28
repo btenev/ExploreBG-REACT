@@ -11,6 +11,7 @@ interface Props {
 }
 
 const HomeTrailsSection = ({ trailContent }: Props) => {
+  /*TODO: fetch token from local storage if available*/
   const { data, isLoading, error } = useRandomTrails();
 
   if (isLoading) return <p>Loading...</p>;

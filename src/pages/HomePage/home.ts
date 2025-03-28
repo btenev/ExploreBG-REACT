@@ -37,6 +37,12 @@ export const homeContent = {
     'btn-view-all': 'View all hikes',
     'btn-create': 'Create hike',
   },
+
+  'section-accommodations': {
+    title: 'Accommodations',
+    'backgr-img-info': 'Old town - Sozopol',
+    'btn-view-all': 'View all accommodations',
+  },
 };
 
 export const homeTopImages = [img5, img2, img3, img6, img1, img4];
