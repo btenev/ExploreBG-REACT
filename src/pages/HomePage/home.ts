@@ -31,6 +31,12 @@ export const homeContent = {
     'btn-view-all': 'View all trails',
     'btn-create': 'Create trail',
   },
+
+  'section-hikes': {
+    title: 'Exciting hikes',
+    'btn-view-all': 'View all hikes',
+    'btn-create': 'Create hike',
+  },
 };
 
 export const homeTopImages = [img5, img2, img3, img6, img1, img4];
