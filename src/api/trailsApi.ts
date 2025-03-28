@@ -1,5 +1,5 @@
-import { ITrailCard } from '../types/trail';
 import { ApiClient } from './apiClient';
+import { ITrailCard } from '../types/trail';
 
 const apiClient = new ApiClient();
 

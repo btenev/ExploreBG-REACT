@@ -4,8 +4,11 @@ import HomeDestinationsSection from '../../components/HomeDestinationSection';
 import HomeTrailsSection from '../../components/HomeTrailsSection';
 import { homeContent } from './home';
 import { homeTopImages } from './home';
+import { useRandomHikes } from '../../hooks/useRandomHikes';
 
 const HomePage = () => {
+  const { data } = useRandomHikes();
+
   return (
     <main className="home">
       <IntersectionObserverComponent />
