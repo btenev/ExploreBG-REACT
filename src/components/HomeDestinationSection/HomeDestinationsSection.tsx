@@ -1,6 +1,6 @@
-import { useRandomDestinations } from '../../hooks/useRandomDestinations';
 import DestinationCard from '../DestinationCard';
 import IntersectionObserverComponent from '../IntersectionObserverComponent';
+import { useRandomDestinations } from '../../hooks/useRandomDestinations';
 
 interface Props {
   destinationContent: {

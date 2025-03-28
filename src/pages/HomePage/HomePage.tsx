@@ -1,13 +1,11 @@
 import './HomePage.scss';
 import IntersectionObserverComponent from '../../components/IntersectionObserverComponent';
 import HomeDestinationsSection from '../../components/HomeDestinationSection';
+import HomeTrailsSection from '../../components/HomeTrailsSection';
 import { homeContent } from './home';
 import { homeTopImages } from './home';
-import { useRandomTrails } from '../../hooks/useRandomTrails';
 
 const HomePage = () => {
-  const { data } = useRandomTrails();
-
   return (
     <main className="home">
       <IntersectionObserverComponent />
@@ -46,6 +44,8 @@ const HomePage = () => {
       <HomeDestinationsSection
         destinationContent={homeContent['section-destinations']}
       />
+
+      <HomeTrailsSection trailContent={homeContent['section-trails']} />
     </main>
   );
 };
