@@ -11,16 +11,16 @@ interface IQuestion {
 }
 
 interface Props {
-  questions: IQuestion[];
+  questionsContent: IQuestion[];
 }
 
-const QA = ({ questions }: Props) => {
+const QA = ({ questionsContent }: Props) => {
   const [openQuestionId, setOpenQuestionId] = useState<number | null>(null);
 
   const toggleQuestion = (id: number) =>
-    openQuestionId === id ? setOpenQuestionId(null) : id;
+    openQuestionId === id ? setOpenQuestionId(null) : setOpenQuestionId(id);
 
-  return questions.map((question) => (
+  return questionsContent.map((question) => (
     <article
       className="question-wrapper"
       key={question.id}

@@ -4,8 +4,8 @@ import HomeDestinationsSection from '../../components/HomeDestinationsSection';
 import HomeTrailsSection from '../../components/HomeTrailsSection';
 import HomeHikesSection from '../../components/HomeHikesSection';
 import HomeAccommodationsSection from '../../components/HomeAccommodationsSection';
-import { homeContent } from './home';
-import { homeTopImages } from './home';
+import { homeContent } from './homeConetent';
+import { homeTopImages } from './homeConetent';
 
 const HomePage = () => {
   return (
