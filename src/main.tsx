@@ -6,14 +6,17 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import './global-styles/main.scss';
 import router from './routes.tsx';
+import { ProvideTheme } from './context/ProvideTheme.tsx';
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <ProvideTheme>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ProvideTheme>
   </StrictMode>
 );

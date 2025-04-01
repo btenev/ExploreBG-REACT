@@ -3,6 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 
 import './Header.scss';
 import Logo from '../Logo';
+import { SwitchTheme } from '../SwitchTheme';
 
 const Header = () => {
   const [isHeaderVisible, setHeaderVisible] = useState<boolean>(true);
@@ -44,7 +45,9 @@ const Header = () => {
           </section>
         )}
 
-        <aside className="header__nav__theme-lang">Some</aside>
+        <aside className="header__nav__theme-lang">
+          <SwitchTheme />
+        </aside>
       </article>
     </header>
   );
