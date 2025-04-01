@@ -1,4 +1,4 @@
 export { default as Footer } from './Footer';
-export { default as Header } from './Header';
+export { Header, SmallHeader } from './Header';
 export { default as Logo } from './Logo';
 export { default as BackButton } from './BackButton';
