@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import './Header.scss';
-import Logo from '../Logo';
-import { SwitchTheme } from '../SwitchTheme';
+import { Logo } from '../';
+import { SwitchTheme } from '../../SwitchTheme';
 
 const Header = () => {
   const [isHeaderVisible, setHeaderVisible] = useState<boolean>(true);

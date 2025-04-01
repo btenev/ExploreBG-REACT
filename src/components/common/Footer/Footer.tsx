@@ -1,7 +1,7 @@
 import { FaRegCopyright } from 'react-icons/fa6';
 
 import './Footer.scss';
-import Logo from '../Logo';
+import { Logo } from '../';
 
 const Footer = () => {
   return (
