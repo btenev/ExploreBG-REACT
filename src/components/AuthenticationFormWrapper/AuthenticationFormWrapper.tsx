@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const AuthenticationWrapper = () => {
+const AuthenticationFormWrapper = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
   return (
@@ -25,4 +25,4 @@ const AuthenticationWrapper = () => {
   );
 };
 
-export default AuthenticationWrapper;
+export default AuthenticationFormWrapper;

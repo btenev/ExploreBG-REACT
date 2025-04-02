@@ -1,3 +1,5 @@
+import './SmallHeader.scss';
+
 import { Logo, BackButton } from '../';
 
 const SmallHeader = () => {

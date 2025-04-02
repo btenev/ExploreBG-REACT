@@ -1,0 +1,65 @@
+@use '../../global-styles/main' as gs;
+
+.login-register {
+  position: relative;
+  padding: 5rem 0;
+
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/images/login-register.jpeg');
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(90%);
+  }
+
+  & > .forms {
+    position: relative;
+    backdrop-filter: blur(0.2rem);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    margin-bottom: 12rem;
+    box-shadow: 0 0 4px aquamarine;
+
+    @media (max-height: 750px) and (orientation: landscape) {
+      margin-bottom: unset;
+    }
+
+    @include gs.display(L-mobile) {
+      margin-bottom: unset;
+    }
+
+    @include gs.display(mobile) {
+      padding: 0.5rem;
+    }
+
+    & > .buttons {
+      margin-bottom: 2rem;
+      @include gs.flex(none, space-evenly, none);
+
+      & > button {
+        all: unset;
+        color: gray;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 1s ease;
+
+        &:hover {
+          color: gs.$light-primary;
+        }
+      }
+
+      & > .current {
+        color: gs.$light-primary;
+        border-bottom: 3px solid aquamarine;
+      }
+    }
+  }
+
+  & > .small-footer {
+    color: black !important;
+  }
+}

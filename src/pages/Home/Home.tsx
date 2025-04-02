@@ -1,4 +1,4 @@
-import './HomePage.scss';
+import './Home.scss';
 import IntersectionObserverComponent from '../../components/IntersectionObserverComponent';
 import HomeDestinationsSection from '../../components/HomeDestinationsSection';
 import HomeTrailsSection from '../../components/HomeTrailsSection';
@@ -7,7 +7,7 @@ import HomeAccommodationsSection from '../../components/HomeAccommodationsSectio
 import { homeContent } from './homeConetent';
 import { homeTopImages } from './homeConetent';
 
-const HomePage = () => {
+const Home = () => {
   return (
     <main className="home">
       <IntersectionObserverComponent />
@@ -58,4 +58,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
