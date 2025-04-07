@@ -1,11 +1,11 @@
 import { ApiClient } from './apiClient';
-import { ITrailCard } from '../types/trail';
+import { ITrailCard } from '../types';
 
 const apiClient = new ApiClient();
 
 const baseTrailsUrl = '/trails';
 
 export const trailsApi = {
-  get4RandomTrails: (token?: string) =>
-    apiClient.get<ITrailCard[]>(`${baseTrailsUrl}/random`, token),
+  get4RandomTrails: () =>
+    apiClient.get<ITrailCard[]>(`${baseTrailsUrl}/random`),
 };

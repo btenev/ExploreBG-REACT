@@ -1,4 +1,4 @@
-import { ITrailCard } from '../../types/trail';
+import { ITrailCard } from '../../types';
 import defaultImg from '../../assets/images/hike-default.jpg';
 
 interface Props {

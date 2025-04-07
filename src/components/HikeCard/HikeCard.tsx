@@ -1,5 +1,5 @@
 import defaultImg from '../../assets/images/hike-default.jpg';
-import { IHikeCard } from '../../types/hike';
+import { IHikeCard } from '../../types';
 import { formatDateToDDMMMYYYY } from '../../utils/dateUtils';
 
 interface Props {

@@ -1,4 +1,4 @@
-import { IAccommodationCard } from '../../types/accommodation';
+import { IAccommodationCard } from '../../types';
 import defaultImg from '../../assets/images/accommodation-default.jpg';
 
 interface Props {

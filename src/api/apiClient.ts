@@ -10,7 +10,6 @@ export class ApiClient {
   private async request<T>(
     method: string,
     endpoint: string,
-    sessionToken?: string,
     body?: any
   ): Promise<T> {
     const headerObj: Record<string, string> = {};
@@ -19,13 +18,10 @@ export class ApiClient {
       headerObj['Content-Type'] = 'application/json';
     }
 
-    if (sessionToken) {
-      headerObj['Authorization'] = `Bearer ${sessionToken}`;
-    }
-
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       method: method,
       headers: headerObj,
+      credentials: 'include',
       body: body ? JSON.stringify(body) : undefined,
     });
 
@@ -36,18 +32,16 @@ export class ApiClient {
     return response.json();
   }
 
-  get = <T>(endpoint: string, sessionToken?: string) =>
-    this.request<T>('GET', endpoint, sessionToken, undefined);
+  get = <T>(endpoint: string) => this.request<T>('GET', endpoint);
 
-  post = <T>(endpoint: string, sessionToken: string, body: any) =>
-    this.request<T>('POST', endpoint, sessionToken, body);
+  post = <T>(endpoint: string, body: any) =>
+    this.request<T>('POST', endpoint, body);
 
-  put = <T>(endpoint: string, sessionToken: string, body: any) =>
-    this.request<T>('PUT', endpoint, sessionToken, body);
+  put = <T>(endpoint: string, body: any) =>
+    this.request<T>('PUT', endpoint, body);
 
-  patch = <T>(endpoint: string, sessionToken: string, body: any) =>
-    this.request<T>('PATCH', endpoint, sessionToken, body);
+  patch = <T>(endpoint: string, body: any) =>
+    this.request<T>('PATCH', endpoint, body);
 
-  delete = <T>(endpoint: string, sessionToken: string) =>
-    this.request<T>('DELETE', endpoint, sessionToken, undefined);
+  delete = <T>(endpoint: string) => this.request<T>('DELETE', endpoint);
 }

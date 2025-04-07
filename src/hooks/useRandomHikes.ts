@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { hikesApi } from '../api/hikesApi';
 
-export const useRandomHikes = (token?: string) => {
+export const useRandomHikes = () => {
   return useQuery({
     queryKey: ['randomHikes'],
-    queryFn: () => hikesApi.get4RandomHikes(token),
+    queryFn: () => hikesApi.get4RandomHikes(),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch
     refetchOnReconnect: false, // Optional: also disable on network recovery
