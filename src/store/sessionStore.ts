@@ -38,8 +38,7 @@ export const useSessionStore = create<SessionStore>()(
           const value = sessionStorage.getItem(key);
           return value ? JSON.parse(value) : null;
         },
-        setItem: (key, value) =>
-          sessionStorage.setItem(key, JSON.stringify(value)),
+        setItem: (key, value) => sessionStorage.setItem(key, JSON.stringify(value)),
         removeItem: (key) => sessionStorage.removeItem(key),
       },
     }

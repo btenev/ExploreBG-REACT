@@ -1,4 +1,14 @@
-export class AuthClient {
+import { LoginDto } from '../schemas';
+import { ApiError } from '../types';
+
+type LoginResponse = {
+  id: number;
+  username: string;
+  imageUrl: string;
+  roles: string[];
+};
+
+class AuthClient {
   private baseUrl = import.meta.env.VITE_API_BASE_URL + '/auth';
 
   constructor() {
@@ -7,33 +17,46 @@ export class AuthClient {
     }
   }
 
-  private async request<T>(
-    method: string,
-    endpoint: string,
-    body?: any
-  ): Promise<T> {
+  private async request<T>(method: string, endpoint: string, body?: any): Promise<T> {
     const headerObj: Record<string, string> = {};
 
     if (body && method !== 'GET') {
       headerObj['Content-Type'] = 'application/json';
     }
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: method,
-      headers: headerObj,
-      credentials: 'include',
-      body: body ? JSON.stringify(body) : undefined,
-    });
+    try {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: method,
+        headers: headerObj,
+        credentials: 'include',
+        body: body ? JSON.stringify(body) : undefined,
+      });
 
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+      const responseData = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        // Structure the error to match your ApiError interface
+        const error: ApiError = {
+          errors: responseData.errors || undefined,
+          message: responseData.message || `Request failed with status ${response.status}`,
+        };
+        throw error;
+      }
+
+      return responseData as T;
+    } catch (error) {
+      // Ensure all errors conform to ApiError interface
+      if (error instanceof Error) {
+        throw {
+          message: error.message || 'Network request failed',
+        } satisfies ApiError;
+      }
+      throw error;
     }
-
-    return response.json();
   }
 
-  login = <T>(data: { email: string; password: string }) =>
-    this.request<T>('POST', '/login', data);
+  login = (data: LoginDto): Promise<LoginResponse> =>
+    this.request<LoginResponse>('POST', '/login', data);
 
   register = <T>(data: {
     email: string;
@@ -44,3 +67,5 @@ export class AuthClient {
 
   refreshAccessToken = () => this.request('POST', '/token/refresh');
 }
+
+export const authApi = new AuthClient();
