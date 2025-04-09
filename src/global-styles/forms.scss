@@ -94,6 +94,7 @@
     @include m.set-form();
 
     & > div {
+      margin-bottom: 1rem; /*Added by me*/
       position: relative;
 
       & > label {
