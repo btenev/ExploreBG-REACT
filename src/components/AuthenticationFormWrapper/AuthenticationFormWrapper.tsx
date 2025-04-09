@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import LoginForm from '../LoginForm';
 
 const AuthenticationFormWrapper = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -6,21 +7,15 @@ const AuthenticationFormWrapper = () => {
   return (
     <article className="forms">
       <div className="buttons">
-        <button
-          onClick={() => setIsLogin(true)}
-          className={isLogin ? 'current' : ''}
-        >
+        <button onClick={() => setIsLogin(true)} className={isLogin ? 'current' : ''}>
           Login
         </button>
-        <button
-          onClick={() => setIsLogin(false)}
-          className={isLogin ? '' : 'current'}
-        >
+        <button onClick={() => setIsLogin(false)} className={isLogin ? '' : 'current'}>
           Register
         </button>
       </div>
 
-      {isLogin ? 'Login' : 'RegisterForm'}
+      {isLogin ? <LoginForm /> : 'RegisterForm'}
     </article>
   );
 };
