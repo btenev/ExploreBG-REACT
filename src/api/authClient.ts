@@ -1,12 +1,15 @@
-import { LoginDto } from '../schemas';
+import { LoginDto, RegisterDto } from '../schemas';
 import { ApiError } from '../types';
 
-type LoginResponse = {
+interface LoginResponse extends RegisterResponse {
+  imageUrl: string;
+}
+
+interface RegisterResponse {
   id: number;
   username: string;
-  imageUrl: string;
   roles: string[];
-};
+}
 
 class AuthClient {
   private baseUrl = import.meta.env.VITE_API_BASE_URL + '/auth';
@@ -58,12 +61,8 @@ class AuthClient {
   login = (data: LoginDto): Promise<LoginResponse> =>
     this.request<LoginResponse>('POST', '/login', data);
 
-  register = <T>(data: {
-    email: string;
-    password: string;
-    confirtmPassword: string;
-    username: string;
-  }) => this.request<T>('POST', '/register', data);
+  register = (data: RegisterDto): Promise<RegisterResponse> =>
+    this.request('POST', '/register', data);
 
   refreshAccessToken = () => this.request('POST', '/token/refresh');
 }
