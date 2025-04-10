@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import LoginForm from '../LoginForm';
+import RegisterForm from '../RegisterForm';
 
 const AuthenticationFormWrapper = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -15,7 +16,7 @@ const AuthenticationFormWrapper = () => {
         </button>
       </div>
 
-      {isLogin ? <LoginForm /> : 'RegisterForm'}
+      {isLogin ? <LoginForm /> : <RegisterForm />}
     </article>
   );
 };

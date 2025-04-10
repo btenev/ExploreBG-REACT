@@ -11,7 +11,8 @@ export const emailSchema = z
   .regex(/[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,4}/, 'The email format is incorrect.');
 
 export const usernameSchema = z
-  .string({ required_error: 'Please enter your username.' })
+  .string()
+  .nonempty('Please enter your username.')
   .regex(/^[A-Za-z]/, 'Your username must start with an English letter.')
   .regex(
     /^[A-Za-z_\d]+$/,
