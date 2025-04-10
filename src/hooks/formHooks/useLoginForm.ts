@@ -1,27 +1,8 @@
-import { useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-
+import useFormWithSchema from './useFormWithSchema';
 import { loginSchema } from '../../schemas';
 
 const useLoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid, isSubmitting },
-  } = useForm({
-    resolver: zodResolver(loginSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
-  });
-
-  return {
-    register,
-    handleSubmit,
-    errors,
-    isValid,
-    isSubmitting,
-  };
+  return useFormWithSchema(loginSchema);
 };
 
 export default useLoginForm;
