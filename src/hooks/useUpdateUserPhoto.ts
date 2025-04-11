@@ -12,10 +12,14 @@ export const useUpdateUserPhoto = () => {
     mutationKey: ['userPhoto'],
     mutationFn: (data: FormData) => imagesApi.updateUserPhoto(data),
     onSuccess: (data) => {
-      store({
-        userImage: data.imageUrl,
-      });
-      toast.success('You successfully updated you profile photo!');
+      if (data.imageUrl) {
+        store({
+          userImage: data.imageUrl,
+        });
+        toast.success('You successfully updated you profile photo!');
+      } else {
+        toast.error('Image upload succeeded, but no image URL returned.');
+      }
     },
     onError: (error: ApiError) => {
       if (error.errors) {
