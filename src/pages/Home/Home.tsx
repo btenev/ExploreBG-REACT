@@ -43,17 +43,13 @@ const Home = () => {
 
       <section className="home__section-buffer"></section>
 
-      <HomeDestinationsSection
-        destinationContent={homeContent['section-destinations']}
-      />
+      <HomeDestinationsSection destinationContent={homeContent['section-destinations']} />
 
       <HomeTrailsSection trailContent={homeContent['section-trails']} />
 
       <HomeHikesSection hikeContent={homeContent['section-hikes']} />
 
-      <HomeAccommodationsSection
-        accommodationContent={homeContent['section-accommodations']}
-      />
+      <HomeAccommodationsSection accommodationContent={homeContent['section-accommodations']} />
     </main>
   );
 };
