@@ -16,6 +16,17 @@ interface MyProfileResponse {
   createdTrails: ITrailCard[];
 }
 
+export type UserPatchMap = {
+  username: { username: string };
+  email: { email: string };
+  bithdate: { birthdate: string };
+  gender: { gender: 'Male' | 'Female' };
+  userInfo: { userInfo: string };
+};
+
 export const usersApi = {
   getMyProfile: () => apiClient.get<MyProfileResponse>(`${baseUrl}/my-profile`),
+
+  updateUserField: <K extends keyof UserPatchMap>(field: K, data: UserPatchMap[K]) =>
+    apiClient.patch<UserPatchMap[K]>(`${baseUrl}/${field}`, data),
 };
