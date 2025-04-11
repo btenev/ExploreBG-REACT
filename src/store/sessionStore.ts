@@ -5,6 +5,7 @@ import { IUserSession } from '../types';
 interface SessionStore {
   user: IUserSession | null;
   setUser: (user: Omit<IUserSession, 'isAdmin' | 'isModerator'> | null) => void;
+  updateUserFields: (fields: Partial<IUserSession>) => void;
   clearSession: () => void;
 }
 
@@ -29,6 +30,17 @@ export const useSessionStore = create<SessionStore>()(
           },
         });
       },
+      updateUserFields: (fields: Partial<IUserSession>) =>
+        set((state) => {
+          if (!state.user) return { user: null };
+
+          return {
+            user: {
+              ...state.user,
+              ...fields, // Merges the new fields with the existing user
+            },
+          };
+        }),
       clearSession: () => set({ user: null }),
     }),
     {
