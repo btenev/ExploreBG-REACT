@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
@@ -8,6 +9,7 @@ import { ApiError } from '../types';
 
 export const useRegister = () => {
   const store = useSessionStore((state) => state.setUser);
+  const navigate = useNavigate();
 
   return useMutation({
     mutationKey: ['register'],
@@ -19,6 +21,7 @@ export const useRegister = () => {
         userRoles: data.roles,
       });
       toast.success(`Welcome ${data.username}!`);
+      navigate('/users/my-profile');
     },
     onError: (error: ApiError) => {
       if (error.errors) {
