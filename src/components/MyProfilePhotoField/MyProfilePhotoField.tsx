@@ -20,6 +20,8 @@ const MyProfilePhotoField = ({ initialImageUrl }: Props) => {
 
   const changePhoto = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files?.[0];
+    e.currentTarget.value = '';
+
     if (!file) return;
 
     if (
@@ -29,6 +31,8 @@ const MyProfilePhotoField = ({ initialImageUrl }: Props) => {
       toast.info('This image has already been uploaded.');
       return;
     }
+
+    lastUploadedFileRef.current = file;
 
     const compressedFile = await compressImage(file);
 

@@ -2,7 +2,10 @@ import { Dispatch, SetStateAction, RefObject, useEffect } from 'react';
 
 type OnCloseType = Dispatch<SetStateAction<MouseEvent | KeyboardEvent>>;
 
-const useCloseOnEscapeTabAndClickOutside = (ref: RefObject<HTMLElement>, onClose: OnCloseType) => {
+const useCloseOnEscapeTabAndClickOutside = (
+  ref: RefObject<HTMLElement | null>,
+  onClose: OnCloseType
+) => {
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
