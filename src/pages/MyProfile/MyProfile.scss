@@ -1,0 +1,173 @@
+@use '../../global-styles/main.scss' as gs;
+
+.my-profile-container {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    311deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(137, 190, 125, 1) 16%,
+    rgba(190, 189, 89, 1) 71%,
+    rgba(253, 187, 45, 1) 100%
+  );
+  padding: 0 3rem;
+
+  & > article {
+    padding: 7rem 2rem 3rem 0;
+    width: 100%;
+    max-width: 68.75rem;
+    min-height: 100vh;
+    @include gs.flex(row, space-evenly, center);
+
+    @include gs.display(L-mobile) {
+      flex-direction: column;
+      padding-right: 0;
+    }
+
+    & > h1 {
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+      font-size: 5rem;
+      color: gray;
+      text-shadow: 0 0 6px black;
+      margin-right: 5rem;
+
+      @include gs.display(L-mobile) {
+        writing-mode: initial;
+        transform: unset;
+        margin-right: unset;
+        margin-bottom: 2rem;
+      }
+
+      @include gs.display(mobile) {
+        font-size: 3rem;
+      }
+
+      @media (max-height: 35rem) and (orientation: landscape) {
+        font-size: 3rem;
+      }
+    }
+
+    & > section {
+      & svg {
+        color: gray;
+      }
+
+      & > div {
+        margin-bottom: 2rem;
+        position: relative;
+        @include gs.flex(none, center, none);
+        text-shadow: 1px 1px 1px white;
+        width: 40vw;
+
+        @include gs.display(display) {
+          width: 70vw;
+        }
+
+        @include gs.display(L-mobile) {
+          width: 85vw;
+        }
+
+        &:last-of-type {
+          & > p {
+            width: 100%;
+
+            & > svg {
+              position: absolute;
+              top: -1.5rem;
+              right: -1.5rem;
+              font-size: 1.5rem;
+
+              @include gs.display(L-mobile) {
+                top: -1.75rem;
+                right: -0.5rem;
+              }
+
+              @include gs.display(mobile) {
+                font-size: 1.15rem;
+                top: -1.5rem;
+              }
+            }
+          }
+        }
+
+        & > form {
+          position: absolute;
+          top: 0;
+          z-index: 1;
+          @include gs.set-details-update-form();
+        }
+
+        & .error-message {
+          backdrop-filter: blur(0.25rem);
+        }
+
+        & > .info-text {
+          padding: 1rem;
+          border-radius: 0.5rem;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+          text-align: left;
+          box-shadow: 0px 0px 6px green;
+
+          @include gs.display(L-mobile) {
+            max-height: 100vh;
+            overflow-y: scroll;
+          }
+        }
+      }
+
+      [data-theme='dark'] & > div {
+        text-shadow: 1px 1px 1px black;
+      }
+
+      & > aside {
+        @include gs.display(mobile) {
+          @include gs.flex(column-reverse, none, center);
+          gap: 1rem;
+        }
+
+        & > button {
+          @include gs.glow-on-hover-button();
+
+          &:first-of-type {
+            margin-right: 1rem;
+
+            @include gs.display(mobile) {
+              margin-right: unset;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  & .user-profile-section__created-hikes {
+    & > article {
+      height: fit-content;
+
+      & > figure {
+        height: 25vh;
+      }
+
+      & > p {
+        display: none;
+      }
+    }
+  }
+}
+
+[data-theme='dark'] .my-profile-container {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    311deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(145, 190, 120, 1) 16%,
+    rgba(0, 0, 0, 1) 71%,
+    rgba(149, 149, 149, 1) 100%
+  );
+}
+
+.edit {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
