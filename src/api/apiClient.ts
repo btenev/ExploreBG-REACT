@@ -1,3 +1,5 @@
+import { ApiError } from '../types';
+
 export class ApiClient {
   private baseUrl: string = import.meta.env.VITE_API_BASE_URL + '/api';
 
@@ -10,38 +12,51 @@ export class ApiClient {
   private async request<T>(
     method: string,
     endpoint: string,
-    body?: any
+    body?: any,
+    isFormData: boolean = false
   ): Promise<T> {
     const headerObj: Record<string, string> = {};
 
-    if (body && method !== 'GET') {
+    if (!isFormData && body && method !== 'GET') {
       headerObj['Content-Type'] = 'application/json';
     }
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+    const options: RequestInit = {
       method: method,
       headers: headerObj,
       credentials: 'include',
-      body: body ? JSON.stringify(body) : undefined,
-    });
+    };
 
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+    if (isFormData) {
+      // For FormData, we don't need to set Content-Type, browser does it automatically
+      options.body = body;
+    } else if (body) {
+      options.body = JSON.stringify(body);
     }
 
-    return response.json();
+    const response = await fetch(`${this.baseUrl}${endpoint}`, options);
+
+    const responseData = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      const error: ApiError = {
+        errors: responseData.errors || undefined,
+        message: responseData.message || `Request failed with status ${response.status}`,
+      };
+      throw error;
+    }
+
+    return responseData as T;
   }
 
   get = <T>(endpoint: string) => this.request<T>('GET', endpoint);
 
-  post = <T>(endpoint: string, body: any) =>
-    this.request<T>('POST', endpoint, body);
+  post = <T>(endpoint: string, body: any) => this.request<T>('POST', endpoint, body);
 
-  put = <T>(endpoint: string, body: any) =>
-    this.request<T>('PUT', endpoint, body);
+  put = <T>(endpoint: string, body: any) => this.request<T>('PUT', endpoint, body);
 
-  patch = <T>(endpoint: string, body: any) =>
-    this.request<T>('PATCH', endpoint, body);
+  patch = <T>(endpoint: string, body: any, isFormData: boolean = false) =>
+    this.request<T>('PATCH', endpoint, body, isFormData);
 
   delete = <T>(endpoint: string) => this.request<T>('DELETE', endpoint);
 }

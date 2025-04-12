@@ -7,6 +7,7 @@ const baseUrl = '/users';
 
 interface MyProfileResponse {
   id: number;
+  username: string;
   email: string;
   gender: string;
   birthdate: string;
