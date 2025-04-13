@@ -1,8 +1,6 @@
 import useFormWithSchema from './useFormWithSchema';
 import { loginSchema } from '../../schemas';
 
-const useLoginForm = () => {
-  return useFormWithSchema(loginSchema);
-};
+const useLoginForm = () => useFormWithSchema(loginSchema);
 
 export default useLoginForm;

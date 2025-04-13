@@ -1,8 +1,6 @@
 import useFormWithSchema from './useFormWithSchema';
 import { registerSchema } from '../../schemas';
 
-const useRegisterForm = () => {
-  return useFormWithSchema(registerSchema);
-};
+const useRegisterForm = () => useFormWithSchema(registerSchema);
 
 export default useRegisterForm;
