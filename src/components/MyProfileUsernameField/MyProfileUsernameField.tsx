@@ -19,7 +19,13 @@ const MyProfileUsernameField = ({ initialUsername }: Props) => {
   const username = useSessionStore((state) => state.user?.username) ?? initialUsername;
 
   const onSubmit = (data: { username: string }) => {
+    if (data.username === username) {
+      setIsVisible(false);
+      return;
+    }
+
     updateUsername(data);
+    setIsVisible(false);
   };
 
   const formRef = useRef<HTMLFormElement>(null);

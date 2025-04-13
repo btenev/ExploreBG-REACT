@@ -20,7 +20,7 @@ interface MyProfileResponse {
 export type UserPatchMap = {
   username: { username: string };
   email: { email: string };
-  bithdate: { birthdate: string };
+  birthdate: { birthdate: string };
   gender: { gender: 'Male' | 'Female' };
   userInfo: { userInfo: string };
 };
@@ -28,6 +28,8 @@ export type UserPatchMap = {
 export const usersApi = {
   getMyProfile: () => apiClient.get<MyProfileResponse>(`${baseUrl}/my-profile`),
 
-  updateUserField: <K extends keyof UserPatchMap>(field: K, data: UserPatchMap[K]) =>
-    apiClient.patch<UserPatchMap[K]>(`${baseUrl}/${field}`, data),
+  updateUserField: <K extends keyof UserPatchMap>(field: K, data: UserPatchMap[K]) => {
+    const endpoint = field === 'userInfo' ? 'user-info' : field;
+    return apiClient.patch<UserPatchMap[K]>(`${baseUrl}/${endpoint}`, data);
+  },
 };

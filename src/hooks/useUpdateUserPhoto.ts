@@ -16,7 +16,7 @@ export const useUpdateUserPhoto = () => {
         store({
           userImage: data.imageUrl,
         });
-        toast.success('You successfully updated you profile photo!');
+        toast.success('You successfully updated your profile photo!');
       } else {
         toast.error('Image upload succeeded, but no image URL returned.');
       }
