@@ -15,13 +15,20 @@ const MyProfileInfoField = ({ userInfo }: Props) => {
   const { handleSubmit, register, errors, isSubmitting, isValid } = useUserInfoForm();
   const { mutate: updateUserInfo } = useUpdateUserField('userInfo', setInfoValue);
 
-  const onSubmit = (data: { userInfo: string }) => {
+  const onSubmit = (data: { userInfo?: string }) => {
     if (data.userInfo === infoValue) {
       setIsVisible(false);
       return;
     }
 
-    updateUserInfo(data);
+    if (data.userInfo === '' || data.userInfo === undefined) {
+      setInfoValue(null);
+      updateUserInfo({ userInfo: null });
+      setIsVisible(false);
+      return;
+    }
+
+    updateUserInfo({ userInfo: data.userInfo });
     setIsVisible(false);
   };
 

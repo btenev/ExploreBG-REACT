@@ -22,7 +22,7 @@ export type UserPatchMap = {
   email: { email: string };
   birthdate: { birthdate: string };
   gender: { gender: 'Male' | 'Female' };
-  userInfo: { userInfo: string };
+  userInfo: { userInfo: string | null };
 };
 
 export const usersApi = {
