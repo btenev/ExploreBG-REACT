@@ -4,6 +4,7 @@ import MyProfilePhotoField from '../../components/MyProfilePhotoField';
 import MyProfileUsernameField from '../../components/MyProfileUsernameField';
 import MyProfileInfoField from '../../components/MyProfileInfoField';
 import { useMyProfile } from '../../hooks/useMyProfile';
+import MyProfileEmailField from '../../components/MyProfileEmailField';
 
 const MyProfile = () => {
   const { data, isLoading, error } = useMyProfile();
@@ -14,7 +15,7 @@ const MyProfile = () => {
 
   if (!data) return <p>Resource not found!</p>;
 
-  const { imageUrl, username, userInfo } = data;
+  const { imageUrl, username, userInfo, email } = data;
 
   return (
     <main className="my-profile-container">
@@ -25,6 +26,7 @@ const MyProfile = () => {
           <MyProfilePhotoField initialImageUrl={imageUrl} />
 
           <MyProfileUsernameField initialUsername={username} />
+          <MyProfileEmailField initialEmail={email} />
 
           <MyProfileInfoField userInfo={userInfo} />
         </section>
