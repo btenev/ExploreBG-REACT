@@ -1,16 +1,16 @@
 import { Dispatch, SetStateAction } from 'react';
+import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 
 import { useSessionStore } from '../store/sessionStore';
 import { UserPatchMap, usersApi } from '../api/usersApi';
 import { ApiError, IUserSession } from '../types';
-import { toast } from 'react-toastify';
 
 type ExtractInnerValue<K extends keyof UserPatchMap> = UserPatchMap[K][keyof UserPatchMap[K]];
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
-const useUpdateUserField = <K extends keyof UserPatchMap>(
+export const useUpdateUserField = <K extends keyof UserPatchMap>(
   field: K,
   setStateValue?: Dispatch<SetStateAction<ExtractInnerValue<K>>>
 ) => {
@@ -46,5 +46,3 @@ const useUpdateUserField = <K extends keyof UserPatchMap>(
     },
   });
 };
-
-export default useUpdateUserField;

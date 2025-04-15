@@ -3,7 +3,7 @@ import { FaEdit } from 'react-icons/fa';
 
 import { CommonModal, SubmitButton } from '../common';
 import { useUserInfoForm } from '../../hooks/formHooks';
-import useUpdateUserField from '../../hooks/useUpdateUserField';
+import { useUpdateUserField } from '../../hooks/useUpdateUserField';
 
 interface Props {
   userInfo: string | null;

@@ -5,7 +5,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 import { SubmitButton } from '../common';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
 import { useEmailForm } from '../../hooks/formHooks';
-import useUpdateUserField from '../../hooks/useUpdateUserField';
+import { useUpdateUserField } from '../../hooks/useUpdateUserField';
 
 interface Props {
   initialEmail: string;
