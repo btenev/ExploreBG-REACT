@@ -20,12 +20,22 @@ interface MyProfileResponse {
   createdTrails: ITrailCard[];
 }
 
-export type UserPatchMap = {
+export type UserFieldRequestMap = {
   username: { username: string };
   email: { email: string };
   birthdate: { birthdate: string | null };
   gender: { gender: GenderEnum };
   userInfo: { userInfo: string | null };
+  password: { currentPassword: string; newPassword: string };
+};
+
+export type UserFieldResponseMap = {
+  username: { username: string };
+  email: { email: string };
+  birthdate: { birthdate: string | null };
+  gender: { gender: GenderEnum };
+  userInfo: { userInfo: string | null };
+  password: { message: string };
 };
 
 export const usersApi = {
@@ -40,9 +50,12 @@ export const usersApi = {
     }
   },
 
-  updateUserField: <K extends keyof UserPatchMap>(field: K, data: UserPatchMap[K]) => {
+  updateUserField: <K extends keyof UserFieldRequestMap>(
+    field: K,
+    data: UserFieldRequestMap[K]
+  ): Promise<UserFieldResponseMap[K]> => {
     const endpoint = field === 'userInfo' ? 'user-info' : field;
-    return apiClient.patch<UserPatchMap[K]>(`${baseUrl}/${endpoint}`, data);
+    return apiClient.patch(`${baseUrl}/${endpoint}`, data);
   },
 };
 

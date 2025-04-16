@@ -3,14 +3,15 @@ import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 
 import { useSessionStore } from '../store/sessionStore';
-import { UserPatchMap, usersApi } from '../api/usersApi';
+import { UserFieldRequestMap, UserFieldResponseMap, usersApi } from '../api/usersApi';
 import { ApiError, IUserSession } from '../types';
 
-type ExtractInnerValue<K extends keyof UserPatchMap> = UserPatchMap[K][keyof UserPatchMap[K]];
+type ExtractInnerValue<K extends keyof UserFieldResponseMap> =
+  UserFieldResponseMap[K][keyof UserFieldResponseMap[K]];
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
-export const useUpdateUserField = <K extends keyof UserPatchMap>(
+export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
   field: K,
   setStateValue?: Dispatch<SetStateAction<ExtractInnerValue<K>>>
 ) => {
@@ -20,7 +21,7 @@ export const useUpdateUserField = <K extends keyof UserPatchMap>(
 
   return useMutation({
     mutationKey: [`updateUser${capitalize(field)}`],
-    mutationFn: (data: UserPatchMap[K]) => usersApi.updateUserField(field, data),
+    mutationFn: (data: UserFieldRequestMap[K]) => usersApi.updateUserField(field, data),
     onSuccess: (data) => {
       if (!data) {
         toast.error(`Failed to update ${field}. Something went wrong.`);
