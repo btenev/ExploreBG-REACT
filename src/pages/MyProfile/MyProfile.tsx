@@ -3,9 +3,10 @@ import './MyProfile.scss';
 import MyProfilePhotoField from '../../components/MyProfilePhotoField';
 import MyProfileUsernameField from '../../components/MyProfileUsernameField';
 import MyProfileInfoField from '../../components/MyProfileInfoField';
-import { useMyProfile } from '../../hooks/useMyProfile';
 import MyProfileEmailField from '../../components/MyProfileEmailField';
 import MyProfileGenderField from '../../components/MyProfileGenderField';
+import MyProfileBirthdateField from '../../components/MyProfileBirthdateField';
+import { useMyProfile } from '../../hooks/useMyProfile';
 
 const MyProfile = () => {
   const { data, isLoading, error } = useMyProfile();
@@ -16,7 +17,7 @@ const MyProfile = () => {
 
   if (!data) return <p>Resource not found!</p>;
 
-  const { imageUrl, username, userInfo, email, gender } = data;
+  const { imageUrl, username, userInfo, email, gender, birthdate } = data;
 
   return (
     <main className="my-profile-container">
@@ -29,6 +30,7 @@ const MyProfile = () => {
           <MyProfileUsernameField initialUsername={username} />
           <MyProfileEmailField initialEmail={email} />
           <MyProfileGenderField gender={gender} />
+          <MyProfileBirthdateField birthdate={birthdate} />
 
           <MyProfileInfoField userInfo={userInfo} />
         </section>

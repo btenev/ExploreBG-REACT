@@ -3,7 +3,7 @@ import { IHikeCard, ITrailCard } from '../types';
 import { ApiClient } from './apiClient';
 import { GenderEnum } from '../types';
 import { safeParseOrThrow } from '../utils/zodHelpers';
-import { genderEnumSchema } from '../schemas/genderEnumSchema';
+import { genderEnumSchema } from '../schemas';
 
 const apiClient = new ApiClient();
 const baseUrl = '/users';
@@ -23,7 +23,7 @@ interface MyProfileResponse {
 export type UserPatchMap = {
   username: { username: string };
   email: { email: string };
-  birthdate: { birthdate: string };
+  birthdate: { birthdate: string | null };
   gender: { gender: GenderEnum };
   userInfo: { userInfo: string | null };
 };
