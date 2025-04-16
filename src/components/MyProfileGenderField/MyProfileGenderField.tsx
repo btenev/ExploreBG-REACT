@@ -7,7 +7,7 @@ import { useUpdateUserField } from '../../hooks/useUpdateUserField';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
 
 import { GenderEnum } from '../../types';
-import { genderEnumSchema } from '../../schemas/genderEnumSchema';
+import { genderEnumSchema } from '../../schemas';
 import { toast } from 'react-toastify';
 
 interface Props {

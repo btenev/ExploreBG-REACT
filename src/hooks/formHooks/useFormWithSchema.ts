@@ -1,14 +1,16 @@
 import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ZodSchema } from 'zod';
+import { ZodTypeAny, infer as zodInfer } from 'zod';
 
-const useFormWithSchema = <T extends Record<string, any>>(schema: ZodSchema<T>) => {
+const useFormWithSchema = <Schema extends ZodTypeAny>(schema: Schema) => {
+  type SchemaType = zodInfer<Schema>;
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
-  } = useForm<T>({
+  } = useForm<SchemaType>({
     resolver: zodResolver(schema),
     mode: 'onBlur',
     reValidateMode: 'onChange',
