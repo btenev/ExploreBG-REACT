@@ -6,6 +6,7 @@ import MyProfileInfoField from '../../components/MyProfileInfoField';
 import MyProfileEmailField from '../../components/MyProfileEmailField';
 import MyProfileGenderField from '../../components/MyProfileGenderField';
 import MyProfileBirthdateField from '../../components/MyProfileBirthdateField';
+import MyProfileButtons from '../../components/MyProfileButtons';
 import { useMyProfile } from '../../hooks/useMyProfile';
 
 const MyProfile = () => {
@@ -33,6 +34,8 @@ const MyProfile = () => {
           <MyProfileBirthdateField birthdate={birthdate} />
 
           <MyProfileInfoField userInfo={userInfo} />
+
+          <MyProfileButtons />
         </section>
       </article>
     </main>
