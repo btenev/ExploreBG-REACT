@@ -26,7 +26,7 @@ export type UserFieldRequestMap = {
   birthdate: { birthdate: string | null };
   gender: { gender: GenderEnum };
   userInfo: { userInfo: string | null };
-  password: { currentPassword: string; newPassword: string };
+  password: { currentPassword: string; newPassword: string; confirmNewPassword: string };
 };
 
 export type UserFieldResponseMap = {

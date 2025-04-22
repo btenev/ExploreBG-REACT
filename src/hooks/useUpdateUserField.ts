@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 
@@ -16,6 +17,8 @@ export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
   setStateValue?: Dispatch<SetStateAction<ExtractInnerValue<K>>>
 ) => {
   const store = useSessionStore((state) => state.updateUserFields);
+  const clearSession = useSessionStore((state) => state.clearSession);
+  const navigate = useNavigate();
 
   const sessionUpdatableFields: (keyof IUserSession)[] = ['username', 'userImage'];
 
@@ -23,6 +26,14 @@ export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
     mutationKey: [`updateUser${capitalize(field)}`],
     mutationFn: (data: UserFieldRequestMap[K]) => usersApi.updateUserField(field, data),
     onSuccess: (data) => {
+      if (field === 'password') {
+        const { message } = data as UserFieldResponseMap['password'];
+        toast.success(message || 'Your password has been updated successfully.');
+        clearSession();
+        navigate('/authentication');
+        return;
+      }
+
       if (!data) {
         toast.error(`Failed to update ${field}. Something went wrong.`);
         return;
