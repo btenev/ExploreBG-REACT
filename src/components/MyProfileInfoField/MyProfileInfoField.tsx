@@ -3,6 +3,7 @@ import { FaEdit } from 'react-icons/fa';
 
 import { CommonModal, SubmitButton } from '../common';
 import { useUserInfoForm } from '../../hooks/formHooks';
+import { UserInfoDto } from '../../schemas';
 import { useUpdateUserField } from '../../hooks/useUpdateUserField';
 
 interface Props {
@@ -15,7 +16,7 @@ const MyProfileInfoField = ({ userInfo }: Props) => {
   const { handleSubmit, register, errors, isSubmitting, isValid } = useUserInfoForm();
   const { mutate: updateUserInfo } = useUpdateUserField('userInfo', setInfoValue);
 
-  const onSubmit = (data: { userInfo?: string }) => {
+  const onSubmit = (data: UserInfoDto) => {
     if (data.userInfo === infoValue) {
       setIsVisible(false);
       return;

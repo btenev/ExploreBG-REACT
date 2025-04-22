@@ -1,8 +1,9 @@
+import { z } from 'zod';
 import useFormWithSchema from './useFormWithSchema';
 import { registerBaseSchema } from '../../schemas';
 
 const usernameSchema = registerBaseSchema.pick({ username: true });
 
-const useUsernameForm = () => useFormWithSchema(usernameSchema);
+export const useUsernameForm = () => useFormWithSchema(usernameSchema);
 
-export default useUsernameForm;
+export type UsernameDto = z.infer<typeof usernameSchema>;

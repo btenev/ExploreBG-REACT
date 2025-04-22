@@ -11,6 +11,8 @@ export const userBirthdateSchema = z.object({
   ),
 });
 
+export type UserBithdateDto = z.infer<typeof userBirthdateSchema>;
+
 // Utility to check if a string is a valid "yyyy-MM-dd" date and in the past
 function isValidPastDate(value: string | null): boolean {
   if (!value) return true; // Allow null/undefined

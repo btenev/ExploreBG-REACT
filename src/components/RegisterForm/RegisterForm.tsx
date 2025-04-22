@@ -18,7 +18,7 @@ const RegisterForm = () => {
         <div>
           <label htmlFor="email">Email</label>
           <input
-            id="id"
+            id="email"
             type="email"
             {...register('email')}
             placeholder="john.doe@gmail.com"

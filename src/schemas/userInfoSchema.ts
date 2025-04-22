@@ -11,3 +11,5 @@ export const userInfoSchema = z.object({
     )
     .optional(),
 });
+
+export type UserInfoDto = z.infer<typeof userInfoSchema>;

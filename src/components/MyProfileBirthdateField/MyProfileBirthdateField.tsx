@@ -6,6 +6,7 @@ import { SubmitButton } from '../common';
 import { formatDate } from '../../utils/dateUtils';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
 import { useUserBirthdateForm } from '../../hooks/formHooks';
+import { UserBithdateDto } from '../../schemas';
 import { useUpdateUserField } from '../../hooks/useUpdateUserField';
 
 interface Props {
@@ -18,7 +19,7 @@ const MyProfileBirthdateField = ({ birthdate }: Props) => {
   const { handleSubmit, register, errors, isSubmitting, isValid } = useUserBirthdateForm();
   const { mutate: updateUserBirthdate } = useUpdateUserField('birthdate', setBirthdateValue);
 
-  const onSubmit = (data: { birthdate: string | null }) => {
+  const onSubmit = (data: UserBithdateDto) => {
     if (data.birthdate === birthdateValue) {
       setIsVisible(false);
       return;

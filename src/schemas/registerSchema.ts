@@ -5,7 +5,7 @@ export const registerBaseSchema = z.object({
   email: emailSchema,
   username: usernameSchema,
   password: passwordSchema,
-  confirmPassword: z.string({ required_error: 'Please confirm your password.' }),
+  confirmPassword: z.string().nonempty('Please confirm your password.'),
 });
 
 export const registerSchema = registerBaseSchema.refine(

@@ -5,6 +5,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 import { SubmitButton } from '../common';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
 import { useEmailForm } from '../../hooks/formHooks';
+import { EmailDto } from '../../hooks/formHooks';
 import { useUpdateUserField } from '../../hooks/useUpdateUserField';
 
 interface Props {
@@ -17,7 +18,7 @@ const MyProfileEmailField = ({ initialEmail }: Props) => {
   const { handleSubmit, register, errors, isSubmitting, isValid } = useEmailForm();
   const { mutate: updateEmail } = useUpdateUserField('email', setEmail);
 
-  const onSubmit = (data: { email: string }) => {
+  const onSubmit = (data: EmailDto) => {
     if (data.email === email) {
       setIsVisible(false);
       return;

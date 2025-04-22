@@ -6,6 +6,7 @@ import { useSessionStore } from '../../store/sessionStore';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
 import { useUpdateUserField } from '../../hooks/useUpdateUserField';
 import { useUsernameForm } from '../../hooks/formHooks';
+import { UsernameDto } from '../../hooks/formHooks';
 
 interface Props {
   initialUsername: string;
@@ -18,7 +19,7 @@ const MyProfileUsernameField = ({ initialUsername }: Props) => {
 
   const username = useSessionStore((state) => state.user?.username) ?? initialUsername;
 
-  const onSubmit = (data: { username: string }) => {
+  const onSubmit = (data: UsernameDto) => {
     if (data.username === username) {
       setIsVisible(false);
       return;
