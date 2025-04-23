@@ -3,6 +3,4 @@ export interface IUserSession {
   username: string;
   userRoles: string[];
   userImage?: string;
-  isAdmin?: boolean;
-  isAdminOrModerator?: boolean;
 }

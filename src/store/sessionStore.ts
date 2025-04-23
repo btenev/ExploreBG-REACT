@@ -4,7 +4,7 @@ import { IUserSession } from '../types';
 
 interface SessionStore {
   user: IUserSession | null;
-  setUser: (user: Omit<IUserSession, 'isAdmin' | 'isModerator'> | null) => void;
+  setUser: (user: IUserSession | null) => void;
   updateUserFields: (fields: Partial<IUserSession>) => void;
   clearSession: () => void;
 }
@@ -13,23 +13,8 @@ export const useSessionStore = create<SessionStore>()(
   persist(
     (set) => ({
       user: null,
-      setUser: (user) => {
-        if (user === null) {
-          set({ user: null });
-          return;
-        }
+      setUser: (user) => set({ user }),
 
-        const isAdmin = user.userRoles.includes('ADMIN');
-        const isModerator = user.userRoles.includes('MODERATOR');
-
-        set({
-          user: {
-            ...user,
-            isAdmin,
-            isAdminOrModerator: isAdmin || isModerator,
-          },
-        });
-      },
       updateUserFields: (fields: Partial<IUserSession>) =>
         set((state) => {
           if (!state.user) return { user: null };
@@ -41,6 +26,7 @@ export const useSessionStore = create<SessionStore>()(
             },
           };
         }),
+
       clearSession: () => set({ user: null }),
     }),
     {
