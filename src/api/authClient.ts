@@ -11,6 +11,10 @@ interface RegisterResponse {
   roles: string[];
 }
 
+interface LogoutResponse {
+  message: string;
+}
+
 class AuthClient {
   private baseUrl = import.meta.env.VITE_API_BASE_URL + '/auth';
 
@@ -63,6 +67,8 @@ class AuthClient {
 
   register = (data: RegisterDto): Promise<RegisterResponse> =>
     this.request('POST', '/register', data);
+
+  logout = (): Promise<LogoutResponse> => this.request('POST', '/logout');
 
   refreshAccessToken = () => this.request('POST', '/token/refresh');
 }
