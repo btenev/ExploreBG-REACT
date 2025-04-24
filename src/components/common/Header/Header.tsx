@@ -4,6 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 import './Header.scss';
 import { Logo } from '../';
 import { SwitchTheme } from '../../SwitchTheme';
+import HeaderLinksAndButtons from '../../HeaderLinksAndButtons';
 
 const Header = () => {
   const [isHeaderVisible, setHeaderVisible] = useState<boolean>(true);
@@ -15,8 +16,7 @@ const Header = () => {
       requestAnimationFrame(() => {
         const currentScrollPosition = window.scrollY;
         const isVisible =
-          prevScrollPosition.current > currentScrollPosition ||
-          currentScrollPosition < 10;
+          prevScrollPosition.current > currentScrollPosition || currentScrollPosition < 10;
 
         prevScrollPosition.current = currentScrollPosition;
         setHeaderVisible(isVisible);
@@ -31,10 +31,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header
-      className="header"
-      style={{ display: isHeaderVisible ? 'flex' : 'none' }}
-    >
+    <header className="header" style={{ display: isHeaderVisible ? 'flex' : 'none' }}>
       <Logo />
 
       <article className="header__nav">
@@ -44,6 +41,8 @@ const Header = () => {
             <p>Search</p>
           </section>
         )}
+
+        <HeaderLinksAndButtons />
 
         <aside className="header__nav__theme-lang">
           <SwitchTheme />
