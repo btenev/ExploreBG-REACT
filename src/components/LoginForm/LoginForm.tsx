@@ -1,6 +1,6 @@
 import { SubmitButton } from '../common';
-import { useLoginForm } from '../../hooks/formHooks';
-import { useLogin } from '../../hooks/useLogin';
+import { useLoginForm } from '../../hooks/formHooks/authHooks';
+import { useLogin } from '../../hooks/dataHooks/authHooks';
 import { LoginDto } from '../../schemas';
 
 const LoginForm = () => {

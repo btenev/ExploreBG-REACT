@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { registerBaseSchema } from '../../schemas';
-import useFormWithSchema from './useFormWithSchema';
+
+import useFormWithSchema from '../useFormWithSchema';
+import { registerBaseSchema } from '../../../schemas';
 
 const emailSchema = registerBaseSchema.pick({ email: true });
 

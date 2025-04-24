@@ -1,9 +1,9 @@
 import './ChangePasswordPopUp.scss';
 
-import { usePasswordForm } from '../../hooks/formHooks';
+import { usePasswordForm } from '../../hooks/formHooks/userHooks';
 import { PasswordDto } from '../../schemas';
 import PasswordInfo from '../PasswordInfo';
-import { useUpdateUserField } from '../../hooks/useUpdateUserField';
+import { useUpdateUserField } from '../../hooks/dataHooks/userHooks';
 
 interface Props {
   closePopUp: () => void;

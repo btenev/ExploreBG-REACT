@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
-import { imagesApi } from '../api/imagesApi';
-import { useSessionStore } from '../store/sessionStore';
-import { ApiError } from '../types';
+import { imagesApi } from '../../../api/imagesApi';
+import { useSessionStore } from '../../../store/sessionStore';
+import { ApiError } from '../../../types';
 
 export const useUpdateUserPhoto = () => {
   const store = useSessionStore((state) => state.updateUserFields);

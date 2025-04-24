@@ -7,7 +7,7 @@ import MyProfileEmailField from '../../components/MyProfileEmailField';
 import MyProfileGenderField from '../../components/MyProfileGenderField';
 import MyProfileBirthdateField from '../../components/MyProfileBirthdateField';
 import MyProfileButtons from '../../components/MyProfileButtons';
-import { useMyProfile } from '../../hooks/useMyProfile';
+import { useMyProfile } from '../../hooks/dataHooks/userHooks';
 
 const MyProfile = () => {
   const { data, isLoading, error } = useMyProfile();

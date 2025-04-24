@@ -4,9 +4,9 @@ import { FaEdit, FaUserNinja } from 'react-icons/fa';
 import { SubmitButton } from '../common';
 import { useSessionStore } from '../../store/sessionStore';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
-import { useUpdateUserField } from '../../hooks/useUpdateUserField';
-import { useUsernameForm } from '../../hooks/formHooks';
-import { UsernameDto } from '../../hooks/formHooks';
+import { useUpdateUserField } from '../../hooks/dataHooks/userHooks';
+import { useUsernameForm } from '../../hooks/formHooks/userHooks';
+import { UsernameDto } from '../../hooks/formHooks/userHooks';
 
 interface Props {
   initialUsername: string;

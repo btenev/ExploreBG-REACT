@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
-import { RegisterDto } from '../schemas';
-import { useSessionStore } from '../store/sessionStore';
-import { authApi } from '../api/authClient';
-import { ApiError } from '../types';
+import { RegisterDto } from '../../../schemas';
+import { useSessionStore } from '../../../store/sessionStore';
+import { authApi } from '../../../api/authClient';
+import { ApiError } from '../../../types';
 
 export const useRegister = () => {
   const store = useSessionStore((state) => state.setUser);

@@ -1,12 +1,12 @@
 import { ChangeEvent, useRef } from 'react';
+import { toast } from 'react-toastify';
 
 import './MyProfilePhotoField.scss';
 
 import defaultUserImg from '../../assets/images/user-profile-pic.png';
-import { useUpdateUserPhoto } from '../../hooks/useUpdateUserPhoto';
+import { useUpdateUserPhoto } from '../../hooks/dataHooks/userHooks';
+import { useUserImage } from '../../utils/sessionUtils';
 import { compressImage } from '../../utils/imageCompressor';
-import { useSessionStore } from '../../store/sessionStore';
-import { toast } from 'react-toastify';
 
 interface Props {
   initialImageUrl: string | null;
@@ -14,8 +14,7 @@ interface Props {
 
 const MyProfilePhotoField = ({ initialImageUrl }: Props) => {
   const { mutate: userPhoto, isPending } = useUpdateUserPhoto();
-  const userImage =
-    useSessionStore((state) => state.user?.userImage) ?? initialImageUrl ?? defaultUserImg;
+  const userImage = useUserImage() ?? initialImageUrl ?? defaultUserImg;
   const lastUploadedFileRef = useRef<File | null>(null);
 
   const changePhoto = async (e: ChangeEvent<HTMLInputElement>) => {

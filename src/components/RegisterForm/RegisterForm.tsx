@@ -1,8 +1,8 @@
 import PasswordInfo from '../PasswordInfo';
 import { SubmitButton } from '../common';
 import { RegisterDto } from '../../schemas';
-import { useRegisterForm } from '../../hooks/formHooks';
-import { useRegister } from '../../hooks/useRegister';
+import { useRegisterForm } from '../../hooks/formHooks/authHooks';
+import { useRegister } from '../../hooks/dataHooks/authHooks';
 
 const RegisterForm = () => {
   const { register, handleSubmit, errors, isSubmitting, isValid } = useRegisterForm();

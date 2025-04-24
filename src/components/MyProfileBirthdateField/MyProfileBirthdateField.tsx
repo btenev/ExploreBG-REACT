@@ -5,9 +5,9 @@ import { LiaBirthdayCakeSolid } from 'react-icons/lia';
 import { SubmitButton } from '../common';
 import { formatDate } from '../../utils/dateUtils';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
-import { useUserBirthdateForm } from '../../hooks/formHooks';
+import { useUserBirthdateForm } from '../../hooks/formHooks/userHooks';
 import { UserBithdateDto } from '../../schemas';
-import { useUpdateUserField } from '../../hooks/useUpdateUserField';
+import { useUpdateUserField } from '../../hooks/dataHooks/userHooks';
 
 interface Props {
   birthdate: string | null;

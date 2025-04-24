@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 
 import { CommonModal, SubmitButton } from '../common';
-import { useUserInfoForm } from '../../hooks/formHooks';
+import { useUserInfoForm } from '../../hooks/formHooks/userHooks';
 import { UserInfoDto } from '../../schemas';
-import { useUpdateUserField } from '../../hooks/useUpdateUserField';
+import { useUpdateUserField } from '../../hooks/dataHooks/userHooks';
 
 interface Props {
   userInfo: string | null;

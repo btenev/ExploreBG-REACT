@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 
-import { useSessionStore } from '../store/sessionStore';
-import { UserFieldRequestMap, UserFieldResponseMap, usersApi } from '../api/usersApi';
-import { ApiError, IUserSession } from '../types';
+import { useSessionStore } from '../../../store/sessionStore';
+import { UserFieldRequestMap, UserFieldResponseMap, usersApi } from '../../../api/usersApi';
+import { ApiError, IUserSession } from '../../../types';
 
 type ExtractInnerValue<K extends keyof UserFieldResponseMap> =
   UserFieldResponseMap[K][keyof UserFieldResponseMap[K]];

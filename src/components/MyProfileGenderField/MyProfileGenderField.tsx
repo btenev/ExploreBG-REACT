@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import { FaEdit, FaFemale, FaMale } from 'react-icons/fa';
 
 import { SubmitButton } from '../common';
 import { useGenderEnums } from '../../hooks/useGenderEnums';
-import { useUpdateUserField } from '../../hooks/useUpdateUserField';
+import { useUpdateUserField } from '../../hooks/dataHooks/userHooks';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
 
 import { GenderEnum } from '../../types';
 import { genderEnumSchema } from '../../schemas';
-import { toast } from 'react-toastify';
 
 interface Props {
   gender: GenderEnum;
