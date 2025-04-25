@@ -1,6 +1,6 @@
 import DestinationCard from '../DestinationCard';
 import IntersectionObserverComponent from '../IntersectionObserverComponent';
-import { useRandomDestinations } from '../../hooks/useRandomDestinations';
+import { useRandomDestinations } from '../../hooks/dataHooks/destinationHooks';
 
 interface Props {
   destinationContent: {
@@ -23,9 +23,7 @@ const HomeDestinationsSection = ({ destinationContent }: Props) => {
       <>
         <h2 className="home__section-title">{destinationContent.title}</h2>
 
-        <section
-          className={`home__section-wrapper home__section-cards destinations`}
-        >
+        <section className={`home__section-wrapper home__section-cards destinations`}>
           <IntersectionObserverComponent />
 
           {data.map((destination) => (
