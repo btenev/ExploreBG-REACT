@@ -3,10 +3,9 @@ import { toast } from 'react-toastify';
 import { FaEdit, FaFemale, FaMale } from 'react-icons/fa';
 
 import { SubmitButton } from '../common';
-import { useGenderEnums } from '../../hooks/useGenderEnums';
+import { useGenderEnums } from '../../hooks/dataHooks/utilityHooks';
 import { useUpdateUserField } from '../../hooks/dataHooks/userHooks';
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
-
 import { GenderEnum } from '../../types';
 import { genderEnumSchema } from '../../schemas';
 
