@@ -9,6 +9,7 @@ const useFormWithSchema = <Schema extends ZodTypeAny>(schema: Schema) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isValid, isSubmitting },
   } = useForm<SchemaType>({
     resolver: zodResolver(schema),
@@ -19,6 +20,7 @@ const useFormWithSchema = <Schema extends ZodTypeAny>(schema: Schema) => {
   return {
     register,
     handleSubmit,
+    control,
     errors,
     isValid,
     isSubmitting,

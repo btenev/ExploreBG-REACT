@@ -5,11 +5,11 @@ import { DifficultyLevelEnum, SeasonEnum, SuitableForEnum, WaterAvailabilityEnum
 export const seasonVisitedSchema = z.nativeEnum(SeasonEnum);
 export const waterAvailabilitySchema = z.nativeEnum(WaterAvailabilityEnum);
 export const trailDifficultySchema = z.nativeEnum(DifficultyLevelEnum);
-export const activity = z.nativeEnum(SuitableForEnum);
+export const activitySchema = z.nativeEnum(SuitableForEnum);
 
 export const trailEnumsSchema = z.object({
   seasonVisited: z.array(seasonVisitedSchema),
   waterAvailability: z.array(waterAvailabilitySchema),
   trailDifficulty: z.array(trailDifficultySchema),
-  activity: z.array(activity),
+  activity: z.array(activitySchema),
 });
