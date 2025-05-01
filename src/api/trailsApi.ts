@@ -1,5 +1,5 @@
 import { ApiClient } from './apiClient';
-import { ITrailCard } from '../types';
+import { ITrail, ITrailCard } from '../types';
 import { CreateTrailDto } from '../schemas';
 
 const apiClient = new ApiClient();
@@ -11,4 +11,6 @@ export const trailsApi = {
 
   createTrail: (trailData: CreateTrailDto): Promise<{ id: string }> =>
     apiClient.post(`${baseTrailsUrl}`, trailData),
+
+  getTrailById: (trailId: string): Promise<ITrail> => apiClient.get(`${baseTrailsUrl}/${trailId}`),
 };

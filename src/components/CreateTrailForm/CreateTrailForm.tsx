@@ -12,7 +12,7 @@ import {
 } from '../common';
 import { TrailEnumsResponse } from '../../api/utilitiesApi';
 import { useHasSession } from '../../utils/sessionUtils';
-import { useCreateTrail } from '../../hooks/dataHooks/trailHooks/useCreateTrail';
+import { useCreateTrail } from '../../hooks/dataHooks/trailHooks';
 import { CreateTrailDto } from '../../schemas';
 
 const TRAIL_INFO =
