@@ -1,0 +1,52 @@
+@use '../../../global-styles/main.scss' as gs;
+
+.suggestions {
+  & > input {
+    width: 100%;
+  }
+
+  &__wrapper {
+    position: relative;
+
+    &__matches {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      background-color: white;
+      color: black;
+      border: 1px solid #bfbfbf;
+      border-radius: 0.5rem;
+      width: 100%;
+      max-height: 12.5rem;
+      overflow-y: auto;
+      scrollbar-width: thin;
+
+      & > li {
+        padding: 0.5rem;
+        cursor: pointer;
+
+        &.active,
+        &:hover {
+          background-color: gs.$active-option-field;
+          color: black !important;
+        }
+      }
+    }
+  }
+
+  &__selected {
+    margin-bottom: 0.25rem;
+
+    & > button {
+      margin-left: 0.5rem;
+      border-radius: 50%;
+      border: 1px solid white;
+      background-color: black;
+      font-size: 0.65rem;
+      font-weight: bold;
+      color: red;
+      cursor: pointer;
+    }
+  }
+}
