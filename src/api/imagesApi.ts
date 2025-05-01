@@ -10,6 +10,6 @@ interface UserPhotoResponse {
 }
 
 export const imagesApi = {
-  updateUserPhoto: (data: FormData) =>
-    apiClient.patch<UserPhotoResponse>(`${baseUrl}/user`, data, true),
+  updateUserPhoto: (data: FormData): Promise<UserPhotoResponse> =>
+    apiClient.patch(`${baseUrl}/user`, data, true),
 };

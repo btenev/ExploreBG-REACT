@@ -39,7 +39,7 @@ export type UserFieldResponseMap = {
 };
 
 export const usersApi = {
-  getMyProfile: async () => {
+  getMyProfile: async (): Promise<MyProfileResponse> => {
     try {
       const response = await apiClient.get<MyProfileResponse>(`${baseUrl}/my-profile`);
       const gender = genderConverter(response.gender);

@@ -6,7 +6,8 @@ const apiClient = new ApiClient();
 const baseDestinationUrl = '/destinations';
 
 export const destinationsApi = {
-  get4RandomDestinations: () => apiClient.get<IDestinationCard[]>(`${baseDestinationUrl}/random`),
+  get4RandomDestinations: (): Promise<IDestinationCard[]> =>
+    apiClient.get(`${baseDestinationUrl}/random`),
 
-  getAvailableDestinations: () => apiClient.get<IPlace[]>(`${baseDestinationUrl}/select`),
+  getAvailableDestinations: (): Promise<IPlace[]> => apiClient.get(`${baseDestinationUrl}/select`),
 };

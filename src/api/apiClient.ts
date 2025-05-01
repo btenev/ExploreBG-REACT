@@ -49,13 +49,13 @@ export class ApiClient {
     return responseData as T;
   }
 
-  get = <T>(endpoint: string) => this.request<T>('GET', endpoint);
+  get = <T>(endpoint: string): Promise<T> => this.request<T>('GET', endpoint);
 
-  post = <T>(endpoint: string, body: any) => this.request<T>('POST', endpoint, body);
+  post = <T>(endpoint: string, body: any): Promise<T> => this.request<T>('POST', endpoint, body);
 
-  put = <T>(endpoint: string, body: any) => this.request<T>('PUT', endpoint, body);
+  put = <T>(endpoint: string, body: any): Promise<T> => this.request<T>('PUT', endpoint, body);
 
-  patch = <T>(endpoint: string, body: any, isFormData: boolean = false) =>
+  patch = <T>(endpoint: string, body: any, isFormData: boolean = false): Promise<T> =>
     this.request<T>('PATCH', endpoint, body, isFormData);
 
   delete = <T>(endpoint: string) => this.request<T>('DELETE', endpoint);

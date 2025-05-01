@@ -6,5 +6,5 @@ const apiClient = new ApiClient();
 const baseHikeUrls = '/hikes';
 
 export const hikesApi = {
-  get4RandomHikes: () => apiClient.get<IHikeCard[]>(`${baseHikeUrls}/random`),
+  get4RandomHikes: (): Promise<IHikeCard[]> => apiClient.get(`${baseHikeUrls}/random`),
 };

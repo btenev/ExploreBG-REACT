@@ -25,7 +25,7 @@ export interface TrailEnumsResponse {
 }
 
 export const utilitiesApi = {
-  getGenderEnum: async () => {
+  getGenderEnum: async (): Promise<RegisterEnumsResponse> => {
     const response = await apiClient.get<RegisterEnumsResponse>(`${baseUrl}/register-enums`);
     return safeParseOrThrow(
       registerEnumsSchema,
@@ -34,7 +34,7 @@ export const utilitiesApi = {
     );
   },
 
-  getTrailEnums: async () => {
+  getTrailEnums: async (): Promise<TrailEnumsResponse> => {
     const response = await apiClient.get<TrailEnumsResponse>(`${baseUrl}/create/trail-enums`);
     return safeParseOrThrow(
       trailEnumsSchema,

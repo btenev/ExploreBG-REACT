@@ -6,8 +6,9 @@ const apiClient = new ApiClient();
 const baseAccommodationUrl = '/accommodations';
 
 export const accommodationsApi = {
-  get4RandomAccommodations: () =>
-    apiClient.get<IAccommodationCard[]>(`${baseAccommodationUrl}/random`),
+  get4RandomAccommodations: (): Promise<IAccommodationCard[]> =>
+    apiClient.get(`${baseAccommodationUrl}/random`),
 
-  getAvailableAccommodations: () => apiClient.get<IHut[]>(`${baseAccommodationUrl}/select`),
+  getAvailableAccommodations: (): Promise<IHut[]> =>
+    apiClient.get(`${baseAccommodationUrl}/select`),
 };

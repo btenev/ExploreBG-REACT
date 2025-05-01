@@ -62,8 +62,7 @@ class AuthClient {
     }
   }
 
-  login = (data: LoginDto): Promise<LoginResponse> =>
-    this.request<LoginResponse>('POST', '/login', data);
+  login = (data: LoginDto): Promise<LoginResponse> => this.request('POST', '/login', data);
 
   register = (data: RegisterDto): Promise<RegisterResponse> =>
     this.request('POST', '/register', data);
