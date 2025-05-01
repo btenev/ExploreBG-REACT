@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { trailsApi } from '../api/trailsApi';
+import { trailsApi } from '../../../api/trailsApi';
 
 export const useRandomTrails = () => {
   return useQuery({
