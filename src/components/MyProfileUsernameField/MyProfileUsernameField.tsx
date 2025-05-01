@@ -14,8 +14,8 @@ interface Props {
 
 const MyProfileUsernameField = ({ initialUsername }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const { handleSubmit, register, errors, isSubmitting, isValid } = useUsernameForm();
-  const { mutate: updateUsername } = useUpdateUserField('username');
+  const { handleSubmit, register, errors } = useUsernameForm();
+  const { mutate: updateUsername, isPending } = useUpdateUserField('username');
 
   const username = useSessionStore((state) => state.user?.username) ?? initialUsername;
 
@@ -59,7 +59,7 @@ const MyProfileUsernameField = ({ initialUsername }: Props) => {
           className="username-field"
         />
 
-        <SubmitButton isSubmitting={isSubmitting} isValid={isValid} buttonName="Change" />
+        <SubmitButton isSubmitting={isPending} buttonName="Change" />
         <button type="button" onClick={() => setIsVisible(!isVisible)}>
           Cancel
         </button>

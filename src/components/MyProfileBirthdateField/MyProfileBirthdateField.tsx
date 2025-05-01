@@ -16,8 +16,11 @@ interface Props {
 const MyProfileBirthdateField = ({ birthdate }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [birthdateValue, setBirthdateValue] = useState<string | null>(birthdate);
-  const { handleSubmit, register, errors, isSubmitting, isValid } = useUserBirthdateForm();
-  const { mutate: updateUserBirthdate } = useUpdateUserField('birthdate', setBirthdateValue);
+  const { handleSubmit, register, errors } = useUserBirthdateForm();
+  const { mutate: updateUserBirthdate, isPending } = useUpdateUserField(
+    'birthdate',
+    setBirthdateValue
+  );
 
   const onSubmit = (data: UserBithdateDto) => {
     if (data.birthdate === birthdateValue) {
@@ -61,7 +64,7 @@ const MyProfileBirthdateField = ({ birthdate }: Props) => {
           className="birthdate-field"
         />
 
-        <SubmitButton isSubmitting={isSubmitting} isValid={isValid} buttonName="Change" />
+        <SubmitButton isSubmitting={isPending} buttonName="Change" />
         <button type="button" onClick={() => setIsVisible(!isVisible)}>
           Cancel
         </button>

@@ -4,8 +4,8 @@ import { useLogin } from '../../hooks/dataHooks/authHooks';
 import { LoginDto } from '../../schemas';
 
 const LoginForm = () => {
-  const { handleSubmit, register, errors, isSubmitting, isValid } = useLoginForm();
-  const { mutate: login } = useLogin();
+  const { handleSubmit, register, errors } = useLoginForm();
+  const { mutate: login, isPending } = useLogin();
 
   const onSubmit = (data: LoginDto) => {
     login(data);
@@ -38,7 +38,7 @@ const LoginForm = () => {
           {errors.password && <div className="error-message">{errors.password.message}</div>}
         </div>
 
-        <SubmitButton isSubmitting={isSubmitting} isValid={isValid} buttonName="Login" />
+        <SubmitButton isSubmitting={isPending} buttonName="Login" />
       </form>
     </section>
   );

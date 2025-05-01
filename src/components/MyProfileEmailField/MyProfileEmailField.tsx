@@ -15,8 +15,8 @@ interface Props {
 const MyProfileEmailField = ({ initialEmail }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(initialEmail);
-  const { handleSubmit, register, errors, isSubmitting, isValid } = useEmailForm();
-  const { mutate: updateEmail } = useUpdateUserField('email', setEmail);
+  const { handleSubmit, register, errors } = useEmailForm();
+  const { mutate: updateEmail, isPending } = useUpdateUserField('email', setEmail);
 
   const onSubmit = (data: EmailDto) => {
     if (data.email === email) {
@@ -56,7 +56,7 @@ const MyProfileEmailField = ({ initialEmail }: Props) => {
           className="email-field"
         />
 
-        <SubmitButton isSubmitting={isSubmitting} isValid={isValid} buttonName="Change" />
+        <SubmitButton isSubmitting={isPending} buttonName="Change" />
         <button type="button" onClick={() => setIsVisible(!isVisible)}>
           Cancel
         </button>

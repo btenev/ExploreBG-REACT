@@ -1,5 +1,5 @@
 import IntersectionObserverComponent from '../IntersectionObserverComponent';
-import { useRandomTrails } from '../../hooks/useRandomTrails';
+import { useRandomTrails } from '../../hooks/dataHooks/trailHooks';
 import TrailCard from '../TrailCard';
 
 interface Props {

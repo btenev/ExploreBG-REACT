@@ -5,8 +5,8 @@ import { useRegisterForm } from '../../hooks/formHooks/authHooks';
 import { useRegister } from '../../hooks/dataHooks/authHooks';
 
 const RegisterForm = () => {
-  const { register, handleSubmit, errors, isSubmitting, isValid } = useRegisterForm();
-  const { mutate: login } = useRegister();
+  const { register, handleSubmit, errors } = useRegisterForm();
+  const { mutate: login, isPending } = useRegister();
 
   const onSubmit = (data: RegisterDto) => {
     login(data);
@@ -67,7 +67,7 @@ const RegisterForm = () => {
             <div className="error-message">{errors.confirmPassword.message}</div>
           )}
         </div>
-        <SubmitButton isSubmitting={isSubmitting} isValid={isValid} buttonName="Register" />
+        <SubmitButton isSubmitting={isPending} buttonName="Register" />
       </form>
     </section>
   );

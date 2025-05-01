@@ -13,8 +13,8 @@ interface Props {
 const MyProfileInfoField = ({ userInfo }: Props) => {
   const [infoValue, setInfoValue] = useState<string | null>(userInfo);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const { handleSubmit, register, errors, isSubmitting, isValid } = useUserInfoForm();
-  const { mutate: updateUserInfo } = useUpdateUserField('userInfo', setInfoValue);
+  const { handleSubmit, register, errors } = useUserInfoForm();
+  const { mutate: updateUserInfo, isPending } = useUpdateUserField('userInfo', setInfoValue);
 
   const onSubmit = (data: UserInfoDto) => {
     if (data.userInfo === infoValue) {
@@ -54,10 +54,10 @@ const MyProfileInfoField = ({ userInfo }: Props) => {
               defaultValue={infoValue ?? ''}
               // cols={30} rows={10}
               placeholder=" ........"
-            ></textarea>
+            />
 
             <div>
-              <SubmitButton isSubmitting={isSubmitting} isValid={isValid} buttonName="Change" />
+              <SubmitButton isSubmitting={isPending} buttonName="Change" />
               <button type="button" onClick={() => setIsVisible(!isVisible)}>
                 Cancel
               </button>

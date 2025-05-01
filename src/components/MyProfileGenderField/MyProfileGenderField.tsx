@@ -101,7 +101,7 @@ const MyProfileGenderField = ({ gender }: Props) => {
           ))}
         </select>
 
-        <SubmitButton isSubmitting={isUpdatePending} isValid={true} buttonName="Change" />
+        <SubmitButton isSubmitting={isUpdatePending} buttonName="Change" />
         <button type="button" onClick={() => setIsVisible(!isVisible)}>
           Cancel
         </button>
