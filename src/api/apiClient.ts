@@ -9,7 +9,7 @@ export class ApiClient {
     }
   }
 
-  private async request<T>(
+  private async request<T = void>(
     method: string,
     endpoint: string,
     body?: any,
@@ -36,6 +36,10 @@ export class ApiClient {
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, options);
 
+    if (response.status === 204) {
+      return undefined as T;
+    }
+
     const responseData = await response.json().catch(() => ({}));
 
     if (!response.ok) {
@@ -58,5 +62,5 @@ export class ApiClient {
   patch = <T>(endpoint: string, body: any, isFormData: boolean = false): Promise<T> =>
     this.request<T>('PATCH', endpoint, body, isFormData);
 
-  delete = <T>(endpoint: string) => this.request<T>('DELETE', endpoint);
+  delete = (endpoint: string): Promise<void> => this.request<void>('DELETE', endpoint);
 }

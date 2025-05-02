@@ -13,4 +13,7 @@ export const trailsApi = {
     apiClient.post(`${baseTrailsUrl}`, trailData),
 
   getTrailById: (trailId: string): Promise<ITrail> => apiClient.get(`${baseTrailsUrl}/${trailId}`),
+
+  deleteTrailById: (trailId: string): Promise<void> =>
+    apiClient.delete(`${baseTrailsUrl}/${trailId}`),
 };
