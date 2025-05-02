@@ -11,3 +11,4 @@ export { default as CustomSelect } from './CustomSelect';
 export { default as FormInputSearch } from './FormInputSearch';
 export { default as FormFieldInfo } from './FormFieldInfo';
 export { default as RequireAuthModal } from './RequireAuthModal';
+export { default as DeleteItem } from './DeleteItem';
