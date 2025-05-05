@@ -9,12 +9,12 @@ export type EntityType = 'trail';
 
 type DeleteParams = { id: string; entity: EntityType };
 
-export const useDeleteEntityById = (setStateValue: Dispatch<SetStateAction<boolean>>) => {
+export const useDeleteEntity = (setStateValue: Dispatch<SetStateAction<boolean>>) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const apiMapper: Record<EntityType, (id: string) => Promise<void>> = {
-    trail: (id) => trailsApi.deleteTrailById(id),
+    trail: (id) => trailsApi.deleteTrail(id),
   };
 
   return useMutation({

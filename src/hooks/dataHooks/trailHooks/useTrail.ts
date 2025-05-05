@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { trailsApi } from '../../../api/trailsApi';
 
-export const useTrailById = (trailId: string) => {
+export const useTrail = (trailId: string) => {
   return useQuery({
     queryKey: ['trail', trailId],
-    queryFn: () => trailsApi.getTrailById(trailId),
+    queryFn: () => trailsApi.getTrail(trailId),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch
     refetchOnReconnect: false, // Optional: also disable on network recovery

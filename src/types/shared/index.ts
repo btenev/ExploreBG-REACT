@@ -5,3 +5,4 @@ export * from './reviewer';
 export * from './userSession';
 export * from './apiError';
 export * from './enums';
+export * from './like';

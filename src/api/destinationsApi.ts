@@ -1,5 +1,5 @@
 import { ApiClient } from './apiClient';
-import { IDestinationCard, IPlace } from '../types';
+import { IDestinationCard, IPlace, ToggleFavoriteRequest, ToggleFavoriteResponse } from '../types';
 
 const apiClient = new ApiClient();
 
@@ -10,4 +10,10 @@ export const destinationsApi = {
     apiClient.get(`${baseDestinationUrl}/random`),
 
   getAvailableDestinations: (): Promise<IPlace[]> => apiClient.get(`${baseDestinationUrl}/select`),
+
+  toggleFavoriteStatus: (
+    destinationId: string,
+    data: ToggleFavoriteRequest
+  ): Promise<ToggleFavoriteResponse> =>
+    apiClient.patch(`${baseDestinationUrl}/${destinationId}/like`, data),
 };

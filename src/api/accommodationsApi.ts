@@ -1,5 +1,5 @@
 import { ApiClient } from './apiClient';
-import { IAccommodationCard, IHut } from '../types';
+import { IAccommodationCard, IHut, ToggleFavoriteRequest, ToggleFavoriteResponse } from '../types';
 
 const apiClient = new ApiClient();
 
@@ -11,4 +11,10 @@ export const accommodationsApi = {
 
   getAvailableAccommodations: (): Promise<IHut[]> =>
     apiClient.get(`${baseAccommodationUrl}/select`),
+
+  toggleFavoriteStatus: (
+    accommodationId: string,
+    data: ToggleFavoriteRequest
+  ): Promise<ToggleFavoriteResponse> =>
+    apiClient.patch(`${baseAccommodationUrl}/${accommodationId}/like`, data),
 };
