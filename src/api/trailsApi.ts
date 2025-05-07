@@ -57,7 +57,7 @@ export const trailsApi = {
 
   updateHikingTrailField: <K extends keyof HikingTraiFieldRequestMap>(
     field: K,
-    trailId: string,
+    trailId: number,
     data: HikingTraiFieldRequestMap[K]
   ): Promise<HikingTraiFieldResponseMap[K]> => {
     const fieldMapper = {

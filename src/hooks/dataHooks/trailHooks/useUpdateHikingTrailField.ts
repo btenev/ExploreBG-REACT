@@ -15,11 +15,12 @@ type ExtractInnerValue<K extends keyof HikingTraiFieldResponseMap> =
 
 export const useUpdateHikingTrailField = <K extends keyof HikingTraiFieldRequestMap>(
   field: K,
+  trailId: number,
   setStateValue?: Dispatch<SetStateAction<ExtractInnerValue<K>>>
 ) => {
   return useMutation({
     mutationKey: [`update${capitalize(field)}`],
-    mutationFn: ({ trailId, data }: { trailId: string; data: HikingTraiFieldRequestMap[K] }) =>
+    mutationFn: (data: HikingTraiFieldRequestMap[K]) =>
       trailsApi.updateHikingTrailField(field, trailId, data),
     onSuccess: (data) => {
       if (!data) {
