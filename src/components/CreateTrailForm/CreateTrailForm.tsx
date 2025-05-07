@@ -1,6 +1,13 @@
 import { Controller } from 'react-hook-form';
 
-import { IHut, IPlace, SeasonEnum, WaterAvailabilityEnum } from '../../types';
+import {
+  DifficultyLevelEnum,
+  IHut,
+  IPlace,
+  SeasonEnum,
+  SuitableForEnum,
+  WaterAvailabilityEnum,
+} from '../../types';
 
 import { useCreateTrailForm } from '../../hooks/formHooks/trailHooks';
 import {
@@ -20,9 +27,9 @@ const TRAIL_INFO =
 
 export interface ICreateTrail {
   totalDistance: number | unknown;
-  trailDifficulty: number;
+  trailDifficulty: DifficultyLevelEnum;
   elevationGained: number | unknown;
-  activity: string[];
+  activity: SuitableForEnum[];
   availableHuts: { id: number }[];
   destinations: { id: number }[];
 }

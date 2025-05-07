@@ -1,5 +1,6 @@
 import { IHut } from '../accommodation';
 import { IDestination } from '../destination';
+import { DifficultyLevelEnum, SeasonEnum, SuitableForEnum, WaterAvailabilityEnum } from '../shared';
 import { IComment } from '../shared/comment';
 import { IOwner } from '../shared/owner';
 import { TPhoto } from '../shared/photo';
@@ -17,11 +18,11 @@ export interface ITrail extends ITrailCard {
   startPoint: string;
   endPoint: string;
   totalDistance: number;
-  seasonVisited: string;
-  waterAvailable: string;
+  seasonVisited: SeasonEnum;
+  waterAvailability: WaterAvailabilityEnum;
   availableHuts: IHut[];
-  trailDifficulty: number;
-  activity: string[];
+  trailDifficulty: DifficultyLevelEnum;
+  activity: SuitableForEnum[];
   comments: IComment[];
   elevationGained: number;
   nextTo: string;

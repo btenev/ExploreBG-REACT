@@ -1,6 +1,40 @@
 import { ApiClient } from './apiClient';
-import { ITrail, ITrailCard, ToggleFavoriteRequest, ToggleFavoriteResponse } from '../types';
+import {
+  DifficultyLevelEnum,
+  ITrail,
+  ITrailCard,
+  SuitableForEnum,
+  ToggleFavoriteRequest,
+  ToggleFavoriteResponse,
+  WaterAvailabilityEnum,
+} from '../types';
 import { CreateTrailDto } from '../schemas';
+
+export type HikingTraiFieldRequestMap = {
+  startPoint: { startPoint: string };
+  endPoint: { endPoint: string };
+  totalDistance: { totalDistance: string };
+  waterAvailable: { waterAvailable: WaterAvailabilityEnum };
+  activity: { activity: SuitableForEnum[] };
+  trailInfo: { trailInfo: string };
+  elevationGained: { elevationGained: number };
+  trailDifficulty: { trailDifficulty: DifficultyLevelEnum };
+  availableHuts: { availableHuts: { id: number }[] };
+  destinations: { destinations: { id: number }[] };
+};
+
+export type HikingTraiFieldResponseMap = {
+  startPoint: { startPoint: string; lastUpdateDate: string };
+  endPoint: { endPoint: string; lastUpdateDate: string };
+  totalDistance: { totalDistance: string; lastUpdateDate: string };
+  waterAvailable: { waterAvailable: WaterAvailabilityEnum };
+  activity: { activity: SuitableForEnum[] };
+  trailInfo: { trailInfo: string };
+  elevationGained: { elevationGained: number };
+  trailDifficulty: { trailDifficulty: DifficultyLevelEnum };
+  availableHuts: { availableHuts: { id: number }[] };
+  destinations: { destinations: { id: number }[] };
+};
 
 const apiClient = new ApiClient();
 
@@ -20,4 +54,26 @@ export const trailsApi = {
     trailId: string,
     data: ToggleFavoriteRequest
   ): Promise<ToggleFavoriteResponse> => apiClient.patch(`${baseTrailsUrl}/${trailId}/like`, data),
+
+  updateHikingTrailField: <K extends keyof HikingTraiFieldRequestMap>(
+    field: K,
+    trailId: string,
+    data: HikingTraiFieldRequestMap[K]
+  ): Promise<HikingTraiFieldResponseMap[K]> => {
+    const fieldMapper = {
+      startPoint: 'start-point',
+      endPoint: 'end-point',
+      totalDistance: 'total-distance',
+      waterAvailable: 'water-available',
+      trailInfo: 'trail-info',
+      elevationGained: 'elevation-gained',
+      trailDifficulty: 'trail-difficulty',
+      availableHuts: 'available-huts',
+    };
+
+    return apiClient.patch(
+      `${baseTrailsUrl}/${trailId}/${fieldMapper[field as keyof typeof fieldMapper]}`,
+      data
+    );
+  },
 };

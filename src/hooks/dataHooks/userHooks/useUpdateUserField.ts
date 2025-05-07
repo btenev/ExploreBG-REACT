@@ -1,16 +1,16 @@
+import { useMutation } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useMutation } from '@tanstack/react-query';
 
-import { useSessionStore } from '../../../store/sessionStore';
 import { UserFieldRequestMap, UserFieldResponseMap, usersApi } from '../../../api/usersApi';
-import { ApiError, IUserSession } from '../../../types';
+import { useSessionStore } from '../../../store/sessionStore';
+import { IUserSession } from '../../../types';
+import { handleApiError } from '../../../utils/errorHandlers';
+import { capitalize } from '../../../utils/mixedUtils';
 
 type ExtractInnerValue<K extends keyof UserFieldResponseMap> =
   UserFieldResponseMap[K][keyof UserFieldResponseMap[K]];
-
-const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
   field: K,
@@ -49,12 +49,6 @@ export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
 
       toast.success(`You successfully updated your ${field}`);
     },
-    onError: (error: ApiError) => {
-      if (error.errors) {
-        error.errors.forEach((err: string) => toast.error(err));
-      } else {
-        toast.error(error.message);
-      }
-    },
+    onError: handleApiError,
   });
 };
