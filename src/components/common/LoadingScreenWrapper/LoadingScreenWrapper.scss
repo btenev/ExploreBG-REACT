@@ -1,0 +1,7 @@
+@use '../../../global-styles/main.scss' as gs;
+
+.fullscreen-center {
+  width: 100vw;
+  height: 80vh;
+  @include gs.flex(row, center, center);
+}
