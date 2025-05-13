@@ -46,7 +46,9 @@ export class ApiClient {
       const error: ApiError = {
         errors: responseData.errors || undefined,
         message: responseData.message || `Request failed with status ${response.status}`,
+        status: response.status,
       };
+
       throw error;
     }
 
