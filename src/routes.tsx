@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { Layout } from './components/common';
-import { Home, FAQ, Authentication, MyProfile, CreateTrail } from './pages';
+import { Authentication, CreateTrail, FAQ, Home, MyProfile, NotFound } from './pages';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +16,8 @@ const router = createBrowserRouter([
 
   { path: '/authentication', element: <Authentication /> },
   { path: '/trails/create', element: <CreateTrail /> },
+
+  { path: '*', element: <NotFound /> },
 ]);
 
 export default router;
