@@ -1,0 +1,2 @@
+import TrailDetailsWaterAvailabilityField from './TrailDetailsWaterAvailabilityField';
+export default TrailDetailsWaterAvailabilityField;
