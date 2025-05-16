@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { roundToTwoDecimals } from '../utils/mixedUtils';
+
 const placeRegex = /^[A-Za-z]+(\s?[A-Za-z]+)*$/;
 const TEXT_PATTERN_GENERIC =
   'Your text can only contain English letters and spaces, but it must start with a letter.';
@@ -69,28 +71,26 @@ export const totalDistanceSchema = z
   })
   .transform((value) => {
     if (value === '') return null;
-    return Math.floor(Number(value));
+    return roundToTwoDecimals(Number(value));
   })
   .refine((value) => value === null || value > 0, {
     message: 'Total distance must be greater than 0.',
   })
-  .nullable()
-  .optional();
+  .nullable();
 
 export const elevationGainedSchema = z
-  .union([z.string(), z.literal('')]) // Allow string or empty string
+  .union([z.string(), z.literal('')])
   .refine((value) => value === '' || !isNaN(Number(value)), {
     message: 'Elevation gained must be a valid number or empty.',
   })
   .transform((value) => {
-    if (value === '') return null; // If empty, convert to null
-    return Math.floor(Number(value)); // Ensure the number is an integer
+    if (value === '') return null;
+    return Math.floor(Number(value));
   })
   .refine((value) => value === null || value > 0, {
     message: 'Elevation gained must be a number greater than 0.',
   })
-  .nullable()
-  .optional();
+  .nullable();
 
 export const nextToSchema = z
   .string()
