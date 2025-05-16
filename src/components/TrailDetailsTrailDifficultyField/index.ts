@@ -1,0 +1,2 @@
+import TrailDetailsTrailDifficultyField from './TrailDetailsTrailDifficultyField';
+export default TrailDetailsTrailDifficultyField;
