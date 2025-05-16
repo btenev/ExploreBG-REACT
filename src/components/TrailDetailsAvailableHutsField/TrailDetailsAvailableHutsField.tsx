@@ -16,7 +16,7 @@ import { FormInputSearch } from '../common';
 interface Props {
   initialAvailableHuts: IHut[];
   trailId: number;
-  isTrailOwner: boolean;
+  canEdit: boolean;
   availableAccommodations: IHut[];
   isLoadingAccommodations: boolean;
 }
@@ -24,7 +24,7 @@ interface Props {
 const TrailDetailsAvailableHutsField = ({
   initialAvailableHuts,
   trailId,
-  isTrailOwner,
+  canEdit,
   availableAccommodations,
   isLoadingAccommodations,
 }: Props) => {
@@ -59,7 +59,7 @@ const TrailDetailsAvailableHutsField = ({
       <h4>
         <GiWoodCabin />
         &nbsp; Lodges in the area:
-        {isTrailOwner && (
+        {canEdit && (
           <FaEdit
             className="trail-edit-icon"
             style={{
