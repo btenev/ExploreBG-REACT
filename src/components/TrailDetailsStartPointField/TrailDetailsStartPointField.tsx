@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react';
+
 import { FaEdit } from 'react-icons/fa';
 
 import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
-import { SubmitButton } from '../common';
 import { StartPointDto, useStartPointForm } from '../../hooks/formHooks/trailHooks';
 import { useUpdateHikingTrailField } from '../../hooks/dataHooks/trailHooks';
+
+import { SubmitButton } from '../common';
 
 interface Props {
   initialStartPoint: string;
@@ -15,6 +17,7 @@ interface Props {
 const TrailDetailsStartPointField = ({ initialStartPoint, trailId, isTrailOwner }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [startPoint, setStartPoint] = useState<string>(initialStartPoint);
+  const formRef = useRef<HTMLFormElement>(null);
   const { register, handleSubmit, errors } = useStartPointForm();
   const { mutate: updateStartPoint, isPending } = useUpdateHikingTrailField(
     'startPoint',
@@ -29,12 +32,10 @@ const TrailDetailsStartPointField = ({ initialStartPoint, trailId, isTrailOwner 
     }
 
     updateStartPoint(data);
+    setIsVisible(false);
   };
 
-  const formRef = useRef<HTMLFormElement>(null);
-
   useCloseOnEscapeTabAndClickOutside(formRef, () => setIsVisible(false));
-
   return (
     <div className="trail__pair__field-wrapper">
       <div className="trail__pair__field-wrapper__field" style={{ opacity: isVisible ? '0' : '1' }}>

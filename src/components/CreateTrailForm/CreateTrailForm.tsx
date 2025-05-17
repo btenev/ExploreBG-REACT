@@ -17,18 +17,21 @@ import {
   RequireAuthModal,
   SubmitButton,
 } from '../common';
+
+import { CreateTrailDto } from '../../schemas';
+
 import { TrailEnumsResponse } from '../../api/utilitiesApi';
 import { useHasSession } from '../../utils/sessionUtils';
+
 import { useCreateTrail } from '../../hooks/dataHooks/trailHooks';
-import { CreateTrailDto } from '../../schemas';
 
 const TRAIL_INFO =
   'Share the details of your favorite trail with us—describe the scenery, the difficulty level, any wildlife you encountered, and the special moments that made your hike memorable. Your insights could inspire fellow hikers and help them discover new paths to explore!';
 
 export interface ICreateTrail {
-  totalDistance: number | unknown;
+  totalDistance: number | null;
   trailDifficulty: DifficultyLevelEnum;
-  elevationGained: number | unknown;
+  elevationGained: number | null;
   activity: SuitableForEnum[];
   availableHuts: { id: number }[];
   destinations: { id: number }[];
