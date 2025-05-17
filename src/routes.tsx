@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { Layout } from './components/common';
-import { Authentication, CreateTrail, FAQ, Home, MyProfile, NotFound } from './pages';
+import { Home, FAQ, Authentication, MyProfile, CreateTrail, TrailDetails, NotFound } from './pages';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +11,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'faq', element: <FAQ /> },
       { path: 'users/my-profile', element: <MyProfile /> },
+      { path: '/trails/:trailId', element: <TrailDetails /> },
     ],
   },
 

@@ -11,3 +11,5 @@ export const useIsAdminOrModerator = (): boolean =>
 
 export const useUserImage = (): string | null =>
   useSessionStore((state) => state.user?.userImage ?? null);
+
+export const getUserId = (): number | null => useSessionStore.getState().user?.userId ?? null;
