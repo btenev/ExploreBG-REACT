@@ -1,3 +1,26 @@
+import { format } from 'date-fns';
+
+export const formatEntityLastUpdate = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+
+  const isToday =
+    date.getDate() === now.getDate() &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === now.getFullYear();
+
+  const time = format(date, 'HH:mm');
+  const sameYear = date.getFullYear() === now.getFullYear();
+
+  if (isToday) {
+    return time;
+  } else if (sameYear) {
+    return format(date, 'dd MMM HH:mm');
+  } else {
+    return format(date, 'dd MMM yyyy HH:mm');
+  }
+};
+
 export const formatDateToDDMMMYYYY = (inputDate: string) => {
   const [year, monthNumber, day] = inputDate.split('-');
   const date = new Date(Number(year), Number(monthNumber) - 1, Number(day));
