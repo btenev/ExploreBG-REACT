@@ -1,6 +1,14 @@
 import { IHut } from '../accommodation';
 import { IDestination } from '../destination';
-import { DifficultyLevelEnum, SeasonEnum, SuitableForEnum, WaterAvailabilityEnum } from '../shared';
+
+import {
+  DifficultyLevelEnum,
+  SeasonEnum,
+  StatusEnum,
+  SuitableForEnum,
+  WaterAvailabilityEnum,
+} from '../shared';
+
 import { IComment } from '../shared/comment';
 import { IOwner } from '../shared/owner';
 import { TPhoto } from '../shared/photo';
@@ -30,7 +38,7 @@ export interface ITrail extends ITrailCard {
   images: TPhoto[];
   gpxFile: TGpxFile | null;
   lastUpdateDate: string;
-  detailsStatus?: string;
+  detailsStatus: StatusEnum;
 }
 
 export type TGpxFile = {

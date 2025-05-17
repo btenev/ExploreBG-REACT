@@ -3,3 +3,4 @@ export * from './SeasonEnum';
 export * from './WaterAvailabilityEnum';
 export * from './DifficultyLevelEnum';
 export * from './SuitableForEnum';
+export * from './StatusEnum';

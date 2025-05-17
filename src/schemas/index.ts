@@ -5,3 +5,6 @@ export * from './genderEnumSchema';
 export * from './userBirthdateSchema';
 export * from './updatePasswordSchema';
 export * from './createTrailSchema';
+export * from './availableHutsRequestSchema';
+export * from './destinationsRequestSchema';
+export * from './detailsStatusEnumSchema';
