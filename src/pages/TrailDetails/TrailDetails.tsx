@@ -2,11 +2,19 @@ import { Link, useParams } from 'react-router-dom';
 
 import './TrailDetails.scss';
 
-import { DeleteItem, LoadingScreenWrapper, NotFoundModal } from '../../components/common';
+import {
+  DeleteItem,
+  LoadingScreenWrapper,
+  NotFoundModal,
+  PhotosSection,
+} from '../../components/common';
+
 import { useTrail } from '../../hooks/dataHooks/trailHooks';
+
 import { isApiError } from '../../utils/errorHandlers';
 import { isOwner } from '../../utils/mixedUtils';
 import { getUserId } from '../../utils/sessionUtils';
+
 import TrailDetailsSection from '../../components/TrailDetailsSection';
 
 const TrailDetails = () => {
@@ -65,9 +73,19 @@ const TrailDetails = () => {
             <Link to="#comments">comments</Link>
           </li>
         </ul>
-
-        <TrailDetailsSection trail={trail} canEdit={canEdit} />
       </nav>
+
+      <TrailDetailsSection trail={trail} canEdit={canEdit} />
+
+      <span id="photos" />
+      {(trail.images.length > 0 || canEdit) && (
+        <PhotosSection
+          entityId={trail.id}
+          photos={trail.images}
+          canEdit={canEdit}
+          folder="Trails"
+        />
+      )}
     </main>
   );
 };

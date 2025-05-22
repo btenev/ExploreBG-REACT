@@ -18,3 +18,4 @@ export { default as LoadingSpinner } from './LoadingSpinner';
 export { default as LoadingScreenWrapper } from './LoadingScreenWrapper';
 export { default as FavoriteToggle } from './FavoriteToggle';
 export { default as MemberImage } from './MemberImage';
+export { default as PhotosSection } from './PhotosSection';
