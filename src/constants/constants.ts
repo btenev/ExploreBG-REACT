@@ -1,0 +1,1 @@
+export const ALLOWED_PHOTO_UPLOAD_COUNT = 10;

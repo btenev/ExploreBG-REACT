@@ -78,6 +78,12 @@ export const trailsApi = {
 
     return apiClient.patch(`${baseTrailsUrl}/${trailId}/${endPoint}`, data);
   },
+
+  updateMainTrailPhoto: (
+    trailId: string,
+    data: { imageId: string }
+  ): Promise<{ imageId: number }> =>
+    apiClient.patch(`${baseTrailsUrl}/${trailId}/main-image`, data),
 };
 
 const detailsStatusConverter = (detailsStatus: unknown): StatusEnum => {
