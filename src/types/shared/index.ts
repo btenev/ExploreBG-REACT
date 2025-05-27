@@ -6,3 +6,4 @@ export * from './userSession';
 export * from './apiError';
 export * from './enums';
 export * from './like';
+export * from './map';
