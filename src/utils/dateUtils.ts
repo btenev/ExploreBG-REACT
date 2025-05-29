@@ -41,3 +41,8 @@ export const formatDate = (inputDate: string | null): string | null => {
 
   return `${day} ${month} ${year}`;
 };
+
+export const formatFullDate = (input: string): string => {
+  const date = new Date(input);
+  return format(date, 'd MMMM yyyy -- HH:mm:ss');
+};

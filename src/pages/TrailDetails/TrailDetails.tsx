@@ -16,6 +16,7 @@ import { isOwner } from '../../utils/mixedUtils';
 import { getUserId } from '../../utils/sessionUtils';
 
 import TrailDetailsSection from '../../components/TrailDetailsSection';
+import TrailMapSection from '../../components/TrailMapSection';
 
 const TrailDetails = () => {
   const { trailId } = useParams<{ trailId: string }>();
@@ -78,13 +79,18 @@ const TrailDetails = () => {
       <TrailDetailsSection trail={trail} canEdit={canEdit} />
 
       <span id="photos" />
-      {(trail.images.length > 0 || canEdit) && (
+      {(canEdit || trail.images.length > 0) && (
         <PhotosSection
           entityId={trail.id}
           photos={trail.images}
           canEdit={canEdit}
           folder="Trails"
         />
+      )}
+
+      <span id="map" />
+      {(canEdit || trail.gpxFile) && (
+        <TrailMapSection trailId={trail.id} gpxFile={trail.gpxFile} canEdit={canEdit} />
       )}
     </main>
   );

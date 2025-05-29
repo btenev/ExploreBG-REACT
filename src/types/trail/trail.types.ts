@@ -44,6 +44,6 @@ export interface ITrail extends ITrailCard {
 export type TGpxFile = {
   id: number;
   gpxUrl: string;
-  gpxStatus: string;
+  gpxStatus: StatusEnum;
   creationDate: string;
 };

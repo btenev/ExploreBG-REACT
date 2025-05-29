@@ -15,3 +15,10 @@ export const toKebabCase = (str: string) =>
   str.replace(/([A-Z])/g, (letter) => '-' + letter.toLowerCase());
 
 export const roundToTwoDecimals = (value: number): number => Math.round(value * 100) / 100;
+
+export const convertMetersToKmM = (meters: number) => {
+  const km = Math.floor(meters / 1000);
+  const remainingMeters = Math.floor(meters % 1000);
+
+  return `${km} km ${remainingMeters} m`;
+};
