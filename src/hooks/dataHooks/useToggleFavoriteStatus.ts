@@ -1,14 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
-import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
+
+import { toast } from 'react-toastify';
+
+import { EntityType, ToggleFavoriteRequest, ToggleFavoriteResponse } from '../../types';
 
 import { trailsApi } from '../../api/trailsApi';
 import { accommodationsApi } from '../../api/accommodationsApi';
 import { destinationsApi } from '../../api/destinationsApi';
-import { handleApiError } from '../../utils/errorHandlers';
-import { ToggleFavoriteRequest, ToggleFavoriteResponse } from '../../types';
 
-type EntityType = 'trail' | 'accommodation' | 'destination';
+import { handleApiError } from '../../utils/errorHandlers';
 
 type LikeParams = { id: string; entity: EntityType; data: ToggleFavoriteRequest };
 

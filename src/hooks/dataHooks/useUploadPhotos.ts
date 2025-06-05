@@ -3,9 +3,10 @@ import { useMutation } from '@tanstack/react-query';
 
 import { toast } from 'react-toastify';
 
-import { imagesApi } from '../../api/imagesApi';
 import { ALLOWED_PHOTO_UPLOAD_COUNT } from '../../constants';
 import { PhotosAction } from '../../context/PhotosContextProvider';
+import { imagesApi } from '../../api/imagesApi';
+
 import { handleApiError } from '../../utils/errorHandlers';
 
 interface UploadPhotosParams {

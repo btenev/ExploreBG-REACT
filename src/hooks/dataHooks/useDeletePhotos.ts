@@ -3,8 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import { toast } from 'react-toastify';
 
-import { imagesApi } from '../../api/imagesApi';
 import { PhotosAction } from '../../context/PhotosContextProvider';
+import { imagesApi } from '../../api/imagesApi';
 import { handleApiError } from '../../utils/errorHandlers';
 
 export const useDeletePhotos = (dispatch: Dispatch<PhotosAction>) => {

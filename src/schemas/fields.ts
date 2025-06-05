@@ -13,6 +13,7 @@ export const passMaxLength = 24;
 export const trailPlaceMinLength = 3;
 export const trailPlaceMaxLength = 30;
 export const trailInfoMaxLength = 3000;
+export const commentMaxLength = 1000;
 
 export const emailSchema = z
   .string()
@@ -102,7 +103,7 @@ export const nextToSchema = z
   )
   .max(
     trailPlaceMaxLength,
-    `The village/town/city name  can be a maximum of ${trailPlaceMaxLength} characters`
+    `The village/town/city name  can be a maximum of ${trailPlaceMaxLength} characters.`
   );
 
 export const trailInfoSchema = z
@@ -113,3 +114,8 @@ export const trailInfoSchema = z
     'Valid characters include uppercase and lowercase letters (A-Z, a-z), numbers (0-9), spaces, and the following symbols: ( ) : ; \' " ` ? ! - . , new line.'
   )
   .max(trailInfoMaxLength, `Trail info text must not exceed ${trailInfoMaxLength} characters.`);
+
+export const messageSchema = z
+  .string()
+  .nonempty('Please enter a comment.')
+  .max(commentMaxLength, `The comment must not exceed ${commentMaxLength} characters.`);
