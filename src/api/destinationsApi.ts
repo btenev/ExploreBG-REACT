@@ -1,5 +1,12 @@
 import { ApiClient } from './apiClient';
-import { IDestinationCard, IPlace, ToggleFavoriteRequest, ToggleFavoriteResponse } from '../types';
+import {
+  IComment,
+  IDestinationCard,
+  IPlace,
+  ToggleFavoriteRequest,
+  ToggleFavoriteResponse,
+} from '../types';
+import { CommentDataDto } from '../hooks/formHooks/useCommentForm';
 
 const apiClient = new ApiClient();
 
@@ -16,4 +23,7 @@ export const destinationsApi = {
     data: ToggleFavoriteRequest
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(`${baseDestinationUrl}/${destinationId}/like`, data),
+
+  createDestinationComment: (destinationId: string, data: CommentDataDto): Promise<IComment> =>
+    apiClient.post(`${baseDestinationUrl}/${destinationId}/comments`, data),
 };

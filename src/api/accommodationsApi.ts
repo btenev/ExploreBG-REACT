@@ -1,5 +1,12 @@
 import { ApiClient } from './apiClient';
-import { IAccommodationCard, IHut, ToggleFavoriteRequest, ToggleFavoriteResponse } from '../types';
+import {
+  IAccommodationCard,
+  IComment,
+  IHut,
+  ToggleFavoriteRequest,
+  ToggleFavoriteResponse,
+} from '../types';
+import { CommentDataDto } from '../hooks/formHooks/useCommentForm';
 
 const apiClient = new ApiClient();
 
@@ -17,4 +24,7 @@ export const accommodationsApi = {
     data: ToggleFavoriteRequest
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(`${baseAccommodationUrl}/${accommodationId}/like`, data),
+
+  createAccommodationComment: (accommodationId: string, data: CommentDataDto): Promise<IComment> =>
+    apiClient.post(`${baseAccommodationUrl}/${accommodationId}/comments`, data),
 };

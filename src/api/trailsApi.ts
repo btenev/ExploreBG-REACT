@@ -1,6 +1,8 @@
+import { CommentDataDto } from '../hooks/formHooks/useCommentForm';
 import { CreateTrailDto, detailsStatusEnumSchema } from '../schemas';
 import {
   DifficultyLevelEnum,
+  IComment,
   IHut,
   IPlace,
   ITrail,
@@ -84,6 +86,9 @@ export const trailsApi = {
     data: { imageId: string }
   ): Promise<{ imageId: number }> =>
     apiClient.patch(`${baseTrailsUrl}/${trailId}/main-image`, data),
+
+  createTrailComment: (trailId: string, data: CommentDataDto): Promise<IComment> =>
+    apiClient.post(`${baseTrailsUrl}/${trailId}/comments`, data),
 };
 
 const detailsStatusConverter = (detailsStatus: unknown): StatusEnum => {
