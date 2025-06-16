@@ -27,4 +27,7 @@ export const accommodationsApi = {
 
   createAccommodationComment: (accommodationId: string, data: CommentDataDto): Promise<IComment> =>
     apiClient.post(`${baseAccommodationUrl}/${accommodationId}/comments`, data),
+
+  deleteAccommodationComment: (accommodationsId: string, commentId: string): Promise<void> =>
+    apiClient.delete(`${baseAccommodationUrl}/${accommodationsId}/comments/${commentId}`),
 };

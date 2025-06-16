@@ -7,3 +7,5 @@ export * from './apiError';
 export * from './enums';
 export * from './like';
 export * from './map';
+export * from './entity';
+export * from './delete';

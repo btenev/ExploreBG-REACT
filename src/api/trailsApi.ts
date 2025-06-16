@@ -89,6 +89,9 @@ export const trailsApi = {
 
   createTrailComment: (trailId: string, data: CommentDataDto): Promise<IComment> =>
     apiClient.post(`${baseTrailsUrl}/${trailId}/comments`, data),
+
+  deleteTrailComment: (trailId: string, commentId: string): Promise<void> =>
+    apiClient.delete(`${baseTrailsUrl}/${trailId}/comments/${commentId}`),
 };
 
 const detailsStatusConverter = (detailsStatus: unknown): StatusEnum => {
