@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import './TrailDetails.scss';
 
 import {
+  CommentsSection,
   DeleteItem,
   LoadingScreenWrapper,
   NotFoundModal,
@@ -92,6 +93,9 @@ const TrailDetails = () => {
       {(canEdit || trail.gpxFile) && (
         <TrailMapSection trailId={trail.id} gpxFile={trail.gpxFile} canEdit={canEdit} />
       )}
+
+      <span id="comments" />
+      <CommentsSection userId={userId} entity="trail" entityId={trailId} />
     </main>
   );
 };

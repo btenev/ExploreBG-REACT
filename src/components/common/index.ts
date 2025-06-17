@@ -19,3 +19,4 @@ export { default as LoadingScreenWrapper } from './LoadingScreenWrapper';
 export { default as FavoriteToggle } from './FavoriteToggle';
 export { default as MemberImage } from './MemberImage';
 export { default as PhotosSection } from './PhotosSection';
+export { default as CommentsSection } from './CommentsSection';
