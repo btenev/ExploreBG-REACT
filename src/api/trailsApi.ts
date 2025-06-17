@@ -87,6 +87,9 @@ export const trailsApi = {
   ): Promise<{ imageId: number }> =>
     apiClient.patch(`${baseTrailsUrl}/${trailId}/main-image`, data),
 
+  getTrailComments: (trailId: string): Promise<IComment[]> =>
+    apiClient.get<IComment[]>(`${baseTrailsUrl}/${trailId}/comments`),
+
   createTrailComment: (trailId: string, data: CommentDataDto): Promise<IComment> =>
     apiClient.post(`${baseTrailsUrl}/${trailId}/comments`, data),
 

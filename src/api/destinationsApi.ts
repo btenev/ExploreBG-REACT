@@ -24,6 +24,9 @@ export const destinationsApi = {
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(`${baseDestinationUrl}/${destinationId}/like`, data),
 
+  getDestinationComments: (destinationId: string): Promise<IComment[]> =>
+    apiClient.get<IComment[]>(`${baseDestinationUrl}/${destinationId}/comments`),
+
   createDestinationComment: (destinationId: string, data: CommentDataDto): Promise<IComment> =>
     apiClient.post(`${baseDestinationUrl}/${destinationId}/comments`, data),
 

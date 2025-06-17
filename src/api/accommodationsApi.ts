@@ -25,6 +25,9 @@ export const accommodationsApi = {
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(`${baseAccommodationUrl}/${accommodationId}/like`, data),
 
+  getAccommodationComments: (accommodationId: string): Promise<IComment[]> =>
+    apiClient.get<IComment[]>(`${baseAccommodationUrl}/${accommodationId}/comments`),
+
   createAccommodationComment: (accommodationId: string, data: CommentDataDto): Promise<IComment> =>
     apiClient.post(`${baseAccommodationUrl}/${accommodationId}/comments`, data),
 
