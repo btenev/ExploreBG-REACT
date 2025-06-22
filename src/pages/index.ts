@@ -5,3 +5,4 @@ export { default as MyProfile } from './MyProfile';
 export { default as CreateTrail } from './CreateTrail';
 export { default as TrailDetails } from './TrailDetails';
 export { default as NotFound } from './NotFound';
+export { default as UserProfile } from './UserProfile';
