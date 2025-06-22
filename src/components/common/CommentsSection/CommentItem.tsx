@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { IComment } from '../../../types';
 import { formatEntityLastUpdate } from '../../../utils/dateUtils';
 
-import { useUpdateComment } from '../../../hooks/dataHooks/useUpdateComment';
 import { useCommentForm } from '../../../hooks/formHooks/useCommentForm';
 
 import SubmitButton from '../SubmitButton';

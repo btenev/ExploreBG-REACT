@@ -3,7 +3,8 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { IComment } from '../../../types';
 
 import { useUpdateComment } from '../../../hooks/dataHooks/useUpdateComment';
-import { CommentDataDto, useCommentForm } from '../../../hooks/formHooks/useCommentForm';
+import { CommentDataDto } from '../../../hooks/formHooks/useCommentForm';
+
 import CommentItem from './CommentItem';
 
 interface Props {

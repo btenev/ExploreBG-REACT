@@ -1,9 +1,9 @@
 import { IHikeCard, ITrailCard } from '../types';
-
-import { ApiClient } from './apiClient';
 import { GenderEnum } from '../types';
-import { safeParseOrThrow } from '../utils/zodHelpers';
+
 import { genderEnumSchema } from '../schemas';
+import { safeParseOrThrow } from '../utils/zodHelpers';
+import { ApiClient } from './apiClient';
 
 const apiClient = new ApiClient();
 const baseUrl = '/users';
@@ -42,6 +42,17 @@ export const usersApi = {
   getMyProfile: async (): Promise<MyProfileResponse> => {
     try {
       const response = await apiClient.get<MyProfileResponse>(`${baseUrl}/my-profile`);
+      const gender = genderConverter(response.gender);
+      return { ...response, gender };
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      throw new Error('Failed to load profile due to invalid gender');
+    }
+  },
+
+  getUserProfile: async (userId: string): Promise<MyProfileResponse> => {
+    try {
+      const response = await apiClient.get<MyProfileResponse>(`${baseUrl}/${userId}`);
       const gender = genderConverter(response.gender);
       return { ...response, gender };
     } catch (error) {

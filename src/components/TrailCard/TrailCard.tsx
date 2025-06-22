@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { ITrailCard } from '../../types';
 import defaultImg from '../../assets/images/hike-default.jpg';
 
@@ -31,14 +33,7 @@ const TrailCard = ({ card }: Props) => {
       <p>
         {card.trailInfo.slice(0, 145)} {card.trailInfo.length > 145 && '.....'}
       </p>
-      {/* <Link
-        href={{
-          pathname: '/trails/[trailId]',
-          params: { trailId: card.id },
-        }}
-      >
-        {t('card-btn')}
-      </Link> */}
+      <Link to={`/trails/${card.id}`}>Learn more</Link>
     </>
   );
 };
