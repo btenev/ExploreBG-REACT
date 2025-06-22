@@ -7,7 +7,11 @@ import MyProfileEmailField from '../../components/MyProfileEmailField';
 import MyProfileGenderField from '../../components/MyProfileGenderField';
 import MyProfileBirthdateField from '../../components/MyProfileBirthdateField';
 import MyProfileButtons from '../../components/MyProfileButtons';
+import HikeCard from '../../components/HikeCard';
+import { UserCreatedItems } from '../../components/common';
+
 import { useMyProfile } from '../../hooks/dataHooks/userHooks';
+import TrailCard from '../../components/TrailCard';
 
 const MyProfile = () => {
   const { data, isLoading, error } = useMyProfile();
@@ -18,7 +22,8 @@ const MyProfile = () => {
 
   if (!data) return <p>Resource not found!</p>;
 
-  const { imageUrl, username, userInfo, email, gender, birthdate } = data;
+  const { imageUrl, username, userInfo, email, gender, birthdate, createdHikes, createdTrails } =
+    data;
 
   return (
     <main className="my-profile-container">
@@ -38,6 +43,22 @@ const MyProfile = () => {
           <MyProfileButtons />
         </section>
       </article>
+
+      {createdHikes?.length > 0 && (
+        <UserCreatedItems
+          items={createdHikes}
+          title="hike"
+          renderItem={(hike) => <HikeCard card={hike} />}
+        />
+      )}
+
+      {createdTrails?.length > 0 && (
+        <UserCreatedItems
+          items={createdTrails}
+          title="trail"
+          renderItem={(trail) => <TrailCard card={trail} />}
+        />
+      )}
     </main>
   );
 };

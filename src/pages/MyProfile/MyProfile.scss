@@ -142,17 +142,17 @@
     }
   }
 
-  & .user-profile-section__created-hikes {
+  & .user-items-section__created-items {
     & > article {
       height: fit-content;
 
       & > figure {
-        height: 25vh;
+        height: 30vh;
       }
 
-      & > p {
-        display: none;
-      }
+      // & > p {
+      //   display: none;
+      // }
     }
   }
 }
