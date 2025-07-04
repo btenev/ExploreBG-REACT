@@ -1,6 +1,6 @@
 export { Footer, SmallFooter } from './Footer';
 export { Header, SmallHeader } from './Header';
-export { Layout, SmallLayout } from './Layout';
+export { Layout, SmallLayout, AdminLayout } from './Layout';
 export { default as Logo } from './Logo';
 export { default as BackButton } from './BackButton';
 export { default as SubmitButton } from './SubmitButton';
@@ -21,3 +21,5 @@ export { default as MemberImage } from './MemberImage';
 export { default as PhotosSection } from './PhotosSection';
 export { default as CommentsSection } from './CommentsSection';
 export { default as UserCreatedItems } from './UserCreatedItems';
+export { default as AccessDenied } from './AccessDenied';
+export { default as AdminProtectedPage } from './AdminProtectedPage';
