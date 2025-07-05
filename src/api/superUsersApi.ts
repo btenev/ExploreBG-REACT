@@ -14,4 +14,7 @@ export const superUsersApi = {
     lockAccount: boolean
   ): Promise<{ accountNonLocked: boolean }> =>
     apiClient.patch(`${baseUrl}/${userId}/lock-account`, { lockAccount }),
+
+  updateUserRole: (userId: string, moderator: boolean): Promise<{ moderator: boolean }> =>
+    apiClient.patch(`${baseUrl}/${userId}/update-role`, { moderator }),
 };
