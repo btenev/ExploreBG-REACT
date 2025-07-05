@@ -1,16 +1,20 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { MdClose } from 'react-icons/md';
 
 import './HeaderLinksAndButtons.scss';
 
 import defaultUserImg from '../../assets/images/user-profile-pic.png';
-import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
+
 import UserNavLinks from '../UserNavLinks';
 import NavigationLinks from '../NavigationLinks';
-import { useHasSession, useIsAdminOrModerator, useUserImage } from '../../utils/sessionUtils';
+
+import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEscapeTabClick';
 import { useLogout } from '../../hooks/dataHooks/authHooks';
+
+import { useHasSession, useIsAdminOrModerator, useUserImage } from '../../utils/sessionUtils';
 
 const HeaderLinksAndButtons = () => {
   const [isOpenNavbar, setIsOpenNavbar] = useState<boolean>(false);
