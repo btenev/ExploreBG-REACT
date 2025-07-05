@@ -10,6 +10,7 @@ import {
   TrailDetails,
   NotFound,
   UserProfile,
+  AllUsers,
 } from './pages';
 
 const router = createBrowserRouter([
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
   { path: '/authentication', element: <Authentication /> },
   { path: '/trails/create', element: <CreateTrail /> },
+
+  { path: '/super-users/users', element: <AllUsers /> },
 
   { path: '*', element: <NotFound /> },
 ]);

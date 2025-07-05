@@ -19,10 +19,10 @@ const UserNavLinks = ({ isAdminOrModerator }: Props) => {
       {isAdminOrModerator && (
         <>
           <li>
-            <ActiveLink to={'/admin/users'}>Users</ActiveLink>
+            <ActiveLink to={'/super-users/users'}>Users</ActiveLink>
           </li>
           <li>
-            <ActiveLink to={'/admin/waiting-approval'}>Waiting approval</ActiveLink>
+            <ActiveLink to={'/super-users/waiting-approval'}>Waiting approval</ActiveLink>
           </li>
         </>
       )}
