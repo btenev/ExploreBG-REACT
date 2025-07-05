@@ -1,3 +1,5 @@
+import { IUser } from '../types/shared/user';
+
 type CreatedByEntity = {
   createdBy?: {
     id?: number;
@@ -22,3 +24,6 @@ export const convertMetersToKmM = (meters: number) => {
 
   return `${km} km ${remainingMeters} m`;
 };
+
+export const hasRole = (roles: IUser['roles'], roleToCheck: string): boolean =>
+  roles.some((obj) => obj.role === roleToCheck);

@@ -9,6 +9,23 @@ export const useIsAdminOrModerator = (): boolean =>
     ['ADMIN', 'MODERATOR'].some((role) => state.user?.userRoles.includes(role))
   );
 
+export const useSessionInfo = () => {
+  const user = useSessionStore((state) => state.user);
+  const hasHydrated = useSessionStore((state) => state.hasHydrated);
+
+  const sessionRoles = user?.userRoles ?? [];
+  const staffId = user?.userId ?? null;
+
+  return {
+    sessionRoles,
+    isAdmin: sessionRoles.includes('ADMIN'),
+    isModerator: sessionRoles.includes('MODERATOR'),
+    isAdminOrModerator: ['ADMIN', 'MODERATOR'].some((r) => sessionRoles.includes(r)),
+    staffId,
+    hasHydrated,
+  };
+};
+
 export const useUserImage = (): string | null =>
   useSessionStore((state) => state.user?.userImage ?? null);
 

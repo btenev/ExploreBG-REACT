@@ -7,12 +7,17 @@ interface SessionStore {
   setUser: (user: IUserSession | null) => void;
   updateUserFields: (fields: Partial<IUserSession>) => void;
   clearSession: () => void;
+  hasHydrated: boolean;
+  setHasHydrated: (value: boolean) => void;
 }
 
 export const useSessionStore = create<SessionStore>()(
   persist(
     (set) => ({
       user: null,
+      hasHydrated: false,
+      setHasHydrated: (value: boolean) => set({ hasHydrated: value }),
+
       setUser: (user) => set({ user }),
 
       updateUserFields: (fields: Partial<IUserSession>) =>
@@ -38,6 +43,9 @@ export const useSessionStore = create<SessionStore>()(
         },
         setItem: (key, value) => sessionStorage.setItem(key, JSON.stringify(value)),
         removeItem: (key) => sessionStorage.removeItem(key),
+      },
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true); // <-- set hydrated flag
       },
     }
   )
