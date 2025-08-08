@@ -1,12 +1,10 @@
-import { IUser } from '../types/shared';
-
-import { ApiClient } from './apiClient';
+import { IUser } from '../../types';
+import { ApiClient } from '../apiClient';
 
 const apiClient = new ApiClient();
+const baseUrl = '/moderation';
 
-const baseUrl = '/super-users';
-
-export const superUsersApi = {
+export const userModerationApi = {
   getAllUsers: (): Promise<IUser[]> => apiClient.get(`${baseUrl}/users`),
 
   lockUnlockUserAccount: (
