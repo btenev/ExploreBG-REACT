@@ -1,10 +1,16 @@
 interface Props {
   buttonName: string;
   isSubmitting: boolean;
+  className?: string;
+  onClick?: () => void;
 }
 
-const SubmitButton = ({ buttonName, isSubmitting }: Props) => {
-  return <button disabled={isSubmitting}>{isSubmitting ? 'Loading...' : buttonName}</button>;
+const SubmitButton = ({ buttonName, isSubmitting, className, onClick }: Props) => {
+  return (
+    <button className={className} disabled={isSubmitting} onClick={onClick}>
+      {isSubmitting ? 'Loading...' : buttonName}
+    </button>
+  );
 };
 
 export default SubmitButton;
