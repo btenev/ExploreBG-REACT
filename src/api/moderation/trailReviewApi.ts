@@ -1,3 +1,4 @@
+import { CreateTrailDto } from '../../schemas';
 import { ITrail, ITrailReview, ReviewStatusEnum } from '../../types';
 import { ApiClient } from '../apiClient';
 
@@ -24,6 +25,12 @@ export const trailReviewApi = {
 
   unclaimForReviewTrailDetails: (trailId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${trailId}/unclaim`),
+
+  approveTrailDetails: (
+    trailId: string,
+    trailData: CreateTrailDto
+  ): Promise<{ trailStatus: ReviewStatusEnum }> =>
+    apiClient.post(`${baseUrl}/${trailId}/approve`, trailData),
 
   claimForReviewTrailImages: (trailId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${trailId}/images/claim`),
