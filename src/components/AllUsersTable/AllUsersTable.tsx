@@ -28,7 +28,7 @@ const AllUsersTable = ({ users, isAdmin, staffId }: Props) => {
         </tr>
       </thead>
       <tbody>
-        {users?.map((u, index) => (
+        {users.map((u, index) => (
           <tr key={u.id} className={u.accountNonLocked ? '' : 'locked-account'}>
             <td>{users.length - index}</td>
             <td>

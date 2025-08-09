@@ -8,7 +8,7 @@ import { FaUserLock } from 'react-icons/fa';
 import { CommonModal } from '../common';
 import { IUser } from '../../types/shared/user';
 import { hasRole } from '../../utils/mixedUtils';
-import { useToggleAccountLock } from '../../hooks/dataHooks/superUserHooks';
+import { useToggleAccountLock } from '../../hooks/dataHooks/moderation';
 
 interface Props {
   user: IUser;

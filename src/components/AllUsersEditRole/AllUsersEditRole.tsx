@@ -7,7 +7,7 @@ import { FaEdit } from 'react-icons/fa';
 import { IUser } from '../../types/shared/user';
 import { CommonModal } from '../common';
 import { hasRole } from '../../utils/mixedUtils';
-import { useUpdateUserRole } from '../../hooks/dataHooks/superUserHooks';
+import { useUpdateUserRole } from '../../hooks/dataHooks/moderation';
 
 interface Props {
   user: IUser;

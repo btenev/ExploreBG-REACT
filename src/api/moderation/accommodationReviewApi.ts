@@ -10,6 +10,9 @@ export interface WaitingApprovalEntityResponse {
 }
 
 export const accommodationReviewApi = {
+  getWaitingApprovalAccommodations: (query: string): Promise<WaitingApprovalEntityResponse> =>
+    apiClient.get(`${baseUrl}/waiting-approval${query}`),
+
   claimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${accommodationId}/images/claim`),
 

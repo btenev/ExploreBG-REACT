@@ -7,7 +7,7 @@ import {
 } from '../../components/common';
 
 import { useSessionInfo } from '../../utils/sessionUtils';
-import { useGetAllUsers } from '../../hooks/dataHooks/superUserHooks';
+import { useGetAllUsers } from '../../hooks/dataHooks/moderation';
 
 const AllUsers = () => {
   const { isAdminOrModerator, isAdmin, hasHydrated, staffId } = useSessionInfo();
