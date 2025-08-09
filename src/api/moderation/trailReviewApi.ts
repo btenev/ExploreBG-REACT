@@ -19,6 +19,12 @@ export const trailReviewApi = {
   getTrailReviewer: (trailId: string): Promise<{ reviewerId: number }> =>
     apiClient.get(`${baseUrl}/${trailId}/reviewer`),
 
+  claimForReviewTrailDetails: (trailId: string): Promise<void> =>
+    apiClient.patch(`${baseUrl}/${trailId}/claim`),
+
+  unclaimForReviewTrailDetails: (trailId: string): Promise<void> =>
+    apiClient.patch(`${baseUrl}/${trailId}/unclaim`),
+
   claimForReviewTrailImages: (trailId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${trailId}/images/claim`),
 
