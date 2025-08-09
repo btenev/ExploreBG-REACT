@@ -1,10 +1,11 @@
+import { StatusEnum } from '../enums';
 import { TImagesForReview } from '../photo';
 import { TReviewedBy } from '../reviewer';
 
 export interface IWaitingApproval {
   id: number;
   name: string;
-  detailsStatus: string;
+  detailsStatus: StatusEnum;
   destinationStatus?: string;
   accommodationStatus?: string;
   reviewedBy?: TReviewedBy;
@@ -12,6 +13,6 @@ export interface IWaitingApproval {
   images: TImagesForReview;
   gpxFile: {
     reviewedBy: TReviewedBy;
-    gpxStatus: string;
+    gpxStatus: StatusEnum;
   };
 }

@@ -1,4 +1,4 @@
-import { ITrailReview, ReviewStatusEnum } from '../../types';
+import { ITrail, ITrailReview, ReviewStatusEnum } from '../../types';
 import { ApiClient } from '../apiClient';
 
 const apiClient = new ApiClient();
@@ -12,6 +12,9 @@ export interface WaitingApprovalTrailsResponse {
 export const trailReviewApi = {
   getWaitingApprovalTrails: (query: string): Promise<WaitingApprovalTrailsResponse> =>
     apiClient.get(`${baseUrl}/waiting-approval${query}`),
+
+  getCreatedTrailForReview: (trailId: string): Promise<ITrail> =>
+    apiClient.get(`${baseUrl}/${trailId}/review`),
 
   claimForReviewTrailImages: (trailId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${trailId}/images/claim`),
