@@ -2,15 +2,16 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { Layout } from './components/common';
 import {
-  Home,
-  FAQ,
-  Authentication,
-  MyProfile,
-  CreateTrail,
-  TrailDetails,
-  NotFound,
-  UserProfile,
   AllUsers,
+  Authentication,
+  CreateTrail,
+  FAQ,
+  Home,
+  MyProfile,
+  NotFound,
+  TrailDetails,
+  UserProfile,
+  WaitingApproval,
 } from './pages';
 
 const router = createBrowserRouter([
@@ -29,8 +30,8 @@ const router = createBrowserRouter([
   { path: '/authentication', element: <Authentication /> },
   { path: '/trails/create', element: <CreateTrail /> },
 
-  { path: '/super-users/users', element: <AllUsers /> },
-
+  { path: '/moderation/users', element: <AllUsers /> },
+  { path: '/moderation/dashboard/waiting-approval/count', element: <WaitingApproval /> },
   { path: '*', element: <NotFound /> },
 ]);
 

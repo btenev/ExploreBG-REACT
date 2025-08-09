@@ -8,11 +8,11 @@ interface Props {
 
 const AdminLayout = ({ children }: Props) => {
   return (
-    <>
+    <div className="container">
       <Header />
 
       {children}
-    </>
+    </div>
   );
 };
 
