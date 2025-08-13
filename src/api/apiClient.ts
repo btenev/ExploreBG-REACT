@@ -61,7 +61,7 @@ export class ApiClient {
 
   put = <T>(endpoint: string, body: any): Promise<T> => this.request<T>('PUT', endpoint, body);
 
-  patch = <T>(endpoint: string, body: any, isFormData: boolean = false): Promise<T> =>
+  patch = <T>(endpoint: string, body?: any, isFormData: boolean = false): Promise<T> =>
     this.request<T>('PATCH', endpoint, body, isFormData);
 
   delete = (endpoint: string, body?: any): Promise<void> =>

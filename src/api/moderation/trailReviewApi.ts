@@ -1,5 +1,6 @@
 import { CreateTrailDto } from '../../schemas';
 import { ITrail, ITrailReview, ReviewStatusEnum } from '../../types';
+import { reviewStatusConverter } from '../../utils/statusConverter';
 import { ApiClient } from '../apiClient';
 
 const apiClient = new ApiClient();
@@ -26,11 +27,23 @@ export const trailReviewApi = {
   unclaimForReviewTrailDetails: (trailId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${trailId}/unclaim`),
 
-  approveTrailDetails: (
+  approveTrailDetails: async (
     trailId: string,
     trailData: CreateTrailDto
-  ): Promise<{ trailStatus: ReviewStatusEnum }> =>
-    apiClient.post(`${baseUrl}/${trailId}/approve`, trailData),
+  ): Promise<{ entityStatus: ReviewStatusEnum }> => {
+    try {
+      const response = await apiClient.patch<{ entityStatus: unknown }>(
+        `${baseUrl}/${trailId}/approve`,
+        trailData
+      );
+
+      const entityStatus = reviewStatusConverter(response.entityStatus);
+      return { entityStatus };
+    } catch (error) {
+      console.error('Error approving trail details:', error);
+      throw new Error('Failed to approve trail details due to invalid entity status');
+    }
+  },
 
   claimForReviewTrailImages: (trailId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${trailId}/images/claim`),
@@ -38,9 +51,21 @@ export const trailReviewApi = {
   unclaimForReviewTrailImages: (trailId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${trailId}/images/unclaim`),
 
-  approveTrailImages: (
+  approveTrailImages: async (
     trailId: string,
     imageIds: number[]
-  ): Promise<{ entityStatus: ReviewStatusEnum }> =>
-    apiClient.patch(`${baseUrl}/${trailId}/images/approve`, { imageIds }),
+  ): Promise<{ entityStatus: ReviewStatusEnum }> => {
+    try {
+      const response = await apiClient.patch<{ entityStatus: unknown }>(
+        `${baseUrl}/${trailId}/images/approve`,
+        { imageIds }
+      );
+
+      const entityStatus = reviewStatusConverter(response.entityStatus);
+      return { entityStatus };
+    } catch (error) {
+      console.error('Error approving trail images:', error);
+      throw new Error('Failed to approve trail images due to invalid entity status');
+    }
+  },
 };

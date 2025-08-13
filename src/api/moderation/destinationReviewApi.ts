@@ -1,6 +1,7 @@
 import { ApiClient } from '../apiClient';
 import { ReviewStatusEnum } from '../../types';
 import { WaitingApprovalEntityResponse } from './accommodationReviewApi';
+import { reviewStatusConverter } from '../../utils/statusConverter';
 
 const apiClient = new ApiClient();
 const baseUrl = '/moderation/destinations';
@@ -15,9 +16,23 @@ export const destinationReviewApi = {
   unclaimForReviewDestinationImages: (destinationId: string): Promise<void> =>
     apiClient.patch(`${baseUrl}/${destinationId}/images/unclaim`),
 
-  approveDestinationImages: (
+  approveDestinationImages: async (
     destinationId: string,
     imageIds: number[]
-  ): Promise<{ entityStatus: ReviewStatusEnum }> =>
-    apiClient.patch(`${baseUrl}/${destinationId}/images/approve`, { imageIds }),
+  ): Promise<{ entityStatus: ReviewStatusEnum }> => {
+    try {
+      const response = await apiClient.patch<{ entityStatus: unknown }>(
+        `${baseUrl}/${destinationId}/images/approve`,
+        {
+          imageIds,
+        }
+      );
+
+      const entityStatus = reviewStatusConverter(response.entityStatus);
+      return { entityStatus };
+    } catch (error) {
+      console.error('Error approving destination images:', error);
+      throw new Error('Failed to approve destination images due to invalid entity status');
+    }
+  },
 };
