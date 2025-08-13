@@ -66,7 +66,7 @@ export const endPointSchema = z
   .max(trailPlaceMaxLength, `The end point can be a maximum of ${trailPlaceMaxLength} characters.`);
 
 export const totalDistanceSchema = z
-  .union([z.string(), z.literal('')])
+  .union([z.string(), z.number(), z.literal('')])
   .refine((value) => value === '' || !isNaN(Number(value)), {
     message: 'Total distance must be a valid number or empty.',
   })
@@ -80,7 +80,7 @@ export const totalDistanceSchema = z
   .nullable();
 
 export const elevationGainedSchema = z
-  .union([z.string(), z.literal('')])
+  .union([z.string(), z.number(), z.literal('')])
   .refine((value) => value === '' || !isNaN(Number(value)), {
     message: 'Elevation gained must be a valid number or empty.',
   })

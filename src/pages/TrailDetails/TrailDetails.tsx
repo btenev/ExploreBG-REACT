@@ -58,7 +58,9 @@ const TrailDetails = () => {
       )}
 
       <nav className="trail-details__nav" aria-label="trail-details-page-navigation">
-        {canEdit && <DeleteItem deletionObj="this trail" entity="trail" id={trail.id.toString()} />}
+        {canEdit && (
+          <DeleteItem deletionObj="this trail" entity="trail" entityId={trail.id.toString()} />
+        )}
 
         <ul>
           {trail.images.length > 0 && (

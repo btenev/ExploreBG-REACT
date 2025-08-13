@@ -1,15 +1,7 @@
 import { Controller } from 'react-hook-form';
 
-import {
-  DifficultyLevelEnum,
-  IHut,
-  IPlace,
-  SeasonEnum,
-  SuitableForEnum,
-  WaterAvailabilityEnum,
-} from '../../types';
+import { IHut, IPlace, ITrail, SeasonEnum, StatusEnum, WaterAvailabilityEnum } from '../../types';
 
-import { useCreateTrailForm } from '../../hooks/formHooks/trailHooks';
 import {
   CustomSelect,
   FormFieldInfo,
@@ -21,48 +13,82 @@ import {
 import { CreateTrailDto } from '../../schemas';
 
 import { TrailEnumsResponse } from '../../api/utilitiesApi';
-import { useHasSession } from '../../utils/sessionUtils';
+import { useSessionInfo } from '../../utils/sessionUtils';
 
+import { useCreateTrailForm } from '../../hooks/formHooks/trailHooks';
+import { useGetTrailReviewer } from '../../hooks/dataHooks/moderation';
+import { useToggleReviewTrailDetails } from '../../hooks/dataHooks/moderation';
+import { useApproveTrail } from '../../hooks/dataHooks/moderation';
 import { useCreateTrail } from '../../hooks/dataHooks/trailHooks';
 
 const TRAIL_INFO =
   'Share the details of your favorite trail with us—describe the scenery, the difficulty level, any wildlife you encountered, and the special moments that made your hike memorable. Your insights could inspire fellow hikers and help them discover new paths to explore!';
 
-export interface ICreateTrail {
-  totalDistance: number | null;
-  trailDifficulty: DifficultyLevelEnum;
-  elevationGained: number | null;
-  activity: SuitableForEnum[];
-  availableHuts: { id: number }[];
-  destinations: { id: number }[];
-}
-
 interface Props {
-  // userSession: IUserSession | null;
   formEnums: TrailEnumsResponse;
   availableAccommodations: IHut[];
   availableDestinations: IPlace[];
-  errMessage?: string;
+  dataForReview?: ITrail;
 }
 
 const CreateTrailForm = ({
-  // userSession,
   formEnums,
   availableAccommodations,
   availableDestinations,
-}: // errMessage,
-Props) => {
-  const { register, handleSubmit, control, errors } = useCreateTrailForm();
-  const { mutate: createTrail, isPending } = useCreateTrail();
+  dataForReview,
+}: Props) => {
+  const { register, handleSubmit, control, errors } = useCreateTrailForm(dataForReview);
+  const { staffId } = useSessionInfo();
 
-  const userSession = useHasSession();
+  const trailId = dataForReview?.id;
+  const detailsStatus = dataForReview?.detailsStatus !== StatusEnum.approved;
+  const enabled = Boolean(trailId && detailsStatus);
+
+  const { data: reviewerData } = useGetTrailReviewer(String(trailId!), enabled);
+
+  const { mutate: createTrail, isPending: creating } = useCreateTrail();
+  const { mutate: approveTrail, isPending: approving } = useApproveTrail();
+  const toggleReview = useToggleReviewTrailDetails();
+
+  const forReview = reviewerData?.reviewerId === null || reviewerData?.reviewerId !== staffId;
+
   const onSubmit = (trailData: CreateTrailDto) => {
+    if (dataForReview && !forReview) {
+      // Approve the trail details
+      approveTrail({ trailData, trailId: String(dataForReview.id) });
+      return;
+    }
+
     createTrail(trailData);
+  };
+
+  const handleReviewClick = () => {
+    if (!dataForReview) return;
+
+    if (forReview) {
+      // Claim the trail for review
+      toggleReview.mutate({
+        trailId: String(dataForReview.id),
+        shouldClaim: true,
+      });
+    } else {
+      // Unclaim the trail from review
+      toggleReview.mutate({
+        trailId: String(dataForReview.id),
+        shouldClaim: false,
+      });
+    }
   };
 
   return (
     <>
-      {!userSession && <RequireAuthModal message="Only logged-in users can access this page." />}
+      {!staffId && <RequireAuthModal message="Only logged-in users can access this page." />}
+
+      {dataForReview && dataForReview?.detailsStatus !== StatusEnum.approved && (
+        <button onClick={handleReviewClick} className="review-btn">
+          {forReview ? 'review' : 'cancel'}
+        </button>
+      )}
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="form-container__form">
         <div className="form-container__form__pair">
@@ -117,7 +143,6 @@ Props) => {
                   options={formEnums.seasonVisited}
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  // initialValue={dataForReview?.seasonVisited ?? undefined}
                 />
               )}
             />
@@ -146,7 +171,6 @@ Props) => {
                   options={formEnums.waterAvailability}
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  // initialValue={dataForReview?.waterAvailable ?? undefined}
                 />
               )}
             />
@@ -163,7 +187,6 @@ Props) => {
                   options={formEnums.trailDifficulty}
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  // initialValue={dataForReview?.trailDifficulty ?? undefined}
                 />
               )}
             />
@@ -175,14 +198,12 @@ Props) => {
             <Controller
               name="availableHuts"
               control={control}
-              defaultValue={[]}
               render={({ field }) => (
                 <FormInputSearch
                   suggestions={availableAccommodations}
-                  onAddSelection={(value) => field.onChange(value)}
-                  onRemoveSelection={(value) => field.onChange(value)}
+                  value={field.value ?? []}
+                  onChange={field.onChange}
                   suggestionName={'accommodationName'}
-                  // initialValues={dataForReview?.availableHuts}
                 />
               )}
             />
@@ -193,14 +214,12 @@ Props) => {
             <Controller
               name="destinations"
               control={control}
-              defaultValue={[]}
               render={({ field }) => (
                 <FormInputSearch
                   suggestions={availableDestinations}
-                  onAddSelection={(value) => field.onChange(value)}
-                  onRemoveSelection={(value) => field.onChange(value)}
+                  value={field.value ?? []}
+                  onChange={field.onChange}
                   suggestionName={'destinationName'}
-                  // initialValues={dataForReview?.destinations}
                 />
               )}
             />
@@ -212,7 +231,6 @@ Props) => {
             id="nextTo"
             type="text"
             {...register('nextTo')}
-            // defaultValue={dataForReview?.nextTo}
             placeholder={'city ​​/ town / village'}
           />
           {errors.nextTo && <div className="error-message">{errors.nextTo.message}</div>}
@@ -225,21 +243,23 @@ Props) => {
           <textarea
             id="trailInfo"
             {...register('trailInfo')}
-            // defaultValue={dataForReview?.trailInfo}
             // cols={30} rows={10}
             placeholder="........."
           />
           {errors.trailInfo && <div className="error-message">{errors.trailInfo.message}</div>}
         </div>
-        {/* 
-        {!dataForReview && <p style={{ color: 'black' }}>* {t('photos-message')}</p>}
+
+        {!dataForReview && (
+          <p style={{ color: 'black' }}>* You can add photos after create this trail.</p>
+        )}
 
         {(!dataForReview || (dataForReview && !forReview)) &&
-          ctxDataForReview?.detailsStatus != 'approved' && (
-            <CSubmitButton buttonName={dataForReview && !forReview ? 'Approve' : t('btn-create')} />
-          )} */}
-
-        <SubmitButton isSubmitting={isPending} buttonName="Create trail" />
+          dataForReview?.detailsStatus !== StatusEnum.approved && (
+            <SubmitButton
+              isSubmitting={dataForReview && !forReview ? approving : creating}
+              buttonName={dataForReview && !forReview ? 'Approve' : 'Create trail'}
+            />
+          )}
       </form>
     </>
   );

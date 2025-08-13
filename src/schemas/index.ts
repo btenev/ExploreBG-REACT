@@ -8,3 +8,4 @@ export * from './createTrailSchema';
 export * from './availableHutsRequestSchema';
 export * from './destinationsRequestSchema';
 export * from './detailsStatusEnumSchema';
+export * from './reviewStatusEnumSchema';

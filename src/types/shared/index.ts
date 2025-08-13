@@ -10,3 +10,4 @@ export * from './like';
 export * from './map';
 export * from './entity';
 export * from './delete';
+export * from './admin';
