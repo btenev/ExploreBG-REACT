@@ -11,24 +11,17 @@ interface ISuggestion {
 
 interface Props {
   suggestions: ISuggestion[];
-  onAddSelection: (newValues: { id: number }[]) => void;
-  onRemoveSelection: (newValues: { id: number }[]) => void;
+  value?: ISuggestion[];
+  onChange: (newValues: ISuggestion[]) => void;
   suggestionName: string;
-  initialValues?: ISuggestion[];
 }
 
-const FormInputSearch = ({
-  suggestions,
-  onAddSelection,
-  onRemoveSelection,
-  suggestionName,
-  initialValues,
-}: Props) => {
+const FormInputSearch = ({ suggestions, value, onChange, suggestionName }: Props) => {
+  const selectedValue = value ?? [];
+
   const [search, setSearch] = useState<string>('');
   const [filteredSuggestions, setFilteredSuggestions] = useState<ISuggestion[]>([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number>(-1);
-  const [selectedValues, setSelectedValues] = useState<ISuggestion[]>(initialValues ?? []);
-
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
   const resetSuggestions = useCallback(() => {
@@ -38,16 +31,16 @@ const FormInputSearch = ({
   }, []);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setSearch(value);
+    const inputValue = e.target.value;
+    setSearch(inputValue);
 
-    if (!value) {
+    if (!inputValue) {
       setFilteredSuggestions([]);
       return;
     }
 
     const filtered = suggestions.filter((s) =>
-      s[suggestionName]?.toLowerCase().includes(value.toLowerCase())
+      s[suggestionName]?.toLowerCase().includes(inputValue.toLowerCase())
     );
 
     setFilteredSuggestions(filtered);
@@ -56,13 +49,12 @@ const FormInputSearch = ({
 
   const selectSuggestion = useCallback(
     (suggestion: ISuggestion) => {
-      if (selectedValues.some((selected) => selected.id === suggestion.id)) return;
+      if (selectedValue.some((selected) => selected.id === suggestion.id)) return;
 
-      setSelectedValues((prev) => [...prev, suggestion]);
-      onAddSelection([...selectedValues, { id: suggestion.id }]);
+      onChange([...selectedValue, suggestion]);
       resetSuggestions();
     },
-    [selectedValues, onAddSelection, resetSuggestions]
+    [value, onChange, resetSuggestions]
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -92,11 +84,9 @@ const FormInputSearch = ({
 
   const removeSelectedValue = useCallback(
     (id: number) => {
-      const newValues = selectedValues.filter((v) => v.id !== id);
-      setSelectedValues(newValues);
-      onRemoveSelection(newValues.map(({ id }) => ({ id })));
+      onChange(selectedValue.filter((v) => v.id !== id));
     },
-    [onRemoveSelection, selectedValues]
+    [selectedValue, onChange]
   );
 
   useCloseOnEscapeTabAndClickOutside(suggestionsRef, resetSuggestions);
@@ -137,7 +127,7 @@ const FormInputSearch = ({
           </ul>
         </div>
       )}
-      {selectedValues.map((value) => (
+      {selectedValue.map((value) => (
         <p key={value.id} className="suggestions__selected">
           {value[suggestionName]}
           <button type="button" onClick={() => removeSelectedValue(value.id)} aria-label="Remove">

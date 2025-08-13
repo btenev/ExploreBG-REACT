@@ -3,20 +3,21 @@ import { useState } from 'react';
 import './DeleteItem.scss';
 
 import ConfirmationModal from '../ConfirmationModal';
-import { EntityType, useDeleteEntity } from '../../../hooks/dataHooks/useDeleteEntity';
+import { useDeleteEntity } from '../../../hooks/dataHooks/useDeleteEntity';
+import { EntityType } from '../../../types';
 
 interface Props {
   deletionObj: string;
   entity: EntityType;
-  id: string;
+  entityId: string;
 }
 
-const DeleteItem = ({ deletionObj, entity, id }: Props) => {
+const DeleteItem = ({ deletionObj, entity, entityId }: Props) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const { mutate: deleteEntity } = useDeleteEntity(setIsDialogOpen);
 
   const handleConfirm = () => {
-    deleteEntity({ id, entity });
+    deleteEntity({ entityId, entity });
   };
 
   return (

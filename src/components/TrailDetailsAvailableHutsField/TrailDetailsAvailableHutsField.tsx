@@ -108,10 +108,9 @@ const TrailDetailsAvailableHutsField = ({
                 render={({ field }) => (
                   <FormInputSearch
                     suggestions={availableAccommodations}
-                    onAddSelection={(value) => field.onChange(value)}
-                    onRemoveSelection={(value) => field.onChange(value)}
+                    value={field.value}
+                    onChange={field.onChange}
                     suggestionName={'accommodationName'}
-                    initialValues={initialAvailableHuts}
                   />
                 )}
               />

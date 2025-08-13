@@ -5,12 +5,11 @@ import { GiBeech, GiFallingLeaf } from 'react-icons/gi';
 import './TrailDetailsSection.scss';
 
 import { ITrail, StatusEnum } from '../../types';
-
 import { FavoriteToggle, MemberImage } from '../common';
 
-import { useTrailEnums } from '../../hooks/dataHooks/utilityHooks';
 import { useAvailableAccommodations } from '../../hooks/dataHooks/accommodationHooks';
 import { useAvailableDestinations } from '../../hooks/dataHooks/destinationHooks';
+import { useTrailEnums } from '../../hooks/dataHooks/utilityHooks';
 
 import TrailDetailsActivityField from '../TrailDetailsActivityField';
 import TrailDetailsAvailableHutsField from '../TrailDetailsAvailableHutsField';
@@ -18,11 +17,11 @@ import TrailDetailsDestinationsField from '../TrailDetailsDestinationsField';
 import TrailDetailsElevationField from '../TrailDetailsElevationField';
 import TrailDetailsEndPointField from '../TrailDetailsEndPointField';
 import TrailDetailsInfoField from '../TrailDetailsInfoField';
+import TrailDetailsLastUpdateField from '../TrailDetailsLastUpdateField';
 import TrailDetailsStartPointField from '../TrailDetailsStartPointField';
 import TrailDetailsTotalDistanceField from '../TrailDetailsTotalDistanceField';
 import TrailDetailsDifficultyField from '../TrailDetailsTrailDifficultyField';
 import TrailDetailsWaterAvailabilityField from '../TrailDetailsWaterAvailabilityField';
-import TrailDetailsLastUpdateField from '../TrailDetailsLastUpdateField';
 
 import { LastUpdatedProvider } from '../../context/LastUpdateProvider';
 

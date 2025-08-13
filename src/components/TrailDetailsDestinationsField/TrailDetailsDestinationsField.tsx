@@ -103,10 +103,9 @@ const TrailDetailsDestinationsField = ({
                 render={({ field }) => (
                   <FormInputSearch
                     suggestions={availableDestinations}
-                    onAddSelection={(value) => field.onChange(value)}
-                    onRemoveSelection={(value) => field.onChange(value)}
+                    value={field.value}
+                    onChange={field.onChange}
                     suggestionName={'destinationName'}
-                    initialValues={initialDestinations}
                   />
                 )}
               />
