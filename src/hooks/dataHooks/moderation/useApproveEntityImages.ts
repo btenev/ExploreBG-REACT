@@ -1,8 +1,10 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
+import { ROUTES } from '../../../constants';
 import { EntityType, ReviewStatusEnum } from '../../../types';
+
 import {
   accommodationReviewApi,
   destinationReviewApi,
@@ -12,6 +14,7 @@ import { handleApiError } from '../../../utils/errorHandlers';
 
 export const useApproveEntityImages = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: ['approveEntityImages'],
@@ -36,9 +39,19 @@ export const useApproveEntityImages = () => {
       }
     },
 
-    onSuccess: (data, variables) => {
+    onSuccess: async (data, variables) => {
+      queryClient.removeQueries({
+        queryKey: ['getImageReviewer', variables.entityId],
+        exact: true,
+      });
+
+      // Invalidate trail query to refetch latest data from backend
+      await queryClient.invalidateQueries({
+        queryKey: ['getCreatedTrailForReview', variables.entityId],
+      });
+
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate('/moderation/waiting-approval/count');
+        navigate(ROUTES.dashboard);
       }
       toast.success(
         `${variables.imageIds.length} image${

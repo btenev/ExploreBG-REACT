@@ -23,3 +23,7 @@ export { default as CommentsSection } from './CommentsSection';
 export { default as UserCreatedItems } from './UserCreatedItems';
 export { default as AccessDenied } from './AccessDenied';
 export { default as AdminProtectedPage } from './AdminProtectedPage';
+export { default as ViewDetails } from './ViewDetails';
+export { default as PaginationControls } from './PaginationControls';
+export { default as ZoomPhoto } from './ZoomPhoto';
+export { default as ApproveEntityImages } from './ApproveEntityImages';

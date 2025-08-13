@@ -24,7 +24,8 @@ const ApproveEntityImages = ({ entityId, entityType, imagesForReview }: Props) =
   if (imagesForReview.length === 0) return null;
 
   const imageId = imagesForReview[0].id;
-  const enabled = Boolean(imageId);
+  const imageStatus = imagesForReview[0].imageStatus !== StatusEnum.approved;
+  const enabled = Boolean(imageId && imageStatus);
 
   const { data: reviewerData } = useGetImageReviewer(String(imageId), enabled);
 
@@ -67,7 +68,7 @@ const ApproveEntityImages = ({ entityId, entityType, imagesForReview }: Props) =
     }
 
     approveImages({
-      entityId: String(imagesForReview[0].id),
+      entityId: String(entityId),
       entityType: entityType,
       imageIds: selectedPhotoIds,
     });
@@ -83,7 +84,9 @@ const ApproveEntityImages = ({ entityId, entityType, imagesForReview }: Props) =
 
       {imagesForReview.map((p, index) => (
         <div key={p.id}>
-          <input type="checkbox" onChange={() => handleCheckboxClick(p.id)} />
+          {p.imageStatus !== StatusEnum.approved && (
+            <input type="checkbox" onChange={() => handleCheckboxClick(p.id)} />
+          )}
 
           <figure style={{ cursor: 'pointer' }}>
             <img
