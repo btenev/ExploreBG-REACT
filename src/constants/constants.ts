@@ -14,7 +14,13 @@ export const SORT_DIR_DESC = 'DESC';
 
 /*Navigation routes*/
 export const ROUTES = {
-  dashboard: '/moderation/dashboard/waiting-approval/count',
-  trailDetails: (params: { id: string | number }) => `/trails/${params.id}`,
+  trailDetails: (params: { trailId: string | number }) => `/trails/${params.trailId}`,
   trailDetailsPattern: '/trails/:trailId',
+  moderation: {
+    dashboard: '/moderation/dashboard/waiting-approval/count',
+    gpx: {
+      reviewer: (params: { gpxId: string | number }) => `/moderation/gpx/${params.gpxId}/reviewer`,
+      reviewerPattern: '/moderation/gpx/:gpxId/reviewer',
+    },
+  },
 } as const;

@@ -1,3 +1,4 @@
+import { ROUTES } from '../../constants';
 import { ActiveLink } from '../common';
 
 interface Props {
@@ -22,9 +23,7 @@ const UserNavLinks = ({ isAdminOrModerator }: Props) => {
             <ActiveLink to={'/moderation/users'}>Users</ActiveLink>
           </li>
           <li>
-            <ActiveLink to={'/moderation/dashboard/waiting-approval/count'}>
-              Waiting approval
-            </ActiveLink>
+            <ActiveLink to={ROUTES.moderation.dashboard}>Waiting approval</ActiveLink>
           </li>
         </>
       )}

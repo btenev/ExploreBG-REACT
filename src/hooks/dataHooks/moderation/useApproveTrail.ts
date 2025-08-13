@@ -39,7 +39,7 @@ export const useApproveTrail = () => {
       await queryClient.invalidateQueries({ queryKey: ['getCreatedTrailForReview', trailId] });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(ROUTES.dashboard);
+        navigate(ROUTES.moderation.dashboard);
       }
     },
 

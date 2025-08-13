@@ -51,7 +51,7 @@ export const useApproveEntityImages = () => {
       });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(ROUTES.dashboard);
+        navigate(ROUTES.moderation.dashboard);
       }
       toast.success(
         `${variables.imageIds.length} image${
