@@ -26,6 +26,10 @@ export const ROUTES = {
       unclaimTrailForReview: (params: { trailId: string | number }) =>
         `/moderation/trails/${params.trailId}/gpx-file/unclaim`,
       unclaimTrailForReviewPattern: '/moderation/trails/:trailId/gpx-file/unclaim',
+
+      approveTrailGpxfile: (params: { trailId: string | number }) =>
+        `/moderation/trails/${params.trailId}/gpx-file/approve`,
+      approveTrailGpxfilePattern: '/moderation/trails/:trailId/gpx-file/approve',
     },
     gpx: {
       reviewer: (params: { gpxId: string | number }) => `/moderation/gpx/${params.gpxId}/reviewer`,

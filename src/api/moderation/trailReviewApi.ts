@@ -75,4 +75,23 @@ export const trailReviewApi = {
 
   unclaimForReviewTrailGpx: (trailId: string): Promise<void> =>
     apiClient.patch(ROUTES.moderation.trail.unclaimTrailForReview({ trailId })),
+
+  approveTrailGpxFile: async (
+    trailId: string,
+    approved: boolean
+  ): Promise<{ entityStatus: ReviewStatusEnum }> => {
+    try {
+      const response = await apiClient.patch<{ entityStatus: unknown }>(
+        ROUTES.moderation.trail.approveTrailGpxfile({ trailId }),
+        { approved }
+      );
+
+      const entityStatus = reviewStatusConverter(response.entityStatus);
+
+      return { entityStatus };
+    } catch (error) {
+      console.error('Error approving Gpx file:', error);
+      throw new Error('Failed to approve Gpx file due to invalid entity status');
+    }
+  },
 };

@@ -11,6 +11,7 @@ export const useGetImageReviewer = (imageId: string, enabled: boolean) => {
     queryFn: () => imageModerationApi.getImageReviewer(imageId),
     enabled, // Ensure the query runs only if trailId is provided
     staleTime: 0,
+    gcTime: 0,
     retry: false, // Disable retries on failure
   });
 };
