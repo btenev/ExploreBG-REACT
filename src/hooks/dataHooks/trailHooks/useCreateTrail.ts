@@ -15,7 +15,7 @@ export const useCreateTrail = () => {
     mutationFn: (trailData: CreateTrailDto) => trailsApi.createTrail(trailData),
 
     onSuccess: (data) => {
-      navigate(ROUTES.trailDetails({ id: data.id })); // Redirect to the created trail's page
+      navigate(ROUTES.trailDetails({ trailId: data.id })); // Redirect to the created trail's page
       toast.success(`Trail created successfully!`);
     },
 

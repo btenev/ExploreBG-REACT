@@ -18,6 +18,15 @@ export const ROUTES = {
   trailDetailsPattern: '/trails/:trailId',
   moderation: {
     dashboard: '/moderation/dashboard/waiting-approval/count',
+    trail: {
+      claimTrailForReview: (params: { trailId: string | number }) =>
+        `/moderation/trails/${params.trailId}/gpx-file/claim`,
+      claimTrailForReviewPattern: '/moderation/trails/:trailId/gpx-file/claim',
+
+      unclaimTrailForReview: (params: { trailId: string | number }) =>
+        `/moderation/trails/${params.trailId}/gpx-file/unclaim`,
+      unclaimTrailForReviewPattern: '/moderation/trails/:trailId/gpx-file/unclaim',
+    },
     gpx: {
       reviewer: (params: { gpxId: string | number }) => `/moderation/gpx/${params.gpxId}/reviewer`,
       reviewerPattern: '/moderation/gpx/:gpxId/reviewer',

@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 import { trailReviewApi } from '../../../api/moderation';
 import { handleApiError } from '../../../utils/errorHandlers';
@@ -16,6 +17,12 @@ export const useToggleReviewTrailDetails = () => {
 
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['getTrailReviewer', variables.trailId] });
+
+      toast.success(
+        variables.shouldClaim
+          ? `Trail successfully claimed for review.`
+          : 'Trail review claim removed.'
+      );
     },
 
     onError: handleApiError,

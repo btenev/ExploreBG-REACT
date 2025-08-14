@@ -1,3 +1,4 @@
+import { ROUTES } from '../../constants';
 import { CreateTrailDto } from '../../schemas';
 import { ITrail, ITrailReview, ReviewStatusEnum } from '../../types';
 import { reviewStatusConverter } from '../../utils/statusConverter';
@@ -68,4 +69,10 @@ export const trailReviewApi = {
       throw new Error('Failed to approve trail images due to invalid entity status');
     }
   },
+
+  claimForReviewTrailGpx: (trailId: string): Promise<void> =>
+    apiClient.patch(ROUTES.moderation.trail.claimTrailForReview({ trailId })),
+
+  unclaimForReviewTrailGpx: (trailId: string): Promise<void> =>
+    apiClient.patch(ROUTES.moderation.trail.unclaimTrailForReview({ trailId })),
 };
