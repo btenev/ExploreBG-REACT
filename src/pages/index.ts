@@ -7,3 +7,5 @@ export { default as TrailDetails } from './TrailDetails';
 export { default as NotFound } from './NotFound';
 export { default as UserProfile } from './UserProfile';
 export { default as AllUsers } from './AllUsers';
+export { default as WaitingApproval } from './WaitingAppoval';
+export { default as TrailReview } from './TrailReview';

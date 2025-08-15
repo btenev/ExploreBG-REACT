@@ -1,29 +1,31 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { ROUTES } from './constants';
 import { Layout } from './components/common';
 import {
-  AllUsers,
-  Authentication,
-  CreateTrail,
-  FAQ,
   Home,
+  FAQ,
+  Authentication,
   MyProfile,
-  NotFound,
+  CreateTrail,
   TrailDetails,
+  NotFound,
   UserProfile,
+  AllUsers,
   WaitingApproval,
+  TrailReview,
 } from './pages';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    // path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <Home /> },
-      { path: 'faq', element: <FAQ /> },
-      { path: 'users/my-profile', element: <MyProfile /> },
-      { path: 'users/:userId', element: <UserProfile /> },
-      { path: 'trails/:trailId', element: <TrailDetails /> },
+      { path: '/', element: <Home /> },
+      { path: '/faq', element: <FAQ /> },
+      { path: '/users/my-profile', element: <MyProfile /> },
+      { path: '/users/:userId', element: <UserProfile /> },
+      { path: ROUTES.trailDetailsPattern, element: <TrailDetails /> },
     ],
   },
 
@@ -31,7 +33,8 @@ const router = createBrowserRouter([
   { path: '/trails/create', element: <CreateTrail /> },
 
   { path: '/moderation/users', element: <AllUsers /> },
-  { path: '/moderation/dashboard/waiting-approval/count', element: <WaitingApproval /> },
+  { path: ROUTES.moderation.dashboard, element: <WaitingApproval /> },
+  { path: '/moderation/trails/:trailId/review', element: <TrailReview /> },
   { path: '*', element: <NotFound /> },
 ]);
 
