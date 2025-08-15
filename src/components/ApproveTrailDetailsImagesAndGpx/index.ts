@@ -1,0 +1,2 @@
+import ApproveTrailDetailsImagesAndGpx from './ApproveTrailDetailsImagesAndGpx';
+export default ApproveTrailDetailsImagesAndGpx;
