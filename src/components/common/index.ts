@@ -27,3 +27,4 @@ export { default as ViewDetails } from './ViewDetails';
 export { default as PaginationControls } from './PaginationControls';
 export { default as ZoomPhoto } from './ZoomPhoto';
 export { default as ApproveEntityImages } from './ApproveEntityImages';
+export { default as CarouselControls } from './CarouselControls';
