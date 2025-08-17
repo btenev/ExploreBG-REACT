@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { ROUTES } from './constants';
+import { PUBLIC_ROUTES, MODERATION_ROUTES } from './constants';
 import { Layout } from './components/common';
 import {
   Home,
@@ -23,18 +23,18 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/faq', element: <FAQ /> },
-      { path: '/users/my-profile', element: <MyProfile /> },
-      { path: '/users/:userId', element: <UserProfile /> },
-      { path: ROUTES.trailDetailsPattern, element: <TrailDetails /> },
+      { path: PUBLIC_ROUTES.user.myProfile, element: <MyProfile /> },
+      { path: PUBLIC_ROUTES.user.getProfile.path, element: <UserProfile /> },
+      { path: PUBLIC_ROUTES.trail.details.path, element: <TrailDetails /> },
     ],
   },
 
-  { path: '/authentication', element: <Authentication /> },
-  { path: '/trails/create', element: <CreateTrail /> },
+  { path: PUBLIC_ROUTES.authentication, element: <Authentication /> },
+  { path: PUBLIC_ROUTES.trail.create, element: <CreateTrail /> },
 
-  { path: '/moderation/users', element: <AllUsers /> },
-  { path: ROUTES.moderation.dashboard, element: <WaitingApproval /> },
-  { path: '/moderation/trails/:trailId/review', element: <TrailReview /> },
+  { path: MODERATION_ROUTES.user.getAll, element: <AllUsers /> },
+  { path: MODERATION_ROUTES.dashboard, element: <WaitingApproval /> },
+  { path: MODERATION_ROUTES.trail.getCreatedTrailForReview.path, element: <TrailReview /> },
   { path: '*', element: <NotFound /> },
 ]);
 

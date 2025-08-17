@@ -11,29 +11,3 @@ export const DEFAULT_CARDS_PER_PAGE = 3;
 
 export const DEFAULT_SORT_BY = 'id';
 export const SORT_DIR_DESC = 'DESC';
-
-/*Navigation routes*/
-export const ROUTES = {
-  trailDetails: (params: { trailId: string | number }) => `/trails/${params.trailId}`,
-  trailDetailsPattern: '/trails/:trailId',
-  moderation: {
-    dashboard: '/moderation/dashboard/waiting-approval/count',
-    trail: {
-      claimTrailForReview: (params: { trailId: string | number }) =>
-        `/moderation/trails/${params.trailId}/gpx-file/claim`,
-      claimTrailForReviewPattern: '/moderation/trails/:trailId/gpx-file/claim',
-
-      unclaimTrailForReview: (params: { trailId: string | number }) =>
-        `/moderation/trails/${params.trailId}/gpx-file/unclaim`,
-      unclaimTrailForReviewPattern: '/moderation/trails/:trailId/gpx-file/unclaim',
-
-      approveTrailGpxfile: (params: { trailId: string | number }) =>
-        `/moderation/trails/${params.trailId}/gpx-file/approve`,
-      approveTrailGpxfilePattern: '/moderation/trails/:trailId/gpx-file/approve',
-    },
-    gpx: {
-      reviewer: (params: { gpxId: string | number }) => `/moderation/gpx/${params.gpxId}/reviewer`,
-      reviewerPattern: '/moderation/gpx/:gpxId/reviewer',
-    },
-  },
-} as const;

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { trailsApi } from '../../../api/trailsApi';
 import { CreateTrailDto } from '../../../schemas';
 import { handleApiError } from '../../../utils/errorHandlers';
-import { ROUTES } from '../../../constants';
+import { PUBLIC_ROUTES } from '../../../constants';
 
 export const useCreateTrail = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export const useCreateTrail = () => {
     mutationFn: (trailData: CreateTrailDto) => trailsApi.createTrail(trailData),
 
     onSuccess: (data) => {
-      navigate(ROUTES.trailDetails({ trailId: data.id })); // Redirect to the created trail's page
+      navigate(PUBLIC_ROUTES.trail.details.build(data.id)); // Redirect to the created trail's page
       toast.success(`Trail created successfully!`);
     },
 

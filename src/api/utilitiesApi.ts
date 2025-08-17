@@ -1,3 +1,4 @@
+import { PUBLIC_ROUTES } from '../constants';
 import { registerEnumsSchema } from '../schemas/genderEnumSchema';
 import { trailEnumsSchema } from '../schemas/trailEnumsSchema';
 import {
@@ -26,7 +27,9 @@ export interface TrailEnumsResponse {
 
 export const utilitiesApi = {
   getGenderEnum: async (): Promise<RegisterEnumsResponse> => {
-    const response = await apiClient.get<RegisterEnumsResponse>(`${baseUrl}/register-enums`);
+    const response = await apiClient.get<RegisterEnumsResponse>(
+      PUBLIC_ROUTES.utilities.registerEnums
+    );
     return safeParseOrThrow(
       registerEnumsSchema,
       response,
@@ -35,7 +38,7 @@ export const utilitiesApi = {
   },
 
   getTrailEnums: async (): Promise<TrailEnumsResponse> => {
-    const response = await apiClient.get<TrailEnumsResponse>(`${baseUrl}/create/trail-enums`);
+    const response = await apiClient.get<TrailEnumsResponse>(PUBLIC_ROUTES.utilities.trailEnums);
     return safeParseOrThrow(
       trailEnumsSchema,
       response,

@@ -6,6 +6,7 @@ import { authApi } from '../../../api/authClient';
 import { useSessionStore } from '../../../store/sessionStore';
 import { ApiError } from '../../../types';
 import { LoginDto } from '../../../schemas';
+import { PUBLIC_ROUTES } from '../../../constants';
 
 export const useLogin = () => {
   const store = useSessionStore((state) => state.setUser);
@@ -22,7 +23,7 @@ export const useLogin = () => {
         userRoles: data.roles,
       });
       toast.success(`Welcome ${data.username}!`);
-      navigate('/users/my-profile');
+      navigate(PUBLIC_ROUTES.user.myProfile);
     },
     onError: (error: ApiError) => {
       if (error.errors) {

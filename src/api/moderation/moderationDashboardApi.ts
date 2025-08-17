@@ -1,7 +1,7 @@
+import { MODERATION_ROUTES } from '../../constants';
 import { ApiClient } from '../apiClient';
 
 const apiClient = new ApiClient();
-const baseUrl = '/moderation/dashboard';
 
 export interface WaitingApprovalCountResponse {
   accommidations: number;
@@ -11,5 +11,5 @@ export interface WaitingApprovalCountResponse {
 
 export const moderationDashboardApi = {
   getWaitingApprovalCount: (): Promise<WaitingApprovalCountResponse> =>
-    apiClient.get(`${baseUrl}/entities/waiting-approval/count`),
+    apiClient.get(MODERATION_ROUTES.dashboard),
 };

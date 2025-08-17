@@ -1,3 +1,4 @@
+import { PUBLIC_ROUTES } from '../constants';
 import { CommentDataDto } from '../hooks/formHooks/useCommentForm';
 import { CreateTrailDto, detailsStatusEnumSchema } from '../schemas';
 import {
@@ -48,14 +49,14 @@ const apiClient = new ApiClient();
 const baseTrailsUrl = '/trails';
 
 export const trailsApi = {
-  get4RandomTrails: (): Promise<ITrailCard[]> => apiClient.get(`${baseTrailsUrl}/random`),
+  get4RandomTrails: (): Promise<ITrailCard[]> => apiClient.get(PUBLIC_ROUTES.trail.random),
 
   createTrail: (trailData: CreateTrailDto): Promise<{ id: string }> =>
-    apiClient.post(`${baseTrailsUrl}`, trailData),
+    apiClient.post(PUBLIC_ROUTES.trail.create, trailData),
 
   getTrail: async (trailId: string): Promise<ITrail> => {
     try {
-      const response = await apiClient.get<ITrail>(`${baseTrailsUrl}/${trailId}`);
+      const response = await apiClient.get<ITrail>(PUBLIC_ROUTES.trail.details.build(trailId));
       const detailsStatus = detailsStatusConverter(response.detailsStatus);
       return { ...response, detailsStatus };
     } catch (error) {
@@ -64,12 +65,14 @@ export const trailsApi = {
     }
   },
 
-  deleteTrail: (trailId: string): Promise<void> => apiClient.delete(`${baseTrailsUrl}/${trailId}`),
+  deleteTrail: (trailId: string): Promise<void> =>
+    apiClient.delete(PUBLIC_ROUTES.trail.details.build(trailId)),
 
   toggleFavoriteStatus: (
     trailId: string,
     data: ToggleFavoriteRequest
-  ): Promise<ToggleFavoriteResponse> => apiClient.patch(`${baseTrailsUrl}/${trailId}/like`, data),
+  ): Promise<ToggleFavoriteResponse> =>
+    apiClient.patch(PUBLIC_ROUTES.trail.favoriteTrail(trailId), data),
 
   updateHikingTrailField: <K extends keyof HikingTraiFieldRequestMap>(
     field: K,
@@ -85,16 +88,16 @@ export const trailsApi = {
     trailId: string,
     data: { imageId: string }
   ): Promise<{ imageId: number }> =>
-    apiClient.patch(`${baseTrailsUrl}/${trailId}/main-image`, data),
+    apiClient.patch(PUBLIC_ROUTES.trail.updateMainTrailPhoto(trailId), data),
 
   getTrailComments: (trailId: string): Promise<IComment[]> =>
-    apiClient.get<IComment[]>(`${baseTrailsUrl}/${trailId}/comments`),
+    apiClient.get<IComment[]>(PUBLIC_ROUTES.trail.trailComments(trailId)),
 
   createTrailComment: (trailId: string, data: CommentDataDto): Promise<IComment> =>
-    apiClient.post(`${baseTrailsUrl}/${trailId}/comments`, data),
+    apiClient.post(PUBLIC_ROUTES.trail.trailComments(trailId), data),
 
   deleteTrailComment: (trailId: string, commentId: string): Promise<void> =>
-    apiClient.delete(`${baseTrailsUrl}/${trailId}/comments/${commentId}`),
+    apiClient.delete(PUBLIC_ROUTES.trail.deleteTrailComment(trailId, commentId)),
 };
 
 const detailsStatusConverter = (detailsStatus: unknown): StatusEnum => {

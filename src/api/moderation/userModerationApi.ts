@@ -1,18 +1,18 @@
+import { MODERATION_ROUTES } from '../../constants';
 import { IUser } from '../../types';
 import { ApiClient } from '../apiClient';
 
 const apiClient = new ApiClient();
-const baseUrl = '/moderation';
 
 export const userModerationApi = {
-  getAllUsers: (): Promise<IUser[]> => apiClient.get(`${baseUrl}/users`),
+  getAllUsers: (): Promise<IUser[]> => apiClient.get(MODERATION_ROUTES.user.getAll),
 
   lockUnlockUserAccount: (
     userId: string,
     lockAccount: boolean
   ): Promise<{ accountNonLocked: boolean }> =>
-    apiClient.patch(`${baseUrl}/${userId}/lock-account`, { lockAccount }),
+    apiClient.patch(MODERATION_ROUTES.user.lockUnlockAccount(userId), { lockAccount }),
 
   updateUserRole: (userId: string, moderator: boolean): Promise<{ moderator: boolean }> =>
-    apiClient.patch(`${baseUrl}/${userId}/update-role`, { moderator }),
+    apiClient.patch(MODERATION_ROUTES.user.updateRole(userId), { moderator }),
 };

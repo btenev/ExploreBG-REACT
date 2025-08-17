@@ -1,4 +1,4 @@
-import { ROUTES } from '../../constants';
+import { PUBLIC_ROUTES, MODERATION_ROUTES } from '../../constants';
 import { ActiveLink } from '../common';
 
 interface Props {
@@ -9,10 +9,10 @@ const UserNavLinks = ({ isAdminOrModerator }: Props) => {
   return (
     <>
       <li>
-        <ActiveLink to={'/users/my-profile'}>My profile</ActiveLink>
+        <ActiveLink to={PUBLIC_ROUTES.user.myProfile}>My profile</ActiveLink>
       </li>
       <li>
-        <ActiveLink to={'/trails/create'}>Create trail</ActiveLink>
+        <ActiveLink to={PUBLIC_ROUTES.trail.create}>Create trail</ActiveLink>
       </li>
 
       <span>--------------------</span>
@@ -20,10 +20,10 @@ const UserNavLinks = ({ isAdminOrModerator }: Props) => {
       {isAdminOrModerator && (
         <>
           <li>
-            <ActiveLink to={'/moderation/users'}>Users</ActiveLink>
+            <ActiveLink to={MODERATION_ROUTES.user.getAll}>Users</ActiveLink>
           </li>
           <li>
-            <ActiveLink to={ROUTES.moderation.dashboard}>Waiting approval</ActiveLink>
+            <ActiveLink to={MODERATION_ROUTES.dashboard}>Waiting approval</ActiveLink>
           </li>
         </>
       )}

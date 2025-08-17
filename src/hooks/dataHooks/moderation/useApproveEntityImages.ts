@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { ROUTES } from '../../../constants';
+import { MODERATION_ROUTES } from '../../../constants';
 import { EntityType, ReviewStatusEnum } from '../../../types';
 
 import {
@@ -51,7 +51,7 @@ export const useApproveEntityImages = () => {
       });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(ROUTES.moderation.dashboard);
+        navigate(MODERATION_ROUTES.dashboard);
       }
       toast.success(
         `${variables.imageIds.length} image${

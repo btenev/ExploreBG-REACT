@@ -1,9 +1,9 @@
 import { ApiClient } from '../apiClient';
 import { IWaitingApproval, ReviewStatusEnum } from '../../types';
 import { reviewStatusConverter } from '../../utils/statusConverter';
+import { MODERATION_ROUTES } from '../../constants';
 
 const apiClient = new ApiClient();
-const baseUrl = '/moderation/accommodations';
 
 export interface WaitingApprovalEntityResponse {
   content: IWaitingApproval[];
@@ -12,13 +12,17 @@ export interface WaitingApprovalEntityResponse {
 
 export const accommodationReviewApi = {
   getWaitingApprovalAccommodations: (query: string): Promise<WaitingApprovalEntityResponse> =>
-    apiClient.get(`${baseUrl}/waiting-approval${query}`),
+    apiClient.get(MODERATION_ROUTES.accommodation.getWaitingApprovalAccommodations(query)),
 
   claimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
-    apiClient.patch(`${baseUrl}/${accommodationId}/images/claim`),
+    apiClient.patch(
+      MODERATION_ROUTES.accommodation.claimForReviewAccommodationImages(accommodationId)
+    ),
 
   unclaimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
-    apiClient.patch(`${baseUrl}/${accommodationId}/images/unclaim`),
+    apiClient.patch(
+      MODERATION_ROUTES.accommodation.unclaimForReviewAccommodationImages(accommodationId)
+    ),
 
   approveAccommodationImages: async (
     accommodationId: string,
@@ -26,7 +30,7 @@ export const accommodationReviewApi = {
   ): Promise<{ entityStatus: ReviewStatusEnum }> => {
     try {
       const response = await apiClient.patch<{ entityStatus: unknown }>(
-        `${baseUrl}/${accommodationId}/images/approve`,
+        MODERATION_ROUTES.accommodation.approveAccommodationImages(accommodationId),
         { imageIds }
       );
 

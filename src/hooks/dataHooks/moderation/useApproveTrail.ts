@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { ROUTES } from '../../../constants';
+import { MODERATION_ROUTES } from '../../../constants';
 import { ReviewStatusEnum } from '../../../types/shared';
 import { trailReviewApi } from '../../../api/moderation';
 import { CreateTrailDto } from '../../../schemas';
@@ -39,7 +39,7 @@ export const useApproveTrail = () => {
       await queryClient.invalidateQueries({ queryKey: ['getCreatedTrailForReview', trailId] });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(ROUTES.moderation.dashboard);
+        navigate(MODERATION_ROUTES.dashboard);
       }
     },
 

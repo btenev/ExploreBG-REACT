@@ -1,11 +1,10 @@
-import { ROUTES } from '../../constants';
+import { MODERATION_ROUTES } from '../../constants';
 import { CreateTrailDto } from '../../schemas';
 import { ITrail, ITrailReview, ReviewStatusEnum } from '../../types';
 import { reviewStatusConverter } from '../../utils/statusConverter';
 import { ApiClient } from '../apiClient';
 
 const apiClient = new ApiClient();
-const baseUrl = '/moderation/trails';
 
 export interface WaitingApprovalTrailsResponse {
   content: ITrailReview[];
@@ -14,19 +13,19 @@ export interface WaitingApprovalTrailsResponse {
 
 export const trailReviewApi = {
   getWaitingApprovalTrails: (query: string): Promise<WaitingApprovalTrailsResponse> =>
-    apiClient.get(`${baseUrl}/waiting-approval${query}`),
+    apiClient.get(MODERATION_ROUTES.trail.getWaitingApprovalTrails(query)),
 
   getCreatedTrailForReview: (trailId: string): Promise<ITrail> =>
-    apiClient.get(`${baseUrl}/${trailId}/review`),
+    apiClient.get(MODERATION_ROUTES.trail.getCreatedTrailForReview.build(trailId)),
 
   getTrailReviewer: (trailId: string): Promise<{ reviewerId: number }> =>
-    apiClient.get(`${baseUrl}/${trailId}/reviewer`),
+    apiClient.get(MODERATION_ROUTES.trail.getTrailReviewer(trailId)),
 
   claimForReviewTrailDetails: (trailId: string): Promise<void> =>
-    apiClient.patch(`${baseUrl}/${trailId}/claim`),
+    apiClient.patch(MODERATION_ROUTES.trail.claimTrailForReview(trailId)),
 
   unclaimForReviewTrailDetails: (trailId: string): Promise<void> =>
-    apiClient.patch(`${baseUrl}/${trailId}/unclaim`),
+    apiClient.patch(MODERATION_ROUTES.trail.unclaimTrailForReview(trailId)),
 
   approveTrailDetails: async (
     trailId: string,
@@ -34,7 +33,7 @@ export const trailReviewApi = {
   ): Promise<{ entityStatus: ReviewStatusEnum }> => {
     try {
       const response = await apiClient.patch<{ entityStatus: unknown }>(
-        `${baseUrl}/${trailId}/approve`,
+        MODERATION_ROUTES.trail.approveTrailDetails(trailId),
         trailData
       );
 
@@ -47,10 +46,10 @@ export const trailReviewApi = {
   },
 
   claimForReviewTrailImages: (trailId: string): Promise<void> =>
-    apiClient.patch(`${baseUrl}/${trailId}/images/claim`),
+    apiClient.patch(MODERATION_ROUTES.trail.claimTrailImagesForReview(trailId)),
 
   unclaimForReviewTrailImages: (trailId: string): Promise<void> =>
-    apiClient.patch(`${baseUrl}/${trailId}/images/unclaim`),
+    apiClient.patch(MODERATION_ROUTES.trail.unclaimTrailImagesForReview(trailId)),
 
   approveTrailImages: async (
     trailId: string,
@@ -58,7 +57,7 @@ export const trailReviewApi = {
   ): Promise<{ entityStatus: ReviewStatusEnum }> => {
     try {
       const response = await apiClient.patch<{ entityStatus: unknown }>(
-        `${baseUrl}/${trailId}/images/approve`,
+        MODERATION_ROUTES.trail.approveTrailImagesForReview(trailId),
         { imageIds }
       );
 
@@ -71,10 +70,10 @@ export const trailReviewApi = {
   },
 
   claimForReviewTrailGpx: (trailId: string): Promise<void> =>
-    apiClient.patch(ROUTES.moderation.trail.claimTrailForReview({ trailId })),
+    apiClient.patch(MODERATION_ROUTES.trail.claimTrailForReview(trailId)),
 
   unclaimForReviewTrailGpx: (trailId: string): Promise<void> =>
-    apiClient.patch(ROUTES.moderation.trail.unclaimTrailForReview({ trailId })),
+    apiClient.patch(MODERATION_ROUTES.trail.unclaimTrailForReview(trailId)),
 
   approveTrailGpxFile: async (
     trailId: string,
@@ -82,7 +81,7 @@ export const trailReviewApi = {
   ): Promise<{ entityStatus: ReviewStatusEnum }> => {
     try {
       const response = await apiClient.patch<{ entityStatus: unknown }>(
-        ROUTES.moderation.trail.approveTrailGpxfile({ trailId }),
+        MODERATION_ROUTES.trail.approveTrailGpxfile(trailId),
         { approved }
       );
 

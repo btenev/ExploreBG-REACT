@@ -15,6 +15,7 @@ import useCloseOnEscapeTabAndClickOutside from '../../hooks/uiHooks/useCloseOnEs
 import { useLogout } from '../../hooks/dataHooks/authHooks';
 
 import { useHasSession, useIsAdminOrModerator, useUserImage } from '../../utils/sessionUtils';
+import { PUBLIC_ROUTES } from '../../constants';
 
 const HeaderLinksAndButtons = () => {
   const [isOpenNavbar, setIsOpenNavbar] = useState<boolean>(false);
@@ -69,7 +70,7 @@ const HeaderLinksAndButtons = () => {
         </ul>
 
         {!hasSession && (
-          <Link to={'/authentication'} className="glow-on-hover">
+          <Link to={PUBLIC_ROUTES.authentication} className="glow-on-hover">
             Login/Sign up
           </Link>
         )}
@@ -107,7 +108,7 @@ const HeaderLinksAndButtons = () => {
           </ul>
 
           {!hasSession && (
-            <Link to={'/authentication'} className="glow-on-hover">
+            <Link to={PUBLIC_ROUTES.authentication} className="glow-on-hover">
               Login/Sign up
             </Link>
           )}

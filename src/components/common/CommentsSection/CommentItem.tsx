@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { IComment } from '../../../types';
 import { formatEntityLastUpdate } from '../../../utils/dateUtils';
+import { PUBLIC_ROUTES } from '../../../constants';
 
 import { useCommentForm } from '../../../hooks/formHooks/useCommentForm';
 
@@ -59,7 +60,7 @@ const CommentItem = ({
 
   return (
     <div className="comments__wrapper__comment" ref={commentRef}>
-      <Link to={`/users/${comment.owner.id}`}>
+      <Link to={PUBLIC_ROUTES.user.getProfile.build(comment.owner.id)}>
         <span>
           <em>{comment.owner.username}</em>
         </span>

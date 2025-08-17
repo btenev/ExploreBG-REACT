@@ -4,6 +4,7 @@ import { GenderEnum } from '../types';
 import { genderEnumSchema } from '../schemas';
 import { safeParseOrThrow } from '../utils/zodHelpers';
 import { ApiClient } from './apiClient';
+import { PUBLIC_ROUTES } from '../constants';
 
 const apiClient = new ApiClient();
 const baseUrl = '/users';
@@ -41,7 +42,7 @@ export type UserFieldResponseMap = {
 export const usersApi = {
   getMyProfile: async (): Promise<MyProfileResponse> => {
     try {
-      const response = await apiClient.get<MyProfileResponse>(`${baseUrl}/my-profile`);
+      const response = await apiClient.get<MyProfileResponse>(PUBLIC_ROUTES.user.myProfile);
       const gender = genderConverter(response.gender);
       return { ...response, gender };
     } catch (error) {
@@ -52,7 +53,9 @@ export const usersApi = {
 
   getUserProfile: async (userId: string): Promise<MyProfileResponse> => {
     try {
-      const response = await apiClient.get<MyProfileResponse>(`${baseUrl}/${userId}`);
+      const response = await apiClient.get<MyProfileResponse>(
+        PUBLIC_ROUTES.user.getProfile.build(userId)
+      );
       const gender = genderConverter(response.gender);
       return { ...response, gender };
     } catch (error) {

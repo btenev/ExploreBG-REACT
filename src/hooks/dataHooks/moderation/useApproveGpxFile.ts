@@ -1,13 +1,13 @@
-import { Dispatch } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Dispatch } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { trailReviewApi } from '../../../api/moderation';
-import { ReviewStatusEnum } from '../../../types/shared/enums/ReviewStatusEnum';
-import { ROUTES } from '../../../constants';
-import { handleApiError } from '../../../utils/errorHandlers';
+import { MODERATION_ROUTES } from '../../../constants';
 import { ApiError } from '../../../types';
+import { ReviewStatusEnum } from '../../../types/shared/enums/ReviewStatusEnum';
+import { handleApiError } from '../../../utils/errorHandlers';
 
 export const useApproveGpxFile = (setLoadingAction: Dispatch<'approve' | 'reject' | null>) => {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export const useApproveGpxFile = (setLoadingAction: Dispatch<'approve' | 'reject
       });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(ROUTES.moderation.dashboard);
+        navigate(MODERATION_ROUTES.dashboard);
       }
 
       toast.success(
