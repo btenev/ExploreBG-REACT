@@ -22,6 +22,11 @@ export const PUBLIC_ROUTES = {
   accommodation: {
     random: `${ACCOMMODATIONS}/random` as const, // simple
 
+    details: {
+      path: `${ACCOMMODATIONS}/:accommodationId` as const, // dynamic
+      build: (accommodationId: string | number) => `${ACCOMMODATIONS}/${accommodationId}`,
+    },
+
     availableAccommodation: `${ACCOMMODATIONS}/select` as const, // simple
 
     favoriteStatus: (accommodationId: string | number) =>

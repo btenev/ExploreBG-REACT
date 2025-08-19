@@ -1,3 +1,5 @@
+import { AccessibilityEnum, AccommodationTypeEnum, IComment, IOwner, StatusEnum } from '../shared';
+
 export interface IHut {
   id: number;
   accommodationName: string;
@@ -5,4 +7,19 @@ export interface IHut {
 
 export interface IAccommodationCard extends IHut {
   imageUrl: string;
+}
+
+export interface IAccommodation extends IAccommodationCard {
+  createdBy: IOwner;
+  phoneNumber: string;
+  site: string;
+  accommodationInfo: string;
+  bedCapacity: number;
+  pricePerBed: number;
+  foodAvailable: boolean;
+  access: AccessibilityEnum;
+  type: AccommodationTypeEnum;
+  nextTo: string;
+  comments: IComment[];
+  detailsStatus: StatusEnum;
 }

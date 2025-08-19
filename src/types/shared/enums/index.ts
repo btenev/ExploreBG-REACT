@@ -5,3 +5,5 @@ export * from './DifficultyLevelEnum';
 export * from './SuitableForEnum';
 export * from './StatusEnum';
 export * from './ReviewStatusEnum';
+export * from './AccessibilityEnum';
+export * from './AccommodationTypeEnum';

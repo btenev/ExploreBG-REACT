@@ -1,5 +1,6 @@
 import { ApiClient } from './apiClient';
 import {
+  IAccommodation,
   IAccommodationCard,
   IComment,
   IHut,
@@ -8,12 +9,26 @@ import {
 } from '../types';
 import { CommentDataDto } from '../hooks/formHooks/useCommentForm';
 import { PUBLIC_ROUTES } from '../constants';
+import { detailsStatusConverter } from '../utils/statusConverter';
 
 const apiClient = new ApiClient();
 
 export const accommodationsApi = {
   get4RandomAccommodations: (): Promise<IAccommodationCard[]> =>
     apiClient.get(PUBLIC_ROUTES.accommodation.random),
+
+  getAccommodation: async (trailId: string): Promise<IAccommodation> => {
+    try {
+      const response = await apiClient.get<IAccommodation>(
+        PUBLIC_ROUTES.trail.details.build(trailId)
+      );
+      const detailsStatus = detailsStatusConverter(response.detailsStatus);
+      return { ...response, detailsStatus };
+    } catch (error) {
+      console.error('Error fetching accommodation:', error);
+      throw new Error('Failed to load accommodation due to invalid details status');
+    }
+  },
 
   getAvailableAccommodations: (): Promise<IHut[]> =>
     apiClient.get(PUBLIC_ROUTES.accommodation.availableAccommodation),

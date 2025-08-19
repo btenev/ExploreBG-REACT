@@ -3,8 +3,8 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 import './FavoriteToggle.scss';
 
-import { EntityType } from '../../../hooks/dataHooks/useDeleteEntity';
 import { useToggleFavoriteStatus } from '../../../hooks/dataHooks/useToggleFavoriteStatus';
+import { EntityType } from '../../../types';
 
 interface Props {
   liked: boolean;

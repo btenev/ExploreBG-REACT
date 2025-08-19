@@ -12,7 +12,6 @@ import { safeParseOrThrow } from '../utils/zodHelpers';
 import { ApiClient } from './apiClient';
 
 const apiClient = new ApiClient();
-const baseUrl = '/utilities';
 
 export interface RegisterEnumsResponse {
   gender: GenderEnum[];

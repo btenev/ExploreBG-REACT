@@ -1,6 +1,6 @@
 import { PUBLIC_ROUTES } from '../constants';
 import { CommentDataDto } from '../hooks/formHooks/useCommentForm';
-import { CreateTrailDto, detailsStatusEnumSchema } from '../schemas';
+import { CreateTrailDto } from '../schemas';
 import {
   DifficultyLevelEnum,
   IComment,
@@ -8,14 +8,13 @@ import {
   IPlace,
   ITrail,
   ITrailCard,
-  StatusEnum,
   SuitableForEnum,
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
   WaterAvailabilityEnum,
 } from '../types';
 import { toKebabCase } from '../utils/mixedUtils';
-import { safeParseOrThrow } from '../utils/zodHelpers';
+import { detailsStatusConverter } from '../utils/statusConverter';
 import { ApiClient } from './apiClient';
 
 export type HikingTraiFieldRequestMap = {
@@ -98,12 +97,4 @@ export const trailsApi = {
 
   deleteTrailComment: (trailId: string, commentId: string): Promise<void> =>
     apiClient.delete(PUBLIC_ROUTES.trail.deleteTrailComment(trailId, commentId)),
-};
-
-const detailsStatusConverter = (detailsStatus: unknown): StatusEnum => {
-  return safeParseOrThrow(
-    detailsStatusEnumSchema,
-    detailsStatus,
-    `Invalid details status value: ${detailsStatus}`
-  );
 };
