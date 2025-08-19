@@ -38,9 +38,11 @@ interface Props {
 }
 
 const TrailDetailsSection = ({ trail, canEdit }: Props) => {
-  const { data: trailEnums, isLoading: isLoadingEnums } = useTrailEnums();
-  const { data: accommodations, isLoading: isLoadingAccommodations } = useAvailableAccommodations();
-  const { data: destinations, isLoading: isLoadingDestinations } = useAvailableDestinations();
+  const { data: trailEnums, isLoading: isLoadingEnums } = useTrailEnums(canEdit);
+  const { data: accommodations, isLoading: isLoadingAccommodations } =
+    useAvailableAccommodations(canEdit);
+  const { data: destinations, isLoading: isLoadingDestinations } =
+    useAvailableDestinations(canEdit);
 
   const season = trail.seasonVisited?.toLowerCase();
   return (
