@@ -17,10 +17,10 @@ export const accommodationsApi = {
   get4RandomAccommodations: (): Promise<IAccommodationCard[]> =>
     apiClient.get(PUBLIC_ROUTES.accommodation.random),
 
-  getAccommodation: async (trailId: string): Promise<IAccommodation> => {
+  getAccommodation: async (accommodationId: string): Promise<IAccommodation> => {
     try {
       const response = await apiClient.get<IAccommodation>(
-        PUBLIC_ROUTES.trail.details.build(trailId)
+        PUBLIC_ROUTES.accommodation.details.build(accommodationId)
       );
       const detailsStatus = detailsStatusConverter(response.detailsStatus);
       return { ...response, detailsStatus };

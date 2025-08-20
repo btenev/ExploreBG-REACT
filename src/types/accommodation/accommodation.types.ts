@@ -1,4 +1,11 @@
-import { AccessibilityEnum, AccommodationTypeEnum, IComment, IOwner, StatusEnum } from '../shared';
+import {
+  AccessibilityEnum,
+  AccommodationTypeEnum,
+  IComment,
+  IOwner,
+  StatusEnum,
+  TPhoto,
+} from '../shared';
 
 export interface IHut {
   id: number;
@@ -7,6 +14,7 @@ export interface IHut {
 
 export interface IAccommodationCard extends IHut {
   imageUrl: string;
+  likedByUser: boolean;
 }
 
 export interface IAccommodation extends IAccommodationCard {
@@ -20,6 +28,7 @@ export interface IAccommodation extends IAccommodationCard {
   access: AccessibilityEnum;
   type: AccommodationTypeEnum;
   nextTo: string;
+  images: TPhoto[];
   comments: IComment[];
   detailsStatus: StatusEnum;
 }

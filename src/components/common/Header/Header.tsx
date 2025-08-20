@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import './Header.scss';
+
 import { Logo } from '../';
 import { SwitchTheme } from '../../SwitchTheme';
 import HeaderLinksAndButtons from '../../HeaderLinksAndButtons';
