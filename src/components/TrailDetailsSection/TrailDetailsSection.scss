@@ -12,15 +12,6 @@
     display: flex;
   }
 
-  &__created-by {
-    @include gs.flex(none, center, center);
-    margin-bottom: 1.5rem;
-
-    & > p {
-      margin-right: 0.75rem;
-    }
-  }
-
   &__pair {
     @include gs.flex(none, space-around, center);
 

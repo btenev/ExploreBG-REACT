@@ -29,3 +29,7 @@ export { default as ZoomPhoto } from './ZoomPhoto';
 export { default as ApproveEntityImages } from './ApproveEntityImages';
 export { default as CarouselControls } from './CarouselControls';
 export { default as EntityDetailsWrapper } from './EntityDetailsWrapper';
+export { default as EntityDetailsNav } from './EntityDetailsNav';
+export { default as ImportantNotice } from './ImportantNotice';
+export { default as ScrollToTopBtn } from './ScrollToTopBtn';
+export { default as EntityCreatedBy } from './EntityCreatedBy';

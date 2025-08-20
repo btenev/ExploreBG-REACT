@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-
 import './TrailDetails.scss';
 
 import {
   CommentsSection,
-  DeleteItem,
+  EntityDetailsNav,
   EntityDetailsWrapper,
+  ImportantNotice,
   PhotosSection,
 } from '../../components/common';
 
@@ -21,36 +20,16 @@ const TrailDetails = () => {
         <main className="trail-details">
           <h1>{`${trail.startPoint} - ${trail.endPoint} - trail details`}</h1>
 
-          {!canEdit && (
-            <details open className="trail-details__warning">
-              <summary>Important Notice:</summary>
-              While ExploreBG moderates the data, its accuracy cannot always be guaranteed.
-              ExploreBG is not responsible for any errors or inaccuracies. Please verify information
-              through other reliable sources and exercise caution.
-            </details>
-          )}
+          {!canEdit && <ImportantNotice />}
 
-          <nav className="trail-details__nav" aria-label="trail-details-page-navigation">
-            {canEdit && (
-              <DeleteItem deletionObj="this trail" entity="trail" entityId={trail.id.toString()} />
-            )}
-
-            <ul>
-              {trail.images.length > 0 && (
-                <li>
-                  <Link to="#photos">photos</Link>
-                </li>
-              )}
-              {trail.gpxFile?.gpxUrl && (
-                <li>
-                  <Link to="#map">map</Link>
-                </li>
-              )}
-              <li>
-                <Link to="#comments">comments</Link>
-              </li>
-            </ul>
-          </nav>
+          <EntityDetailsNav
+            canEdit={canEdit}
+            deletionObj="this trail"
+            entity="trail"
+            entityId={trail.id.toString()}
+            imageAvailable={trail.images.length > 0}
+            gpxFileAvailable={!!trail.gpxFile}
+          />
 
           <TrailDetailsSection trail={trail} canEdit={canEdit} />
 

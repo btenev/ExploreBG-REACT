@@ -5,7 +5,7 @@ import { GiBeech, GiFallingLeaf } from 'react-icons/gi';
 import './TrailDetailsSection.scss';
 
 import { ITrail, StatusEnum } from '../../types';
-import { FavoriteToggle, MemberImage } from '../common';
+import { EntityCreatedBy, FavoriteToggle } from '../common';
 
 import { useAvailableAccommodations } from '../../hooks/dataHooks/accommodationHooks';
 import { useAvailableDestinations } from '../../hooks/dataHooks/destinationHooks';
@@ -52,18 +52,7 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
           <FavoriteToggle liked={trail.likedByUser} entityId={trail.id.toString()} entity="trail" />
         )}
 
-        {trail.createdBy && (
-          <div className="trail__created-by">
-            <p>
-              created by: &nbsp;<b>{trail.createdBy.username}</b>
-            </p>
-            <MemberImage
-              ownerId={trail.createdBy.id}
-              imageUrl={trail.createdBy.imageUrl}
-              username={trail.createdBy.username}
-            />
-          </div>
-        )}
+        {trail.createdBy && <EntityCreatedBy createdBy={trail.createdBy} />}
 
         {trail.detailsStatus == StatusEnum.review && <p>Trail details are currently in review!</p>}
 
