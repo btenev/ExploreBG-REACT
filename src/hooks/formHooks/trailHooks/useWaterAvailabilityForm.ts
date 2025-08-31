@@ -1,10 +1,14 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-import { createTrailSchema } from '../../../schemas';
-import useFormWithSchema from '../useFormWithSchema';
+import { createTrailSchema } from "@schemas/trail";
 
-const waterAvailabilitySchema = createTrailSchema.pick({ waterAvailability: true });
+import { useFormWithSchema } from "../base";
 
-export const useWaterAvailabilityForm = () => useFormWithSchema(waterAvailabilitySchema);
+const waterAvailabilitySchema = createTrailSchema.pick({
+  waterAvailability: true,
+});
+
+export const useWaterAvailabilityForm = (defaultValue?: WaterAvailabilityDto) =>
+  useFormWithSchema(waterAvailabilitySchema, defaultValue);
 
 export type WaterAvailabilityDto = z.infer<typeof waterAvailabilitySchema>;

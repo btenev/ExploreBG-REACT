@@ -1,17 +1,17 @@
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { trailsApi } from '../../../api/trailsApi';
-import { CreateTrailDto } from '../../../schemas';
-import { handleApiError } from '../../../utils/errorHandlers';
-import { PUBLIC_ROUTES } from '../../../constants';
+import { trailsApi } from "@api/public";
+import { PUBLIC_ROUTES } from "@constants";
+import { CreateTrailDto } from "@schemas/trail";
+import { handleApiError } from "@utils/errorHandlers";
 
 export const useCreateTrail = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationKey: ['createTrail'],
+    mutationKey: ["createTrail"],
     mutationFn: (trailData: CreateTrailDto) => trailsApi.createTrail(trailData),
 
     onSuccess: (data) => {

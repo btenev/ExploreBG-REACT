@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { utilitiesApi } from '../../../api/utilitiesApi';
+import { useQuery } from "@tanstack/react-query";
+
+import { utilitiesApi } from "@api/public";
 
 export const useTrailEnums = (enabled: boolean) => {
   return useQuery({
-    queryKey: ['trailEnums'],
+    queryKey: ["trailEnums"],
     queryFn: () => utilitiesApi.getTrailEnums(),
     enabled,
     refetchOnMount: false, // Only fetch on hard reloads

@@ -1,17 +1,15 @@
-import { IHut } from '../accommodation';
-import { IDestination } from '../destination';
-
+import { IHut } from "../accommodation";
+import { IDestination } from "../destination";
 import {
   DifficultyLevelEnum,
   SeasonEnum,
   StatusEnum,
   SuitableForEnum,
   WaterAvailabilityEnum,
-} from '../shared';
-
-import { IComment } from '../shared/comment';
-import { IOwner } from '../shared/owner';
-import { TPhoto } from '../shared/photo';
+  IComment,
+  IOwner,
+  TPhoto,
+} from "../shared";
 
 export interface ITrailCard {
   id: number;

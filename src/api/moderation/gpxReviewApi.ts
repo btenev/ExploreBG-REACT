@@ -1,5 +1,6 @@
-import { MODERATION_ROUTES } from '../../constants';
-import { ApiClient } from '../apiClient';
+import { MODERATION_ROUTES } from "@constants";
+
+import { ApiClient } from "../base";
 
 const apiClient = new ApiClient();
 

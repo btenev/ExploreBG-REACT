@@ -1,10 +1,12 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-import useFormWithSchema from '../useFormWithSchema';
-import { createTrailSchema } from '../../../schemas';
+import { createTrailSchema } from "@schemas/trail";
+
+import { useFormWithSchema } from "../base";
 
 const startPointSchema = createTrailSchema.pick({ startPoint: true });
 
-export const useStartPointForm = () => useFormWithSchema(startPointSchema);
+export const useStartPointForm = (defaultValues?: StartPointDto) =>
+  useFormWithSchema(startPointSchema, defaultValues);
 
 export type StartPointDto = z.infer<typeof startPointSchema>;

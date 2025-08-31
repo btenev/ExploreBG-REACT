@@ -1,5 +1,5 @@
-import { toast } from 'react-toastify';
-import imageCompression, { Options } from 'browser-image-compression';
+import imageCompression, { Options } from "browser-image-compression";
+import { toast } from "react-toastify";
 
 const defaultOptions: Options = {
   maxSizeMB: 1,
@@ -16,13 +16,18 @@ export const compressImage = async (
   try {
     return await imageCompression(file, options);
   } catch (err) {
-    console.error(`Error compressing image "${file.name}" (${file.size} bytes):`, err);
-    toast.error('Something went wrong while compressing your image.');
+    console.error(
+      `Error compressing image "${file.name}" (${file.size} bytes):`,
+      err
+    );
+    toast.error("Something went wrong while compressing your image.");
   }
 };
 
 export const compressImages = async (files: File[]) => {
-  const compressedFiles = await Promise.all(files.map((file) => compressImage(file)));
+  const compressedFiles = await Promise.all(
+    files.map((file) => compressImage(file))
+  );
 
   return compressedFiles;
 };

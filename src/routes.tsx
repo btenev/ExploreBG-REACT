@@ -1,7 +1,7 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from "react-router-dom";
 
-import { PUBLIC_ROUTES, MODERATION_ROUTES } from './constants';
-import { Layout } from './components/common';
+import { Layout } from "./components/common";
+import { PUBLIC_ROUTES, MODERATION_ROUTES } from "./constants";
 import {
   Home,
   FAQ,
@@ -14,18 +14,23 @@ import {
   AllUsers,
   WaitingApproval,
   TrailReview,
-} from './pages';
+  AccommodationDetails,
+} from "./pages";
 
 const router = createBrowserRouter([
   {
     // path: '/',
     element: <Layout />,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/faq', element: <FAQ /> },
+      { path: "/", element: <Home /> },
+      { path: "/faq", element: <FAQ /> },
       { path: PUBLIC_ROUTES.user.myProfile, element: <MyProfile /> },
       { path: PUBLIC_ROUTES.user.getProfile.path, element: <UserProfile /> },
       { path: PUBLIC_ROUTES.trail.details.path, element: <TrailDetails /> },
+      {
+        path: PUBLIC_ROUTES.accommodation.details.path,
+        element: <AccommodationDetails />,
+      },
     ],
   },
 
@@ -34,8 +39,11 @@ const router = createBrowserRouter([
 
   { path: MODERATION_ROUTES.user.getAll, element: <AllUsers /> },
   { path: MODERATION_ROUTES.dashboard, element: <WaitingApproval /> },
-  { path: MODERATION_ROUTES.trail.getCreatedTrailForReview.path, element: <TrailReview /> },
-  { path: '*', element: <NotFound /> },
+  {
+    path: MODERATION_ROUTES.trail.getCreatedTrailForReview.path,
+    element: <TrailReview />,
+  },
+  { path: "*", element: <NotFound /> },
 ]);
 
 export default router;

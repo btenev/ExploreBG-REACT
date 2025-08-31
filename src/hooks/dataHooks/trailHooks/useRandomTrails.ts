@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { trailsApi } from '../../../api/trailsApi';
+import { useQuery } from "@tanstack/react-query";
+
+import { trailsApi } from "@api/public";
 
 export const useRandomTrails = () => {
   return useQuery({
-    queryKey: ['randomTrails'],
+    queryKey: ["randomTrails"],
     queryFn: () => trailsApi.get4RandomTrails(),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch

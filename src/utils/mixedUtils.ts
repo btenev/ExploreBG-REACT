@@ -1,4 +1,4 @@
-import { IUser } from '../types/shared/user';
+import { IUser } from "../types/shared";
 
 type CreatedByEntity = {
   createdBy?: {
@@ -11,12 +11,14 @@ export const isOwner = <T extends CreatedByEntity>(
   userId: number
 ): boolean => entity?.createdBy?.id === userId;
 
-export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+export const capitalize = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1);
 
 export const toKebabCase = (str: string) =>
-  str.replace(/([A-Z])/g, (letter) => '-' + letter.toLowerCase());
+  str.replace(/([A-Z])/g, (letter) => "-" + letter.toLowerCase());
 
-export const roundToTwoDecimals = (value: number): number => Math.round(value * 100) / 100;
+export const roundToTwoDecimals = (value: number): number =>
+  Math.round(value * 100) / 100;
 
 export const convertMetersToKmM = (meters: number) => {
   const km = Math.floor(meters / 1000);
@@ -25,5 +27,5 @@ export const convertMetersToKmM = (meters: number) => {
   return `${km} km ${remainingMeters} m`;
 };
 
-export const hasRole = (roles: IUser['roles'], roleToCheck: string): boolean =>
+export const hasRole = (roles: IUser["roles"], roleToCheck: string): boolean =>
   roles.some((obj) => obj.role === roleToCheck);

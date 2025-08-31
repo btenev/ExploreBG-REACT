@@ -22,10 +22,15 @@
     "baseUrl": "src",
     "paths": {
       "@api/*": ["api/*"],
-      "@types/*": ["types/*"],
+      "@types": ["types/index.ts"],
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
-      "@schemas/*": ["schemas/*"]
+      "@schemas/*": ["schemas/*"],
+      "@utils/*": ["utils/*"],
+      "@constants": ["constants/index.ts"],
+      "@store/*": ["store/*"],
+      "@context/*": ["context/*"],
+      "@assets/*": ["assets/*"]
     }
   },
   "include": ["src"]

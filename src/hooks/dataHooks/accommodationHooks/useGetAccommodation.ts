@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { accommodationsApi } from '../../../api/accommodationsApi';
+import { useQuery } from "@tanstack/react-query";
+
+import { accommodationsApi } from "@api/public";
 
 export const useGetAccommodation = (accommodationId: string) => {
   return useQuery({
-    queryKey: ['accommodation', accommodationId],
+    queryKey: ["accommodation", accommodationId],
     queryFn: () => accommodationsApi.getAccommodation(accommodationId),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch

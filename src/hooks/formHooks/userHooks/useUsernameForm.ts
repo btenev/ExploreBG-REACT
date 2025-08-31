@@ -1,7 +1,8 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-import useFormWithSchema from '../useFormWithSchema';
-import { registerBaseSchema } from '../../../schemas';
+import { registerBaseSchema } from "@schemas/user";
+
+import { useFormWithSchema } from "../base";
 
 const usernameSchema = registerBaseSchema.pick({ username: true });
 

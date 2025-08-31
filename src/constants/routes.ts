@@ -1,15 +1,15 @@
 /** ----------------- PUBLIC ROUTES ----------------- **/
-const USERS = '/users' as const;
-const TRAILS = '/trails' as const;
-const ACCOMMODATIONS = '/accommodations' as const;
-const DESTINATIONS = '/destinations' as const;
-const HIKES = '/hikes' as const;
-const IMAGES = '/images' as const;
-const GPX = '/gpx' as const;
-const COMMENTS = '/comments' as const;
+const USERS = "/users" as const;
+const TRAILS = "/trails" as const;
+const ACCOMMODATIONS = "/accommodations" as const;
+const DESTINATIONS = "/destinations" as const;
+const HIKES = "/hikes" as const;
+const IMAGES = "/images" as const;
+const GPX = "/gpx" as const;
+const COMMENTS = "/comments" as const;
 
 export const PUBLIC_ROUTES = {
-  authentication: '/authentication' as const, // simple, no build needed
+  authentication: "/authentication" as const, // simple, no build needed
 
   user: {
     getProfile: {
@@ -24,7 +24,8 @@ export const PUBLIC_ROUTES = {
 
     details: {
       path: `${ACCOMMODATIONS}/:accommodationId` as const, // dynamic
-      build: (accommodationId: string | number) => `${ACCOMMODATIONS}/${accommodationId}`,
+      build: (accommodationId: string | number) =>
+        `${ACCOMMODATIONS}/${accommodationId}`,
     },
 
     availableAccommodation: `${ACCOMMODATIONS}/select` as const, // simple
@@ -66,9 +67,11 @@ export const PUBLIC_ROUTES = {
 
     favoriteTrail: (trailId: string | number) => `${TRAILS}/${trailId}/like`,
 
-    updateMainTrailPhoto: (trailId: string | number) => `${TRAILS}/${trailId}/main-image`,
+    updateMainTrailPhoto: (trailId: string | number) =>
+      `${TRAILS}/${trailId}/main-image`,
 
-    trailComments: (trailId: string | number) => `${TRAILS}/${trailId}/comments`,
+    trailComments: (trailId: string | number) =>
+      `${TRAILS}/${trailId}/comments`,
 
     deleteTrailComment: (trailId: string, commentId: string) =>
       `${TRAILS}/${trailId}/comments/${commentId}`,
@@ -81,7 +84,8 @@ export const PUBLIC_ROUTES = {
   image: {
     updateUserPhoto: `${IMAGES}/user` as const, // simple
 
-    deleteEntityPhotos: (entityId: string | number) => `${IMAGES}/entity/${entityId}`,
+    deleteEntityPhotos: (entityId: string | number) =>
+      `${IMAGES}/entity/${entityId}`,
   },
 
   gpx: {
@@ -93,14 +97,14 @@ export const PUBLIC_ROUTES = {
   },
 
   utilities: {
-    registerEnums: '/utilities/register-enums' as const, // simple
+    registerEnums: "/utilities/register-enums" as const, // simple
 
-    trailEnums: '/utilities/create/trail-enums' as const, // simple
+    trailEnums: "/utilities/create/trail-enums" as const, // simple
   },
 };
 
 /** ----------------- MODERATION ROUTES ----------------- **/
-const BASE = '/moderation' as const;
+const BASE = "/moderation" as const;
 const MOD_TRAILS = `${BASE}${TRAILS}` as const;
 const MOD_USERS = `${BASE}${USERS}` as const;
 const MOD_IMAGES = `${BASE}${IMAGES}` as const;
@@ -109,19 +113,21 @@ const MOD_DESTINATIONS = `${BASE}${DESTINATIONS}` as const;
 const MOD_GPX = `${BASE}${GPX}` as const;
 
 export const MODERATION_ROUTES = {
-  dashboard: '/moderation/dashboard/entities/waiting-approval/count' as const,
+  dashboard: "/moderation/dashboard/entities/waiting-approval/count" as const,
 
   user: {
     getAll: `${BASE}${USERS}` as const,
 
-    lockUnlockAccount: (userId: string | number) => `${MOD_USERS}/${userId}/lock-account`,
+    lockUnlockAccount: (userId: string | number) =>
+      `${MOD_USERS}/${userId}/lock-account`,
 
-    updateRole: (userId: string | number) => `${MOD_USERS}/${userId}/update-role`,
+    updateRole: (userId: string | number) =>
+      `${MOD_USERS}/${userId}/update-role`,
   },
 
   accommodation: {
     getWaitingApprovalAccommodations: (query?: string) =>
-      `${MOD_ACCOMMODATIONS}/waiting-approval${query ? `?${query}` : ''}`,
+      `${MOD_ACCOMMODATIONS}/waiting-approval${query ? `?${query}` : ""}`,
 
     claimForReviewAccommodationImages: (accommodationId: string) =>
       `${MOD_ACCOMMODATIONS}/${accommodationId}/images/claim`,
@@ -135,7 +141,7 @@ export const MODERATION_ROUTES = {
 
   destination: {
     getWaitingApprovalDestinations: (query?: string) =>
-      `${MOD_DESTINATIONS}/waiting-approval${query ? `?${query}` : ''}`,
+      `${MOD_DESTINATIONS}/waiting-approval${query ? `?${query}` : ""}`,
 
     claimForReviewDestinationImages: (destinationId: string) =>
       `${MOD_DESTINATIONS}/${destinationId}/images/claim`,
@@ -149,20 +155,24 @@ export const MODERATION_ROUTES = {
 
   trail: {
     getWaitingApprovalTrails: (query?: string) =>
-      `${MOD_TRAILS}/waiting-approval${query ? `?${query}` : ''}`,
+      `${MOD_TRAILS}/waiting-approval${query ? `?${query}` : ""}`,
 
     getCreatedTrailForReview: {
       path: `${MOD_TRAILS}/:trailId/review` as const, // pattern for React Router
       build: (trailId: string | number) => `${MOD_TRAILS}/${trailId}/review`,
     },
 
-    getTrailReviewer: (trailId: string | number) => `${MOD_TRAILS}/${trailId}/reviewer`,
+    getTrailReviewer: (trailId: string | number) =>
+      `${MOD_TRAILS}/${trailId}/reviewer`,
 
-    claimTrailForReview: (trailId: string | number) => `${MOD_TRAILS}/${trailId}/claim`,
+    claimTrailForReview: (trailId: string | number) =>
+      `${MOD_TRAILS}/${trailId}/claim`,
 
-    unclaimTrailForReview: (trailId: string | number) => `${MOD_TRAILS}/${trailId}/unclaim`,
+    unclaimTrailForReview: (trailId: string | number) =>
+      `${MOD_TRAILS}/${trailId}/unclaim`,
 
-    approveTrailDetails: (trailId: string | number) => `${MOD_TRAILS}/${trailId}/approve`,
+    approveTrailDetails: (trailId: string | number) =>
+      `${MOD_TRAILS}/${trailId}/approve`,
 
     claimTrailImagesForReview: (trailId: string | number) =>
       `${MOD_TRAILS}/${trailId}/images/claim`,
@@ -173,7 +183,8 @@ export const MODERATION_ROUTES = {
     approveTrailImagesForReview: (trailId: string | number) =>
       `${MOD_TRAILS}/${trailId}/images/approve`,
 
-    approveTrailGpxfile: (trailId: string | number) => `${MOD_TRAILS}/${trailId}/gpx-file/approve`,
+    approveTrailGpxfile: (trailId: string | number) =>
+      `${MOD_TRAILS}/${trailId}/gpx-file/approve`,
   },
 
   images: {

@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { destinationsApi } from '../../../api/destinationsApi';
+import { useQuery } from "@tanstack/react-query";
+
+import { destinationsApi } from "@api/public";
 
 export const useRandomDestinations = () => {
   return useQuery({
-    queryKey: ['randomDestination'],
+    queryKey: ["randomDestination"],
     queryFn: () => destinationsApi.get4RandomDestinations(),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch

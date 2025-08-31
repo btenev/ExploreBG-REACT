@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { IUserSession } from '../types';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
+import { IUserSession } from "../types";
 
 interface SessionStore {
   user: IUserSession | null;
@@ -35,13 +36,14 @@ export const useSessionStore = create<SessionStore>()(
       clearSession: () => set({ user: null }),
     }),
     {
-      name: 'session-storage', // key in sessionStorage
+      name: "session-storage", // key in sessionStorage
       storage: {
         getItem: (key) => {
           const value = sessionStorage.getItem(key);
           return value ? JSON.parse(value) : null;
         },
-        setItem: (key, value) => sessionStorage.setItem(key, JSON.stringify(value)),
+        setItem: (key, value) =>
+          sessionStorage.setItem(key, JSON.stringify(value)),
         removeItem: (key) => sessionStorage.removeItem(key),
       },
       onRehydrateStorage: () => (state) => {

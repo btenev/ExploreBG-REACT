@@ -1,4 +1,6 @@
-import useFormWithSchema from '../useFormWithSchema';
-import { userBirthdateSchema } from '../../../schemas';
+import { userBirthdateSchema } from "@schemas/user";
 
-export const useUserBirthdateForm = () => useFormWithSchema(userBirthdateSchema);
+import { useFormWithSchema } from "../base";
+
+export const useUserBirthdateForm = () =>
+  useFormWithSchema(userBirthdateSchema);

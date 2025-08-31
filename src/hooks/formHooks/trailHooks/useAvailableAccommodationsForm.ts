@@ -1,8 +1,10 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-import useFormWithSchema from '../useFormWithSchema';
-import { availableHutsRequestSchema } from '../../../schemas';
+import { availableHutsRequestSchema } from "@schemas/trail";
 
-export const useAvailableAccommodationsForm = () => useFormWithSchema(availableHutsRequestSchema);
+import { useFormWithSchema } from "../base";
+
+export const useAvailableAccommodationsForm = () =>
+  useFormWithSchema(availableHutsRequestSchema);
 
 export type AvailableHutsDto = z.infer<typeof availableHutsRequestSchema>;

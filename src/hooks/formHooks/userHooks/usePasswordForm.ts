@@ -1,6 +1,7 @@
-import useFormWithScema from '../useFormWithSchema';
-import { updatePasswordSchema } from '../../../schemas';
+import { updatePasswordSchema } from "@schemas/user";
+
+import { useFormWithSchema } from "../base";
 
 export const usePasswordForm = () => {
-  return useFormWithScema(updatePasswordSchema);
+  return useFormWithSchema(updatePasswordSchema);
 };

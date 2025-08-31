@@ -1,4 +1,5 @@
-import useFormWithSchema from '../useFormWithSchema';
-import { loginSchema } from '../../../schemas';
+import { loginSchema } from "@schemas/user";
+
+import { useFormWithSchema } from "../base";
 
 export const useLoginForm = () => useFormWithSchema(loginSchema);

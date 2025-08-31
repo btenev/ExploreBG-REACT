@@ -1,8 +1,10 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-import useFormWithSchema from '../useFormWithSchema';
-import { destinationsRequestSchema } from '../../../schemas';
+import { destinationsRequestSchema } from "@schemas/trail";
 
-export const useDestinationsForm = () => useFormWithSchema(destinationsRequestSchema);
+import { useFormWithSchema } from "../base";
+
+export const useDestinationsForm = () =>
+  useFormWithSchema(destinationsRequestSchema);
 
 export type DestinationsDto = z.infer<typeof destinationsRequestSchema>;

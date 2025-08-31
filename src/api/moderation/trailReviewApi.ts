@@ -1,8 +1,9 @@
-import { MODERATION_ROUTES } from '../../constants';
-import { CreateTrailDto } from '../../schemas';
-import { ITrail, ITrailReview, ReviewStatusEnum } from '../../types';
-import { reviewStatusConverter } from '../../utils/statusConverter';
-import { ApiClient } from '../apiClient';
+import { MODERATION_ROUTES } from "@constants";
+import { CreateTrailDto } from "@schemas/trail";
+import { ITrail, ITrailReview, ReviewStatusEnum } from "@types";
+import { reviewStatusConverter } from "@utils/statusConverter";
+
+import { ApiClient } from "../base";
 
 const apiClient = new ApiClient();
 
@@ -12,11 +13,15 @@ export interface WaitingApprovalTrailsResponse {
 }
 
 export const trailReviewApi = {
-  getWaitingApprovalTrails: (query: string): Promise<WaitingApprovalTrailsResponse> =>
+  getWaitingApprovalTrails: (
+    query: string
+  ): Promise<WaitingApprovalTrailsResponse> =>
     apiClient.get(MODERATION_ROUTES.trail.getWaitingApprovalTrails(query)),
 
   getCreatedTrailForReview: (trailId: string): Promise<ITrail> =>
-    apiClient.get(MODERATION_ROUTES.trail.getCreatedTrailForReview.build(trailId)),
+    apiClient.get(
+      MODERATION_ROUTES.trail.getCreatedTrailForReview.build(trailId)
+    ),
 
   getTrailReviewer: (trailId: string): Promise<{ reviewerId: number }> =>
     apiClient.get(MODERATION_ROUTES.trail.getTrailReviewer(trailId)),
@@ -40,8 +45,10 @@ export const trailReviewApi = {
       const entityStatus = reviewStatusConverter(response.entityStatus);
       return { entityStatus };
     } catch (error) {
-      console.error('Error approving trail details:', error);
-      throw new Error('Failed to approve trail details due to invalid entity status');
+      console.error("Error approving trail details:", error);
+      throw new Error(
+        "Failed to approve trail details due to invalid entity status"
+      );
     }
   },
 
@@ -49,7 +56,9 @@ export const trailReviewApi = {
     apiClient.patch(MODERATION_ROUTES.trail.claimTrailImagesForReview(trailId)),
 
   unclaimForReviewTrailImages: (trailId: string): Promise<void> =>
-    apiClient.patch(MODERATION_ROUTES.trail.unclaimTrailImagesForReview(trailId)),
+    apiClient.patch(
+      MODERATION_ROUTES.trail.unclaimTrailImagesForReview(trailId)
+    ),
 
   approveTrailImages: async (
     trailId: string,
@@ -64,8 +73,10 @@ export const trailReviewApi = {
       const entityStatus = reviewStatusConverter(response.entityStatus);
       return { entityStatus };
     } catch (error) {
-      console.error('Error approving trail images:', error);
-      throw new Error('Failed to approve trail images due to invalid entity status');
+      console.error("Error approving trail images:", error);
+      throw new Error(
+        "Failed to approve trail images due to invalid entity status"
+      );
     }
   },
 
@@ -89,8 +100,10 @@ export const trailReviewApi = {
 
       return { entityStatus };
     } catch (error) {
-      console.error('Error approving Gpx file:', error);
-      throw new Error('Failed to approve Gpx file due to invalid entity status');
+      console.error("Error approving Gpx file:", error);
+      throw new Error(
+        "Failed to approve Gpx file due to invalid entity status"
+      );
     }
   },
 };

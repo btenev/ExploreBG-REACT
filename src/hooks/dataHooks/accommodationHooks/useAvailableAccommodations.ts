@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 
-import { accommodationsApi } from '../../../api/accommodationsApi';
+import { accommodationsApi } from "@api/public";
 
 export const useAvailableAccommodations = (enabled: boolean) =>
   useQuery({
-    queryKey: ['availableAccommodations'],
+    queryKey: ["availableAccommodations"],
     queryFn: accommodationsApi.getAvailableAccommodations,
     enabled,
     refetchOnMount: false, // Only fetch on hard reloads

@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { utilitiesApi } from '../../../api/utilitiesApi';
+import { useQuery } from "@tanstack/react-query";
+
+import { utilitiesApi } from "@api/public";
 
 export const useGenderEnums = () => {
   return useQuery({
-    queryKey: ['genderEnums'],
+    queryKey: ["genderEnums"],
     queryFn: () => utilitiesApi.getGenderEnum(),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch

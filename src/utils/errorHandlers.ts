@@ -1,5 +1,6 @@
-import { toast } from 'react-toastify';
-import { ApiError } from '../types';
+import { toast } from "react-toastify";
+
+import { ApiError } from "../types";
 
 export const handleApiError = (error: ApiError) => {
   if (error.errors) {
@@ -10,5 +11,5 @@ export const handleApiError = (error: ApiError) => {
 };
 
 export const isApiError = (error: unknown): error is ApiError => {
-  return typeof error === 'object' && error !== null && 'status' in error;
+  return typeof error === "object" && error !== null && "status" in error;
 };

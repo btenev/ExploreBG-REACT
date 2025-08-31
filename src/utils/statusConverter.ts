@@ -1,6 +1,9 @@
-import { detailsStatusEnumSchema, ReviewStatusEnumSchema } from '../schemas';
-import { ReviewStatusEnum, StatusEnum } from '../types';
-import { safeParseOrThrow } from './zodHelpers';
+import {
+  detailsStatusEnumSchema,
+  ReviewStatusEnumSchema,
+} from "../schemas/common";
+import { ReviewStatusEnum, StatusEnum } from "../types";
+import { safeParseOrThrow } from "./zodHelpers";
 
 export const detailsStatusConverter = (detailsStatus: unknown): StatusEnum => {
   return safeParseOrThrow(
@@ -10,7 +13,9 @@ export const detailsStatusConverter = (detailsStatus: unknown): StatusEnum => {
   );
 };
 
-export const reviewStatusConverter = (entityStatus: unknown): ReviewStatusEnum => {
+export const reviewStatusConverter = (
+  entityStatus: unknown
+): ReviewStatusEnum => {
   return safeParseOrThrow(
     ReviewStatusEnumSchema,
     entityStatus,

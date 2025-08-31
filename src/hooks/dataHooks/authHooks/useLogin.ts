@@ -1,19 +1,19 @@
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { authApi } from '../../../api/authClient';
-import { useSessionStore } from '../../../store/sessionStore';
-import { ApiError } from '../../../types';
-import { LoginDto } from '../../../schemas';
-import { PUBLIC_ROUTES } from '../../../constants';
+import { authApi } from "@api/auth";
+import { PUBLIC_ROUTES } from "@constants";
+import { LoginDto } from "@schemas/user";
+import { useSessionStore } from "@store/sessionStore";
+import { handleApiError } from "@utils/errorHandlers";
 
 export const useLogin = () => {
   const store = useSessionStore((state) => state.setUser);
   const navigate = useNavigate();
 
   return useMutation({
-    mutationKey: ['login'],
+    mutationKey: ["login"],
     mutationFn: (data: LoginDto) => authApi.login(data),
     onSuccess: (data) => {
       store({
@@ -25,12 +25,6 @@ export const useLogin = () => {
       toast.success(`Welcome ${data.username}!`);
       navigate(PUBLIC_ROUTES.user.myProfile);
     },
-    onError: (error: ApiError) => {
-      if (error.errors) {
-        error.errors.forEach((err: string) => toast.error(err));
-      } else {
-        toast.error(error.message);
-      }
-    },
+    onError: handleApiError,
   });
 };

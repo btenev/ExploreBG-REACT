@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { destinationsApi } from '../../../api/destinationsApi';
+import { useQuery } from "@tanstack/react-query";
+
+import { destinationsApi } from "@api/public";
 
 export const useAvailableDestinations = (enabled: boolean) => {
   return useQuery({
-    queryKey: ['availableDestinations'],
+    queryKey: ["availableDestinations"],
     queryFn: () => destinationsApi.getAvailableDestinations(),
     enabled,
     refetchOnMount: false, // Only fetch on hard reloads

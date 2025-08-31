@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { accommodationsApi } from '../../../api/accommodationsApi';
+import { useQuery } from "@tanstack/react-query";
+
+import { accommodationsApi } from "@api/public";
 
 export const useRandomAccommodations = () => {
   return useQuery({
-    queryKey: ['randomAccommodations'],
+    queryKey: ["randomAccommodations"],
     queryFn: () => accommodationsApi.get4RandomAccommodations(),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch
