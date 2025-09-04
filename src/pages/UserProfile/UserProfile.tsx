@@ -1,21 +1,18 @@
-import { useParams } from 'react-router-dom';
+import { FaFemale, FaMale, FaUserNinja } from "react-icons/fa";
+import { HiOutlineMail } from "react-icons/hi";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { useParams } from "react-router-dom";
 
-import { HiOutlineMail } from 'react-icons/hi';
-import { FaFemale, FaMale, FaUserNinja } from 'react-icons/fa';
-import { LiaBirthdayCakeSolid } from 'react-icons/lia';
+import defaultUserImg from "@assets/images/user-profile-pic.png";
+import { LoadingScreenWrapper, NotFoundModal } from "@components/common";
+import { HikeCard } from "@components/hike";
+import { TrailCard } from "@components/trail";
+import { UserCreatedItems } from "@components/user/profile";
+import { useGetUserProfile } from "@hooks/dataHooks/userHooks";
+import { formatDate } from "@utils/dateUtils";
+import { isApiError } from "@utils/errorHandlers";
 
-import './UserProfile.scss';
-
-import defaultUserImg from '../../assets/images/user-profile-pic.png';
-
-import { isApiError } from '../../utils/errorHandlers';
-import { formatDate } from '../../utils/dateUtils';
-
-import { LoadingScreenWrapper, NotFoundModal, UserCreatedItems } from '../../components/common';
-import HikeCard from '../../components/HikeCard';
-import TrailCard from '../../components/TrailCard';
-
-import { useGetUserProfile } from '../../hooks/dataHooks/userHooks';
+import "./UserProfile.scss";
 
 const UserProfile = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -26,20 +23,36 @@ const UserProfile = () => {
       <NotFoundModal message="Oops! We couldn't find that user. Please check the link and try again." />
     );
 
-  const { data: user, error, isLoading } = useGetUserProfile(userId);
+  const {
+    data: user,
+    error,
+    isLoading,
+  } = useGetUserProfile(userId); /*TODO: update logic*/
 
   if (isLoading) return <LoadingScreenWrapper />;
 
   if (error && isApiError(error) && error.status === 404) {
-    return <NotFoundModal message="The user you're looking for was not found." />;
+    return (
+      <NotFoundModal message="The user you're looking for was not found." />
+    );
   }
 
   if (!user) {
-    return <NotFoundModal message="The  user you're looking for was not found." />;
+    return (
+      <NotFoundModal message="The  user you're looking for was not found." />
+    );
   }
 
-  const { username, email, gender, birthdate, userInfo, imageUrl, createdHikes, createdTrails } =
-    user;
+  const {
+    username,
+    email,
+    gender,
+    birthdate,
+    userInfo,
+    imageUrl,
+    createdHikes,
+    createdTrails,
+  } = user;
 
   return (
     <main className="profile-container">
@@ -53,8 +66,8 @@ const UserProfile = () => {
             </p>
             {gender ? (
               <p>
-                {gender === 'Male' && <FaMale />}
-                {gender === 'Female' && <FaFemale />}
+                {gender === "Male" && <FaMale />}
+                {gender === "Female" && <FaFemale />}
                 gender: <strong>{gender}</strong>
               </p>
             ) : (
@@ -65,8 +78,12 @@ const UserProfile = () => {
 
             <p>
               <LiaBirthdayCakeSolid />
-              birthday:{' '}
-              {birthdate ? <strong>{formatDate(birthdate)}</strong> : <span>not available</span>}
+              birthday:{" "}
+              {birthdate ? (
+                <strong>{formatDate(birthdate)}</strong>
+              ) : (
+                <span>not available</span>
+              )}
             </p>
 
             <p>{userInfo}</p>
@@ -77,9 +94,9 @@ const UserProfile = () => {
               src={imageUrl ?? defaultUserImg}
               width={300}
               height={300}
-              alt={imageUrl ? `${username}'s photo` : 'Default user image'}
+              alt={imageUrl ? `${username}'s photo` : "Default user image"}
               loading="eager"
-              title={imageUrl ? `${username}'s photo` : 'Default user image'}
+              title={imageUrl ? `${username}'s photo` : "Default user image"}
             />
             {username && (
               <figcaption>

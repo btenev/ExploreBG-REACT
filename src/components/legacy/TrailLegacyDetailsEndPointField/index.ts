@@ -1,0 +1,2 @@
+import TrailLegacyDetailsEndPointField from './TrailLegacyDetailsEndPointField';
+export default TrailLegacyDetailsEndPointField;

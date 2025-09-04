@@ -1,0 +1,14 @@
+@use "@styles/main" as gs;
+
+.link {
+  padding: 0 1rem;
+  transition: all 0.7s ease;
+
+  &:hover {
+    color: gs.$middle-primary;
+  }
+}
+
+.active-page-link {
+  color: gs.$middle-primary;
+}

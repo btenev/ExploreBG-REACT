@@ -1,0 +1,28 @@
+@use "@styles/main" as gs;
+
+.scrollToTopBtn {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  border-radius: 50%;
+  color: gs.$bright-purple;
+  font-size: 3rem;
+  backdrop-filter: blur(0.25rem);
+  cursor: pointer;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(2rem);
+  pointer-events: none; // prevent clicks when hidden
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  &:hover {
+    color: gs.$middle-primary;
+  }
+}

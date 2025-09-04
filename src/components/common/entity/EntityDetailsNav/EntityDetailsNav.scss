@@ -1,0 +1,25 @@
+@use "@styles/main" as gs;
+
+.entity-details__nav {
+  width: 100%;
+  max-width: 60rem;
+  margin-bottom: 0.5rem;
+
+  & > ul {
+    @include gs.flex(row, flex-end, none);
+    gap: 1rem;
+    color: gs.$pastel-green;
+
+    & a {
+      transition: all 1s ease;
+
+      &:hover {
+        color: gs.$middle-primary;
+      }
+    }
+  }
+
+  [data-theme="dark"] & ul {
+    color: gs.$bright-turquoise;
+  }
+}

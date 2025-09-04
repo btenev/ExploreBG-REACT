@@ -1,0 +1,9 @@
+@use "@styles/main" as gs;
+
+.field-pair {
+  @include gs.flex(none, space-around, center);
+
+  @include gs.display(L-mobile) {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,11 @@
+export { default as TrailDetailsStartPointField } from "./TrailDetailsStartPointField";
+export { default as TrailDetailsEndPointField } from "./TrailDetailsEndPointField";
+export { default as TrailDetailsTotalDistanceField } from "./TrailDetailsTotalDistanceField";
+export { default as TrailDetailsElevationField } from "./TrailDetailsElevationField";
+export { default as TrailDetailsSeasonVisited } from "./TrailDetailsSeasonVisited";
+export { default as TrailDetailsActivityField } from "./TrailDetailsActivityField";
+export { default as TrailDetailsWaterAvailabilityField } from "./TrailDetailsWaterAvailabilityField";
+export { default as TrailDetailsDifficultyField } from "./TrailDetailsDifficultyField";
+export { default as TrailDetailsInfoField } from "./TrailDetailsInfoField";
+export { default as TrailDetailsAvailableHutsField } from "./TrailDetailsAvailableHutsField";
+export { default as TrailDetailsDestinationsField } from "./TrailDetailsDestinationsField";

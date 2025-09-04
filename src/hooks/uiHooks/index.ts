@@ -1,1 +1,1 @@
-export { default as useCloseOnEscapeTabClick } from './useCloseOnEscapeTabClick';
+export { default as useCloseOnEscapeTabAndClickOutside } from "./useCloseOnEscapeTabAndClickOutside";

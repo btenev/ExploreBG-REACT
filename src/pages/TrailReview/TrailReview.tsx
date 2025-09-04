@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 import {
   AccessDenied,
@@ -7,16 +7,14 @@ import {
   NotFoundModal,
   RequireAuthModal,
   SmallFooter,
-} from '../../components/common';
-import ApproveTrailDetailsImagesAndGpx from '../../components/ApproveTrailDetailsImagesAndGpx';
-
-import { useSessionInfo } from '../../utils/sessionUtils';
-import { isApiError } from '../../utils/errorHandlers';
-
-import { useTrailEnums } from '../../hooks/dataHooks/utilityHooks';
-import { useGetCreatedTrailForReview } from '../../hooks/dataHooks/moderation';
-import { useAvailableAccommodations } from '../../hooks/dataHooks/accommodationHooks';
-import { useAvailableDestinations } from '../../hooks/dataHooks/destinationHooks';
+} from "@components/common";
+import { ApproveTrailDetailsImagesAndGpx } from "@components/moderation/trail";
+import { useAvailableAccommodations } from "@hooks/dataHooks/accommodationHooks";
+import { useAvailableDestinations } from "@hooks/dataHooks/destinationHooks";
+import { useGetCreatedTrailForReview } from "@hooks/dataHooks/moderation/trailReviewHooks";
+import { useTrailEnums } from "@hooks/dataHooks/utilityHooks";
+import { isApiError } from "@utils/errorHandlers";
+import { useSessionInfo } from "@utils/sessionUtils";
 
 const TrailReview = () => {
   const { trailId } = useParams<{ trailId: string }>();
@@ -27,12 +25,17 @@ const TrailReview = () => {
   const { isAdminOrModerator, hasHydrated, staffId } = useSessionInfo();
   const isAuthenticated = staffId !== null;
 
-  const enabled = !invalidId && hasHydrated && isAuthenticated && isAdminOrModerator;
+  const enabled =
+    !invalidId && hasHydrated && isAuthenticated && isAdminOrModerator;
 
-  const { data: trail, error, isLoading } = useGetCreatedTrailForReview(trailId ?? null, enabled);
-  const { data: trailEnums } = useTrailEnums();
-  const { data: accommodations } = useAvailableAccommodations();
-  const { data: destinations } = useAvailableDestinations();
+  const {
+    data: trail,
+    error,
+    isLoading,
+  } = useGetCreatedTrailForReview(trailId ?? null, enabled);
+  const { data: trailEnums } = useTrailEnums(enabled);
+  const { data: accommodations } = useAvailableAccommodations(enabled);
+  const { data: destinations } = useAvailableDestinations(enabled);
 
   if (!hasHydrated) return <LoadingScreenWrapper />;
 
@@ -42,18 +45,24 @@ const TrailReview = () => {
     );
 
   if (!isAuthenticated)
-    return <RequireAuthModal message="Only logged-in users can access this page." />;
+    return (
+      <RequireAuthModal message="Only logged-in users can access this page." />
+    );
 
   if (!isAdminOrModerator) return <AccessDenied />;
 
   if (isLoading) return <LoadingScreenWrapper />;
 
   if (error && isApiError(error) && error.status === 404) {
-    return <NotFoundModal message="The hiking trail you're looking for was not found." />;
+    return (
+      <NotFoundModal message="The hiking trail you're looking for was not found." />
+    );
   }
 
   if (!trail) {
-    return <NotFoundModal message="The hiking trail you're looking for was not found." />;
+    return (
+      <NotFoundModal message="The hiking trail you're looking for was not found." />
+    );
   }
 
   return (

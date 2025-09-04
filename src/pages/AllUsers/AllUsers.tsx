@@ -1,16 +1,16 @@
-import AllUsertsTable from '../../components/AllUsersTable';
 import {
   LoadingScreenWrapper,
   AccessDenied,
   AdminProtectedPage,
   RequireAuthModal,
-} from '../../components/common';
-
-import { useSessionInfo } from '../../utils/sessionUtils';
-import { useGetAllUsers } from '../../hooks/dataHooks/moderation';
+} from "@components/common";
+import { AllUsersTable } from "@components/moderation/user";
+import { useGetAllUsers } from "@hooks/dataHooks/moderation/userModerationHooks";
+import { useSessionInfo } from "@utils/sessionUtils";
 
 const AllUsers = () => {
-  const { isAdminOrModerator, isAdmin, hasHydrated, staffId } = useSessionInfo();
+  const { isAdminOrModerator, isAdmin, hasHydrated, staffId } =
+    useSessionInfo();
 
   const isAuthenticated = staffId !== null;
 
@@ -21,7 +21,9 @@ const AllUsers = () => {
   if (!hasHydrated) return <LoadingScreenWrapper />;
 
   if (!isAuthenticated)
-    return <RequireAuthModal message="Only logged-in users can access this page." />;
+    return (
+      <RequireAuthModal message="Only logged-in users can access this page." />
+    );
 
   if (!isAdminOrModerator) return <AccessDenied />;
 
@@ -29,7 +31,9 @@ const AllUsers = () => {
 
   return (
     <AdminProtectedPage>
-      {users && <AllUsertsTable users={users} isAdmin={isAdmin} staffId={staffId} />}
+      {users && (
+        <AllUsersTable users={users} isAdmin={isAdmin} staffId={staffId} />
+      )}
     </AdminProtectedPage>
   );
 };

@@ -1,0 +1,82 @@
+@use "@styles/main" as gs;
+
+.editable-field {
+  position: relative;
+  margin-bottom: 2rem;
+  @include gs.flex(none, center, none);
+
+  &__display {
+    @include gs.flex(none, none, center);
+  }
+
+  &__form {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+
+    @include gs.display(mobile) {
+      min-width: 50%;
+    }
+
+    & > form {
+      @include gs.set-details-update-form();
+    }
+
+    &__error {
+      backdrop-filter: blur(0.25rem);
+      padding: 0 0.25rem 0.25rem 0.25rem;
+    }
+
+    &__checkbox {
+      width: max-content;
+      background-color: black;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      @include gs.flex(column, none, none);
+
+      & > div {
+        display: flex;
+      }
+
+      &__buttons {
+        @include gs.flex(none, space-around, center);
+
+        & > button {
+          @include gs.glow-on-hover-button();
+
+          &:first-of-type {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  &__season {
+    margin-bottom: 2rem;
+  }
+
+  //   & strong {
+  //     font-size: 1.5rem;
+  //   }
+
+  & ul {
+    & > li {
+      text-align: left;
+    }
+  }
+
+  &__difficulty {
+    display: flex;
+
+    &__empty > span > svg {
+      color: gray;
+    }
+  }
+}
+
+.edit-icon {
+  margin-left: 0.75rem;
+  color: white !important;
+  cursor: pointer;
+}

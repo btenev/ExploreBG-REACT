@@ -1,0 +1,41 @@
+@use "@styles/main" as gs;
+
+.form-field-info {
+  font-size: 1.15rem;
+  cursor: pointer;
+  position: relative;
+
+  &:hover .text,
+  & > .active {
+    display: block;
+    position: absolute;
+    top: -2rem;
+    left: 2rem;
+    font-size: 1rem;
+    width: 20rem;
+    border: 2px solid gs.$menu-border;
+    background-color: gs.$menu-background;
+    backdrop-filter: blur(0.25rem);
+    color: black;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+
+    @include gs.display(tablet) {
+      top: -18rem;
+      left: -15.25rem;
+    }
+
+    @include gs.display(mobile) {
+      width: 18rem;
+    }
+  }
+
+  & > figcaption {
+    display: none;
+    z-index: 1;
+  }
+
+  & > svg {
+    color: yellowgreen;
+  }
+}

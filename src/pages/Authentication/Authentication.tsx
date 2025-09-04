@@ -1,7 +1,7 @@
-import './Authentication.scss';
+import { SmallFooter, SmallHeader } from "@components/common";
+import { AuthenticationFormWrapper } from "@components/user/auth";
 
-import { SmallFooter, SmallHeader } from '../../components/common';
-import AuthenticationFormWrapper from '../../components/AuthenticationFormWrapper';
+import "./Authentication.scss";
 
 const Authentication = () => {
   return (

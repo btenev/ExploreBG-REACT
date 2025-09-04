@@ -1,21 +1,23 @@
-import './TrailDetails.scss';
-
 import {
   CommentsSection,
   EntityDetailsNav,
   EntityDetailsWrapper,
   ImportantNotice,
   PhotosSection,
-} from '../../components/common';
+} from "@components/common";
+import TrailDetailsSection from "@components/trail/TrailDetailsSection";
+import TrailMapSection from "@components/trail/TrailMapSection";
+import { useTrail } from "@hooks/dataHooks/trailHooks";
 
-import { useTrail } from '../../hooks/dataHooks/trailHooks';
-
-import TrailDetailsSection from '../../components/TrailDetailsSection';
-import TrailMapSection from '../../components/TrailMapSection';
+import "./TrailDetails.scss";
 
 const TrailDetails = () => {
   return (
-    <EntityDetailsWrapper entityType="trail" paramName="trailId" fetchHook={useTrail}>
+    <EntityDetailsWrapper
+      entityType="trail"
+      paramName="trailId"
+      fetchHook={useTrail}
+    >
       {(trail, canEdit, userId) => (
         <main className="trail-details">
           <h1>{`${trail.startPoint} - ${trail.endPoint} - trail details`}</h1>
@@ -45,11 +47,19 @@ const TrailDetails = () => {
 
           <span id="map" />
           {(canEdit || trail.gpxFile) && (
-            <TrailMapSection trailId={trail.id} gpxFile={trail.gpxFile} canEdit={canEdit} />
+            <TrailMapSection
+              trailId={trail.id}
+              gpxFile={trail.gpxFile}
+              canEdit={canEdit}
+            />
           )}
 
           <span id="comments" />
-          <CommentsSection userId={userId} entity="trail" entityId={trail.id.toString()} />
+          <CommentsSection
+            userId={userId}
+            entity="trail"
+            entityId={trail.id.toString()}
+          />
         </main>
       )}
     </EntityDetailsWrapper>

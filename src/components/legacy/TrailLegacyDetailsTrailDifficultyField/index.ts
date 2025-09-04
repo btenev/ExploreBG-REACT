@@ -1,0 +1,2 @@
+import TrailLegacyDetailsDifficultyField from './TrailLegacyDetailsDifficultyField';
+export default TrailLegacyDetailsDifficultyField;

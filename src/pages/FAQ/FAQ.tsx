@@ -1,14 +1,16 @@
-import './FAQ.scss';
-import QA from '../../components/QA';
-import { questions } from './faqContent';
+import QA from "@components/QA";
+
+import { questions } from "./faqContent";
+
+import "./FAQ.scss";
 
 const FAQ = () => {
   return (
     <main className="faq">
       <section className="faq__qa">
         <section className="faq__qa__top">
-          <h3>{questions.titles['h3-first']}</h3>
-          <h3>{questions.titles['h3-second']}</h3>
+          <h3>{questions.titles["h3-first"]}</h3>
+          <h3>{questions.titles["h3-second"]}</h3>
         </section>
 
         <h1>{questions.titles.h1}</h1>

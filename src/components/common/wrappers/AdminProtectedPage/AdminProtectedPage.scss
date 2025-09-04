@@ -1,0 +1,121 @@
+@use "@styles/main" as gs;
+
+.admin-wrapper {
+  background-color: chocolate;
+  justify-content: space-between;
+  padding-top: 10rem;
+
+  & > table {
+    width: 100%;
+    max-width: 75rem;
+    border-collapse: collapse;
+
+    & th,
+    td {
+      border: 1px solid #ddd;
+      padding: 0.5rem 0.75rem;
+    }
+
+    & th {
+      background-color: rgb(25, 25, 25);
+      color: #ddd;
+
+      &:first-of-type > svg {
+        font-size: 1.25rem;
+        vertical-align: middle;
+      }
+    }
+
+    [data-theme="dark"] & th {
+      background-color: rgb(1, 81, 1);
+    }
+
+    & > tbody > tr:nth-child(even) {
+      background-color: rgb(188, 94, 27);
+    }
+
+    [data-theme="dark"] & > tbody > tr:nth-child(even) {
+      background-color: rgb(25, 25, 25);
+    }
+
+    & img {
+      max-width: 3rem;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    & td {
+      text-align: center; // Doesnt exist in the original code, its aligned based on the content?!
+      & > a {
+        color: gs.$bright-turquoise;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      & > div {
+        @include gs.flex(none, space-evenly, center);
+
+        & > ul {
+          @include gs.flex(column, space-evenly, center);
+        }
+
+        & > svg {
+          color: white;
+          cursor: pointer;
+        }
+      }
+
+      & .confirm-btn {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &__pending-menu {
+    width: 100%;
+    @include gs.flex(none, space-evenly, center);
+    flex-wrap: wrap;
+    border: 1px solid gs.$bright-turquoise;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+
+    & > li {
+      margin: 0 1rem;
+      cursor: pointer;
+      transition: all 1s ease;
+
+      &:hover,
+      .active {
+        color: gs.$middle-primary;
+      }
+    }
+  }
+}
+
+.admin-forms {
+  background: gs.$bw-backgr;
+  background: gs.$bw-backgr-gradient;
+
+  & > .review-btn {
+    @include gs.glow-on-hover-button();
+    margin: 3rem 0;
+    font-size: 1.5rem;
+    padding: 0.15rem 1.5rem;
+  }
+}
+
+[data-theme="dark"] .admin-wrapper {
+  background-color: black;
+}
+
+.locked-account {
+  background-color: rgba(217, 53, 53, 0.807) !important;
+}
+
+.lock-unlock-icon {
+  color: red;
+  font-size: 1.15rem;
+  cursor: pointer;
+}

@@ -1,11 +1,14 @@
-import './Home.scss';
-import IntersectionObserverComponent from '../../components/IntersectionObserverComponent';
-import HomeDestinationsSection from '../../components/HomeDestinationsSection';
-import HomeTrailsSection from '../../components/HomeTrailsSection';
-import HomeHikesSection from '../../components/HomeHikesSection';
-import HomeAccommodationsSection from '../../components/HomeAccommodationsSection';
-import { homeContent } from './homeConetent';
-import { homeTopImages } from './homeConetent';
+import { IntersectionObserverComponent } from "@components/common";
+import {
+  HomeTrailsSection,
+  HomeAccommodationsSection,
+  HomeDestinationsSection,
+  HomeHikesSection,
+} from "@components/home";
+
+import { homeContent, homeTopImages } from "./homeConetent";
+
+import "./Home.scss";
 
 const Home = () => {
   return (
@@ -37,19 +40,23 @@ const Home = () => {
       </section>
 
       <section className="home__section-wrapper">
-        <h2 className="hidden">{homeContent['section-2'].title}</h2>
-        <p className="hidden">{homeContent['section-2'].text}</p>
+        <h2 className="hidden">{homeContent["section-2"].title}</h2>
+        <p className="hidden">{homeContent["section-2"].text}</p>
       </section>
 
       <section className="home__section-buffer"></section>
 
-      <HomeDestinationsSection destinationContent={homeContent['section-destinations']} />
+      <HomeDestinationsSection
+        destinationContent={homeContent["section-destinations"]}
+      />
 
-      <HomeTrailsSection trailContent={homeContent['section-trails']} />
+      <HomeTrailsSection trailContent={homeContent["section-trails"]} />
 
-      <HomeHikesSection hikeContent={homeContent['section-hikes']} />
+      <HomeHikesSection hikeContent={homeContent["section-hikes"]} />
 
-      <HomeAccommodationsSection accommodationContent={homeContent['section-accommodations']} />
+      <HomeAccommodationsSection
+        accommodationContent={homeContent["section-accommodations"]}
+      />
     </main>
   );
 };

@@ -1,13 +1,13 @@
-import './CreateTrail.scss';
+import { SmallFooter, SmallHeader } from "@components/common";
+import CreateTrailForm from "@components/trail/CreateTrailForm";
+import { useAvailableAccommodations } from "@hooks/dataHooks/accommodationHooks";
+import { useAvailableDestinations } from "@hooks/dataHooks/destinationHooks";
+import { useTrailEnums } from "@hooks/dataHooks/utilityHooks";
 
-import { SmallFooter, SmallHeader } from '../../components/common';
-import CreateTrailForm from '../../components/CreateTrailForm/CreateTrailForm';
-import { useTrailEnums } from '../../hooks/dataHooks/utilityHooks';
-import { useAvailableAccommodations } from '../../hooks/dataHooks/accommodationHooks';
-import { useAvailableDestinations } from '../../hooks/dataHooks/destinationHooks';
+import "./CreateTrail.scss";
 
 const CreateTrail = () => {
-  const { data: enumData } = useTrailEnums();
+  const { data: enumData } = useTrailEnums(); /*TODO: Fix the logic*/
   const { data: accommodationData } = useAvailableAccommodations();
   const { data: destinationData } = useAvailableDestinations();
 

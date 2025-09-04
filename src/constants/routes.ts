@@ -58,7 +58,7 @@ export const PUBLIC_ROUTES = {
   trail: {
     random: `${TRAILS}/random` as const, // simple`
 
-    create: `${TRAILS}/create` as const, // simple
+    create: `${TRAILS}` as const, // simple
 
     details: {
       path: `${TRAILS}/:trailId` as const, // dynamic
@@ -89,7 +89,7 @@ export const PUBLIC_ROUTES = {
   },
 
   gpx: {
-    gpxUpload: (trailId: string | number) => `${GPX}/${trailId}/upload`,
+    gpxUpload: (trailId: string | number) => `${GPX}/trail/${trailId}`,
   },
 
   comment: {

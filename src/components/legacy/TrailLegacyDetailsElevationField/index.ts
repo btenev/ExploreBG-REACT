@@ -1,0 +1,2 @@
+import TrailLegacyDetailsElevationField from './TrailLegacyDetailsElevationField';
+export default TrailLegacyDetailsElevationField;

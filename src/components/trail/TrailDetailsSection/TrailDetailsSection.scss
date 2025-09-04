@@ -1,0 +1,84 @@
+@use "@styles/main" as gs;
+
+.trail {
+  position: relative;
+
+  & > .favorite-icon {
+    right: 1.25rem;
+    font-size: 2rem;
+    border: 1px solid gs.$bright-turquoise;
+    padding: 0.75rem;
+    border-radius: 50%;
+    display: flex;
+  }
+
+  &__links {
+    @include gs.display(mobile) {
+      @include gs.flex(column, none, none);
+    }
+
+    &__wrapper {
+      margin-bottom: 2rem;
+
+      & > h4 {
+        margin-bottom: 0.5rem;
+      }
+
+      &__field {
+        position: relative;
+        @include gs.flex(none, center, none);
+
+        & > a {
+          color: gs.$light-secondary;
+        }
+
+        &__form {
+          position: absolute;
+          z-index: 1;
+
+          & > div {
+            @include gs.set-details-update-form();
+
+            &:first-of-type {
+              border-top-right-radius: unset;
+              border-bottom-right-radius: unset;
+              padding: 0.5rem 0 0.25rem 0.5rem;
+            }
+
+            &:last-of-type {
+              border-top-left-radius: unset;
+              border-bottom-left-radius: unset;
+              padding: 0.5rem 0.5rem 0.25rem 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__last-update {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 1.5rem;
+  }
+}
+
+.trail-edit-icon {
+  margin-left: 0.75rem;
+  color: white !important;
+  cursor: pointer;
+}
+
+@keyframes press {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

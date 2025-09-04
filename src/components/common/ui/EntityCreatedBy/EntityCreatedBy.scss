@@ -1,0 +1,10 @@
+@use "@styles/main" as gs;
+
+.entity-created-by {
+  @include gs.flex(none, center, center);
+  margin-bottom: 1.5rem;
+
+  & > p {
+    margin-right: 0.75rem;
+  }
+}

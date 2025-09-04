@@ -6,7 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { ScrollToTopBtn } from "./components/common";
-import { ProvideTheme } from "./context/ProvideTheme.tsx";
+import { ThemeProvider } from "./context/Theme";
 import router from "./routes.tsx";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +16,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ProvideTheme>
+    <ThemeProvider>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         <ToastContainer
@@ -36,6 +36,6 @@ createRoot(document.getElementById("root")!).render(
 
         <ReactQueryDevtools />
       </QueryClientProvider>
-    </ProvideTheme>
+    </ThemeProvider>
   </StrictMode>
 );

@@ -1,0 +1,17 @@
+// TrailDetailsSeasonVisited.scss
+.trail__season {
+  margin-bottom: 2rem;
+
+  &--spring {
+    color: #4caf50 !important;
+  }
+  &--summer {
+    color: #ff9800 !important;
+  }
+  &--autumn {
+    color: #795548 !important;
+  }
+  &--winter {
+    color: #2196f3 !important;
+  }
+}

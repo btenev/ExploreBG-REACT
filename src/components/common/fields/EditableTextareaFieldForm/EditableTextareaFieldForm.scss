@@ -1,0 +1,53 @@
+@use "@styles/main" as gs;
+
+.editable-textarea-field {
+  min-height: 17rem;
+  position: relative;
+
+  & > div {
+    position: absolute;
+    top: 1rem;
+    z-index: 1;
+    box-shadow: 0 0 0.5rem gs.$electric-blue;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    backdrop-filter: blur(0.5rem);
+    background-color: rgba(128, 128, 128, 0.4);
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+
+    @media (max-height: 35rem) and (orientation: landscape) {
+      max-height: 100vh;
+    }
+
+    & > p {
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    & > span {
+      & > svg {
+        margin-left: 0.5rem;
+        font-size: 1.15rem;
+        animation: press 1.5s ease-in-out infinite;
+      }
+    }
+  }
+
+  & > .edit-icon {
+    position: absolute;
+    top: -0.5rem;
+    right: -1.5rem;
+    margin-left: unset;
+    font-size: 1.5rem;
+
+    @include gs.display(tablet) {
+      top: -0.75rem;
+      right: -0.25rem;
+    }
+  }
+}

@@ -1,8 +1,6 @@
-import './NotFound.scss';
+import { BackButton, SmallFooter, Logo } from "@components/common";
 
-import Logo from '../../components/common/Logo';
-import BackButton from '../../components/common/BackButton';
-import { SmallFooter } from '../../components/common/Footer';
+import "./NotFound.scss";
 
 const NotFound = () => {
   return (

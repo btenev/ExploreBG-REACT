@@ -2,15 +2,14 @@ import { useMutation } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 
-import { useLastUpdated } from "@context/LastUpdate";
-import { handleApiError } from "@utils/errorHandlers";
-import { capitalize } from "@utils/mixedUtils";
-
 import {
   HikingTraiFieldRequestMap,
   HikingTraiFieldResponseMap,
   trailsApi,
-} from "../../api/public/trailsApi";
+} from "@api/public";
+import { useLastUpdated } from "@context/LastUpdate";
+import { handleApiError } from "@utils/errorHandlers";
+import { capitalize } from "@utils/mixedUtils";
 
 type ExtractInnerValue<K extends keyof HikingTraiFieldResponseMap> =
   HikingTraiFieldResponseMap[K][K extends keyof HikingTraiFieldResponseMap[K]

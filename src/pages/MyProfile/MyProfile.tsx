@@ -1,17 +1,18 @@
-import './MyProfile.scss';
+import { HikeCard } from "@components/hike";
+import { TrailCard } from "@components/trail";
+import {
+  MyProfilePhotoField,
+  MyProfileUsernameField,
+  MyProfileBirthdateField,
+  MyProfileEmailField,
+  MyProfileGenderField,
+  MyProfileInfoField,
+  MyProfileButtons,
+  UserCreatedItems,
+} from "@components/user/profile";
+import { useMyProfile } from "@hooks/dataHooks/userHooks";
 
-import MyProfilePhotoField from '../../components/MyProfilePhotoField';
-import MyProfileUsernameField from '../../components/MyProfileUsernameField';
-import MyProfileInfoField from '../../components/MyProfileInfoField';
-import MyProfileEmailField from '../../components/MyProfileEmailField';
-import MyProfileGenderField from '../../components/MyProfileGenderField';
-import MyProfileBirthdateField from '../../components/MyProfileBirthdateField';
-import MyProfileButtons from '../../components/MyProfileButtons';
-import HikeCard from '../../components/HikeCard';
-import { UserCreatedItems } from '../../components/common';
-
-import { useMyProfile } from '../../hooks/dataHooks/userHooks';
-import TrailCard from '../../components/TrailCard';
+import "./MyProfile.scss";
 
 const MyProfile = () => {
   const { data, isLoading, error } = useMyProfile();
@@ -22,8 +23,16 @@ const MyProfile = () => {
 
   if (!data) return <p>Resource not found!</p>;
 
-  const { imageUrl, username, userInfo, email, gender, birthdate, createdHikes, createdTrails } =
-    data;
+  const {
+    imageUrl,
+    username,
+    userInfo,
+    email,
+    gender,
+    birthdate,
+    createdHikes,
+    createdTrails,
+  } = data;
 
   return (
     <main className="my-profile-container">

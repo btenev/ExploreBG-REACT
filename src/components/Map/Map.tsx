@@ -1,20 +1,25 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from "react";
+import {
+  LayersControl,
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  Tooltip,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
-import { LayersControl, MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-defaulticon-compatibility';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
+import { BG_GPS_COORDINATES, DEFAULT_MAP_ZOOM } from "@constants";
+import { FullScreenProvider } from "@context/FullScreen";
+import { ITrackInfo } from "@types";
 
-import { ITrackInfo } from '../../types';
-import { BG_GPS_COORDINATES, DEFAULT_MAP_ZOOM } from '../../constants';
-
-import { FullScreenProvider } from '../../context/FullScreenProvider';
-
-import FullScreenMap from '../FullScreenMap';
-import GpxLayer from '../GpxLayer';
-import CtrlScrollOnMap from '../CtrlScrollOnMap';
-import LocateUserOnMap from '../LocateUserOnMap';
-import MouseCoordinatesOnMap from '../MouseCoordinatesOnMap';
+import CtrlScrollOnMap from "./CtrlScrollOnMap";
+import FullScreenMap from "./FullScreenMap";
+import GpxLayer from "./GpxLayer";
+import LocateUserOnMap from "./LocateUserOnMap";
+import MouseCoordinatesOnMap from "./MouseCoordinatesOnMap";
 
 interface Props {
   width?: string;
@@ -42,7 +47,7 @@ const Map = ({
           center={initialMapPosition ?? BG_GPS_COORDINATES}
           zoom={initialMapZoom ?? DEFAULT_MAP_ZOOM}
           scrollWheelZoom={false}
-          style={{ height: '100%', width: '100%', borderRadius: '0.5rem' }}
+          style={{ height: "100%", width: "100%", borderRadius: "0.5rem" }}
         >
           <LayersControl position="topright">
             <LayersControl.BaseLayer checked name="OpenStreetMap">

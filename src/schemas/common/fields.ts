@@ -1,19 +1,20 @@
 import { z } from "zod";
 
-import { roundToTwoDecimals } from "../../utils/mixedUtils";
+import {
+  USERNAME_MIN_LENGTH,
+  USERNAME_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH,
+  TRAIL_PLACE_MIN_LENGTH,
+  TRAIL_PLACE_MAX_LENGTH,
+  TRAIL_INFO_MAX_LENGTH,
+  COMMENT_MAX_LENGTH,
+} from "@constants";
+import { roundToTwoDecimals } from "@utils/mixedUtils";
 
 const placeRegex = /^[A-Z][a-z]+(\s[A-Za-z]+)*$/;
 const TEXT_PATTERN_GENERIC =
   "Your text can only contain English letters and spaces, but it must start with a capital letter.";
-
-export const usernameMinLength = 3;
-export const usernameMaxLength = 30;
-export const passMinLength = 5;
-export const passMaxLength = 24;
-export const trailPlaceMinLength = 3;
-export const trailPlaceMaxLength = 30;
-export const trailInfoMaxLength = 3000;
-export const commentMaxLength = 1000;
 
 export const emailSchema = z
   .string()
@@ -32,12 +33,12 @@ export const usernameSchema = z
     "Your username can only contain English letters, numbers, and underscores."
   )
   .min(
-    usernameMinLength,
-    `Your username must be at least ${usernameMinLength} characters long.`
+    USERNAME_MIN_LENGTH,
+    `Your username must be at least ${USERNAME_MIN_LENGTH} characters long.`
   )
   .max(
-    usernameMaxLength,
-    `Your username can be a maximum of ${usernameMaxLength} characters.`
+    USERNAME_MAX_LENGTH,
+    `Your username can be a maximum of ${USERNAME_MAX_LENGTH} characters.`
   );
 
 export const passwordSchema = z
@@ -52,12 +53,12 @@ export const passwordSchema = z
   )
   .regex(/^\S*$/, "Your password cannot contain spaces.")
   .min(
-    passMinLength,
-    `Your password must be at least ${passMinLength} characters long.`
+    PASSWORD_MIN_LENGTH,
+    `Your password must be at least ${PASSWORD_MIN_LENGTH} characters long.`
   )
   .max(
-    passMaxLength,
-    `Your password can be a maximum of ${passMaxLength} characters.`
+    PASSWORD_MAX_LENGTH,
+    `Your password can be a maximum of ${PASSWORD_MAX_LENGTH} characters.`
   );
 
 const createPlaceSchema = (fieldName: string) =>
@@ -66,12 +67,12 @@ const createPlaceSchema = (fieldName: string) =>
     .nonempty(`Please enter the ${fieldName}.`)
     .regex(placeRegex, TEXT_PATTERN_GENERIC)
     .min(
-      trailPlaceMinLength,
-      `The ${fieldName} must be at least ${trailPlaceMinLength} characters long.`
+      TRAIL_PLACE_MIN_LENGTH,
+      `The ${fieldName} must be at least ${TRAIL_PLACE_MIN_LENGTH} characters long.`
     )
     .max(
-      trailPlaceMaxLength,
-      `The ${fieldName} can be a maximum of ${trailPlaceMaxLength} characters.`
+      TRAIL_PLACE_MAX_LENGTH,
+      `The ${fieldName} can be a maximum of ${TRAIL_PLACE_MAX_LENGTH} characters.`
     );
 
 /*Trail*/
@@ -112,12 +113,12 @@ export const nextToSchema = z
   .nonempty("Please enter the town or city name near the trail.")
   .regex(placeRegex, TEXT_PATTERN_GENERIC)
   .min(
-    trailPlaceMinLength,
-    `The village/town/city name must be at least ${trailPlaceMinLength} characters long.`
+    TRAIL_PLACE_MIN_LENGTH,
+    `The village/town/city name must be at least ${TRAIL_PLACE_MIN_LENGTH} characters long.`
   )
   .max(
-    trailPlaceMaxLength,
-    `The village/town/city name  can be a maximum of ${trailPlaceMaxLength} characters.`
+    TRAIL_PLACE_MAX_LENGTH,
+    `The village/town/city name  can be a maximum of ${TRAIL_INFO_MAX_LENGTH} characters.`
   );
 
 export const trailInfoSchema = z
@@ -128,14 +129,14 @@ export const trailInfoSchema = z
     "Valid characters include uppercase and lowercase letters (A-Z, a-z), numbers (0-9), spaces, and the following symbols: ( ) : ; ' \" ` ? ! - . , new line."
   )
   .max(
-    trailInfoMaxLength,
-    `Trail info text must not exceed ${trailInfoMaxLength} characters.`
+    TRAIL_INFO_MAX_LENGTH,
+    `Trail info text must not exceed ${TRAIL_INFO_MAX_LENGTH} characters.`
   );
 
 export const messageSchema = z
   .string()
   .nonempty("Please enter a comment.")
   .max(
-    commentMaxLength,
-    `The comment must not exceed ${commentMaxLength} characters.`
+    COMMENT_MAX_LENGTH,
+    `The comment must not exceed ${COMMENT_MAX_LENGTH} characters.`
   );
