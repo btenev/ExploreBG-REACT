@@ -8,11 +8,22 @@ import {
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
 } from "@types";
+import { toKebabCase } from "@utils/mixedUtils";
 import { detailsStatusConverter } from "@utils/statusConverter";
 
 import { ApiClient } from "../base";
 
+export type AccommodationFieldRequestMap = {
+  accommodationName: { accommodationName: string };
+};
+
+export type AccommodationFieldResponseMap = {
+  accommodationName: { accommodationName: string; lastUpdateDate: string };
+};
+
 const apiClient = new ApiClient();
+
+const baseAccommodationUrl = "/accommodations";
 
 export const accommodationsApi = {
   get4RandomAccommodations: (): Promise<IAccommodationCard[]> =>
@@ -46,6 +57,18 @@ export const accommodationsApi = {
       PUBLIC_ROUTES.accommodation.favoriteStatus(accommodationId),
       data
     ),
+
+  updateAccommodationField: <K extends keyof AccommodationFieldRequestMap>(
+    field: K,
+    accommodationId: number,
+    data: AccommodationFieldRequestMap[K]
+  ): Promise<AccommodationFieldResponseMap[K]> => {
+    const endPoint = toKebabCase(field as string);
+    return apiClient.patch(
+      `${baseAccommodationUrl}/${accommodationId}/${endPoint}`,
+      data
+    );
+  },
 
   getAccommodationComments: (accommodationId: string): Promise<IComment[]> =>
     apiClient.get<IComment[]>(
