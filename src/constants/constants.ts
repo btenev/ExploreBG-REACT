@@ -20,7 +20,15 @@ export const USERNAME_MIN_LENGTH = 3;
 export const USERNAME_MAX_LENGTH = 30;
 export const PASSWORD_MIN_LENGTH = 5;
 export const PASSWORD_MAX_LENGTH = 24;
+/*Trail*/
 export const TRAIL_PLACE_MIN_LENGTH = 3;
 export const TRAIL_PLACE_MAX_LENGTH = 30;
 export const TRAIL_INFO_MAX_LENGTH = 3000;
 export const COMMENT_MAX_LENGTH = 1000;
+/*Accommodation*/
+export const ACCOMMODATION_PLACE_MIN_LENGTH = 3;
+export const ACCOMMODATION_PLACE_MAX_LENGTH = 30;
+export const ACCOMMODATION_INFO_LENGTH = 800;
+
+export const NEXT_TO_MIN_LENGTH = 3;
+export const NEXT_TO_MAX_LENGTH = 20;
