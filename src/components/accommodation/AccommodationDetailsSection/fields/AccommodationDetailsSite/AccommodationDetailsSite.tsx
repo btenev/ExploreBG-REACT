@@ -2,11 +2,11 @@ import { FaGlobe } from "react-icons/fa";
 
 import { EditableFieldForm } from "@components/common";
 import { useUpdateAccommodationField } from "@hooks/dataHooks/accommodationHooks";
-import { useAccommodationSiteForm } from "@hooks/formHooks/accommodationHooks";
+import { useSiteForm } from "@hooks/formHooks/accommodationHooks";
 
 interface Props {
   accommodationId: number;
-  initialValue: string;
+  initialValue: string | null;
   canEdit: boolean;
 }
 
@@ -22,7 +22,7 @@ const AccommodationDetailsSite = ({
       label="site"
       initialValue={{ site: initialValue }}
       canEdit={canEdit}
-      useFormHook={useAccommodationSiteForm}
+      useFormHook={useSiteForm}
       mutation={mutation}
       inputType="text"
       renderValue={(val) => (

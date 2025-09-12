@@ -3,6 +3,7 @@ import { LastUpdatedProvider } from "@context/LastUpdate";
 import { IAccommodation, StatusEnum } from "@types";
 
 import {
+  AccommodationDetailsBedCapacity,
   AccommodationDetailsName,
   AccommodationDetailsPhoneNumber,
   AccommodationDetailsSite,
@@ -53,6 +54,14 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
               <AccommodationDetailsPhoneNumber
                 accommodationId={accommodation.id}
                 initialValue={accommodation.phoneNumber}
+                canEdit={candEdit}
+              />
+            </FieldPair>
+
+            <FieldPair>
+              <AccommodationDetailsBedCapacity
+                accommodationId={accommodation.id}
+                initialValue={accommodation.bedCapacity}
                 canEdit={candEdit}
               />
             </FieldPair>

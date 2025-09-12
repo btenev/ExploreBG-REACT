@@ -1,0 +1,2 @@
+import AccommodationDetailsBedCapacity from "./AccommodationDetailsBedCapacity";
+export default AccommodationDetailsBedCapacity;

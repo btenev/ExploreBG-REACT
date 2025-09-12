@@ -6,7 +6,7 @@ import { usePhoneNumberForm } from "@hooks/formHooks/accommodationHooks";
 
 interface Props {
   accommodationId: number;
-  initialValue: string;
+  initialValue: string | null;
   canEdit: boolean;
 }
 
