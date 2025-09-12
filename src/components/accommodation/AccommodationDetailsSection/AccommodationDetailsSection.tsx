@@ -2,7 +2,7 @@ import { EntityCreatedBy, FavoriteToggle } from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
 import { IAccommodation, StatusEnum } from "@types";
 
-import { AccommodationDetailsName } from "./fields";
+import { AccommodationDetailsName, AccommodationDetailsSite } from "./fields";
 
 import "./AccommodationDetailsSection.scss";
 
@@ -36,6 +36,12 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
             <AccommodationDetailsName
               accommodationId={accommodation.id}
               initialValue={accommodation.accommodationName}
+              canEdit={candEdit}
+            />
+
+            <AccommodationDetailsSite
+              accommodationId={accommodation.id}
+              initialValue={accommodation.site}
               canEdit={candEdit}
             />
           </>
