@@ -1,0 +1,2 @@
+import AccommodationDetailsPhoneNumber from "./AccommodationDetailsPhoneNumber";
+export default AccommodationDetailsPhoneNumber;
