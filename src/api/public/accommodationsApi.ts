@@ -15,10 +15,12 @@ import { ApiClient } from "../base";
 
 export type AccommodationFieldRequestMap = {
   accommodationName: { accommodationName: string };
+  site: { site: string | null };
 };
 
 export type AccommodationFieldResponseMap = {
   accommodationName: { accommodationName: string; lastUpdateDate: string };
+  site: { site: string; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();

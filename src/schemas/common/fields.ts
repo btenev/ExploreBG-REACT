@@ -238,12 +238,25 @@ export const siteUrlSchema = z
   .string()
   .trim()
   .nullable()
+  .transform((val) => {
+    if (!val) return val; // keep null/empty
+    // Prepend https:// if missing
+    return val.startsWith("http://") || val.startsWith("https://")
+      ? val
+      : `https://${val}`;
+  })
   .refine(
     (val) => {
-      if (!val) return true; // empty is allowed
+      if (!val) return true; // allow empty
       try {
-        new URL(val); // built-in URL parser
-        return true;
+        const url = new URL(val);
+
+        // Must have http/https protocol AND a valid hostname with a dot
+        return (
+          (url.protocol === "http:" || url.protocol === "https:") &&
+          !!url.hostname &&
+          url.hostname.includes(".")
+        );
       } catch {
         return false;
       }
