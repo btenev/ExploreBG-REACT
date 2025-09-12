@@ -20,6 +20,10 @@
 
     & > form {
       @include gs.set-details-update-form();
+      input[type="number"] {
+        width: 5rem; // adjust size as needed      /*TODO: Review input number*/
+        text-align: center;
+      }
     }
 
     &__error {

@@ -17,12 +17,14 @@ export type AccommodationFieldRequestMap = {
   accommodationName: { accommodationName: string };
   site: { site: string | null };
   phoneNumber: { phoneNumber: string | null };
+  bedCapacity: { bedCapacity: number | null };
 };
 
 export type AccommodationFieldResponseMap = {
   accommodationName: { accommodationName: string; lastUpdateDate: string };
   site: { site: string; lastUpdateDate: string };
   phoneNumber: { phoneNumber: string; lastUpdateDate: string };
+  bedCapacity: { bedCapacity: number | null; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();

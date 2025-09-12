@@ -1,4 +1,5 @@
 export * from "./useCreateAccommodationForm";
 export * from "./useAccommodationNameForm";
-export * from "./useAccommodationSiteForm";
+export * from "./useSiteForm";
 export * from "./usePhoneNumberForm";
+export * from "./useBedCapacityForm";

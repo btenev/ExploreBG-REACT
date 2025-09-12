@@ -210,29 +210,25 @@ export const phoneNumberSchema = z
     }
   });
 
-export const bedCapacitySchema = z.object({
-  bedCapacity: z
-    .string() // accept string input from form
-    .transform((val) => (val === "" ? null : Number(val))) // convert empty string to null, others to number
-    .refine((val) => val === null || (Number.isInteger(val) && val >= 0), {
-      message: "Your bed capacity must be a non-negative integer.",
-    })
-    .nullable(),
-});
+export const bedCapacitySchema = z
+  .string() // accept string input from form
+  .transform((val) => (val === "" ? null : Number(val))) // convert empty string to null, others to number
+  .refine((val) => val === null || (Number.isInteger(val) && val >= 0), {
+    message: "Your bed capacity must be a non-negative integer.",
+  })
+  .nullable();
 
-export const pricePerBedSchema = z.object({
-  pricePerBed: z
-    .string() // input comes as string from form
-    .trim()
-    .transform((val) => (val === "" ? null : Number(val))) // empty -> null, otherwise convert to number
-    .refine((val) => val === null || (typeof val === "number" && !isNaN(val)), {
-      message: "Your price per bed must be a valid number.",
-    })
-    .refine((val) => val === null || val > 0.01, {
-      message: "Your price per bed must be greater than 0.",
-    })
-    .nullable(),
-});
+export const pricePerBedSchema = z
+  .string() // input comes as string from form
+  .trim()
+  .transform((val) => (val === "" ? null : Number(val))) // empty -> null, otherwise convert to number
+  .refine((val) => val === null || (typeof val === "number" && !isNaN(val)), {
+    message: "Your price per bed must be a valid number.",
+  })
+  .refine((val) => val === null || val > 0.01, {
+    message: "Your price per bed must be greater than 0.",
+  })
+  .nullable();
 
 export const siteUrlSchema = z
   .string()
