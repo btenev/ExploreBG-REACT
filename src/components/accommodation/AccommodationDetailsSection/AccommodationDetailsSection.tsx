@@ -6,6 +6,7 @@ import {
   AccommodationDetailsBedCapacity,
   AccommodationDetailsName,
   AccommodationDetailsPhoneNumber,
+  AccommodationDetailsPricePerBed,
   AccommodationDetailsSite,
 } from "./fields";
 
@@ -62,6 +63,12 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
               <AccommodationDetailsBedCapacity
                 accommodationId={accommodation.id}
                 initialValue={accommodation.bedCapacity}
+                canEdit={candEdit}
+              />
+
+              <AccommodationDetailsPricePerBed
+                accommodationId={accommodation.id}
+                initialValue={accommodation.pricePerBed}
                 canEdit={candEdit}
               />
             </FieldPair>
