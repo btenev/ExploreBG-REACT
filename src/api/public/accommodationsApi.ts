@@ -18,6 +18,7 @@ export type AccommodationFieldRequestMap = {
   site: { site: string | null };
   phoneNumber: { phoneNumber: string | null };
   bedCapacity: { bedCapacity: number | null };
+  pricePerBed: { pricePerBed: number | null };
 };
 
 export type AccommodationFieldResponseMap = {
@@ -25,6 +26,7 @@ export type AccommodationFieldResponseMap = {
   site: { site: string; lastUpdateDate: string };
   phoneNumber: { phoneNumber: string; lastUpdateDate: string };
   bedCapacity: { bedCapacity: number | null; lastUpdateDate: string };
+  pricePerBed: { pricePerBed: number | null; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();

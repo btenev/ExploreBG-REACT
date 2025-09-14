@@ -27,7 +27,7 @@ const AccommodationDetailsBedCapacity = ({
       renderValue={(val) => (
         <p>
           <FaBed />
-          &nbsp; Bed capacity: &nbsp;
+          &nbsp; bed capacity: &nbsp;
           {val !== null
             ? `${val} ${val === 1 ? "bed" : "beds"}`
             : "not available"}
