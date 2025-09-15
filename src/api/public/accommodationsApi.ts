@@ -1,6 +1,7 @@
 import { PUBLIC_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import {
+  FoodAvailabilityEnum,
   IAccommodation,
   IAccommodationCard,
   IComment,
@@ -19,6 +20,7 @@ export type AccommodationFieldRequestMap = {
   phoneNumber: { phoneNumber: string | null };
   bedCapacity: { bedCapacity: number | null };
   pricePerBed: { pricePerBed: number | null };
+  availableFood: { availableFood: FoodAvailabilityEnum };
 };
 
 export type AccommodationFieldResponseMap = {
@@ -27,6 +29,10 @@ export type AccommodationFieldResponseMap = {
   phoneNumber: { phoneNumber: string; lastUpdateDate: string };
   bedCapacity: { bedCapacity: number | null; lastUpdateDate: string };
   pricePerBed: { pricePerBed: number | null; lastUpdateDate: string };
+  availableFood: {
+    availableFood: FoodAvailabilityEnum;
+    lastUpdateDate: string;
+  };
 };
 
 const apiClient = new ApiClient();

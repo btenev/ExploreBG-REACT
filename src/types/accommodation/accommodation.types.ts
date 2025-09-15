@@ -1,11 +1,12 @@
 import {
   AccessibilityEnum,
   AccommodationTypeEnum,
+  FoodAvailabilityEnum,
   IComment,
   IOwner,
   StatusEnum,
   TPhoto,
-} from '../shared';
+} from "../shared";
 
 export interface IHut {
   id: number;
@@ -24,7 +25,7 @@ export interface IAccommodation extends IAccommodationCard {
   accommodationInfo: string;
   bedCapacity: number;
   pricePerBed: number;
-  foodAvailable: boolean;
+  availableFood: FoodAvailabilityEnum;
   access: AccessibilityEnum;
   type: AccommodationTypeEnum;
   nextTo: string;

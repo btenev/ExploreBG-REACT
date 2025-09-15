@@ -1,6 +1,10 @@
 import z from "zod";
 
-import { accessSchema, typeSchema } from "./accommodationEnumsSchema";
+import {
+  accessSchema,
+  availableFoodSchema,
+  typeSchema,
+} from "./accommodationEnumsSchema";
 import {
   accommodationInfoSchema,
   accommodationNameSchema,
@@ -18,7 +22,7 @@ export const createAccommodationSchema = z.object({
   site: siteUrlSchema,
   pricePerBed: pricePerBedSchema,
   bedCapacity: bedCapacitySchema,
-  foodAvailable: z.boolean(),
+  availableFood: availableFoodSchema,
   access: accessSchema,
   type: typeSchema,
   accommodationInfo: accommodationInfoSchema,
