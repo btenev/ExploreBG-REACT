@@ -100,6 +100,8 @@ export const PUBLIC_ROUTES = {
     registerEnums: "/utilities/register-enums" as const, // simple
 
     trailEnums: "/utilities/create/trail-enums" as const, // simple
+
+    accommodationEnums: "/utilities/create/accommodation-enums" as const, // simple
   },
 };
 
