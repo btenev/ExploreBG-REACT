@@ -3,3 +3,4 @@ export { default as AccommodationDetailsSite } from "./AccommodationDetailsSite"
 export { default as AccommodationDetailsPhoneNumber } from "./AccommodationDetailsPhoneNumber";
 export { default as AccommodationDetailsBedCapacity } from "./AccommodationDetailsBedCapacity";
 export { default as AccommodationDetailsPricePerBed } from "./AccommodationDetailsPricePerBed";
+export { default as AccommodationDetailsFood } from "./AccommodationDetailsFood";

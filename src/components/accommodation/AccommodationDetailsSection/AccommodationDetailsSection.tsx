@@ -1,9 +1,11 @@
 import { EntityCreatedBy, FavoriteToggle, FieldPair } from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
+import { useAccommodationEnums } from "@hooks/dataHooks/utilityHooks";
 import { IAccommodation, StatusEnum } from "@types";
 
 import {
   AccommodationDetailsBedCapacity,
+  AccommodationDetailsFood,
   AccommodationDetailsName,
   AccommodationDetailsPhoneNumber,
   AccommodationDetailsPricePerBed,
@@ -18,6 +20,9 @@ interface Props {
 }
 
 const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
+  const { data: accommodationEnums, isLoading: isLoadingEnums } =
+    useAccommodationEnums(candEdit);
+
   return (
     <LastUpdatedProvider>
       <section className="accommodation details-page-section">
@@ -70,6 +75,16 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
                 accommodationId={accommodation.id}
                 initialValue={accommodation.pricePerBed}
                 canEdit={candEdit}
+              />
+            </FieldPair>
+
+            <FieldPair>
+              <AccommodationDetailsFood
+                accommodationId={accommodation.id}
+                initialValue={accommodation.availableFood}
+                canEdit={candEdit}
+                formEnums={accommodationEnums?.availableFood ?? []}
+                isLoadingEnums={isLoadingEnums}
               />
             </FieldPair>
           </>
