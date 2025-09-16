@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-import './FieldPair.scss';
+import "./FieldPair.scss";
 
 interface Props {
   children: ReactNode;

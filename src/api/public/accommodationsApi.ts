@@ -23,6 +23,7 @@ export type AccommodationFieldRequestMap = {
   pricePerBed: { pricePerBed: number | null };
   availableFood: { availableFood: FoodAvailabilityEnum };
   access: { access: AccessibilityEnum };
+  nextTo: { nextTo: string };
 };
 
 export type AccommodationFieldResponseMap = {
@@ -36,6 +37,7 @@ export type AccommodationFieldResponseMap = {
     lastUpdateDate: string;
   };
   access: { access: AccessibilityEnum; lastUpdateDate: string };
+  nextTo: { nextTo: string; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();
