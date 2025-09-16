@@ -18,22 +18,22 @@ const AccommodationDetailsPricePerBed = ({
   const mutation = useUpdateAccommodationField("pricePerBed", accommodationId);
   return (
     <EditableFieldForm
-      label="price per bed"
+      label="Price per bed"
       initialValue={{ pricePerBed: initialValue }}
       canEdit={canEdit}
       useFormHook={usePricePerBedForm}
       mutation={mutation}
       inputType="number"
-      renderValue={(val) => {
+      renderValue={(val, label) => {
         const numericVal = val !== null ? Number(val) : null;
 
         return (
           <p>
             <FaMoneyBillWave />
-            &nbsp; Price per bed: &nbsp;
+            &nbsp; {label}: &nbsp;
             {numericVal !== null && !isNaN(numericVal)
               ? `${numericVal.toFixed(2)} BGN`
-              : "not available"}
+              : "Not available"}
           </p>
         );
       }}

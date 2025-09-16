@@ -23,7 +23,7 @@ const AccommodationDetailsName = ({
 
   return (
     <EditableFieldForm<AccommodationNameDto>
-      label="accommodation name"
+      label="Accommodation name"
       initialValue={{ accommodationName: initialValue }}
       canEdit={canEdit}
       useFormHook={useAccommodationNameForm}

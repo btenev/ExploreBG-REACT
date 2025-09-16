@@ -12,7 +12,7 @@ const EntityCreatedBy = ({ createdBy }: Props) => {
   return (
     <div className="entity-created-by">
       <p>
-        created by:&nbsp;<b>{createdBy.username}</b>
+        Created by: &nbsp;<b>{createdBy.username}</b>
       </p>
       <MemberImage
         ownerId={createdBy.id}

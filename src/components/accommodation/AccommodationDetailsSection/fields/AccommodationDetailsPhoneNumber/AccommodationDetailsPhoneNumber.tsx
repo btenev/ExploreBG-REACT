@@ -18,17 +18,17 @@ const AccommodationDetailsPhoneNumber = ({
   const mutation = useUpdateAccommodationField("phoneNumber", accommodationId);
   return (
     <EditableFieldForm
-      label="phone number"
+      label="Phone"
       initialValue={{ phoneNumber: initialValue }}
       canEdit={canEdit}
       useFormHook={usePhoneNumberForm}
       mutation={mutation}
       inputType="tel"
-      renderValue={(val) => (
+      renderValue={(val, label) => (
         <p>
           <MdPhone />
-          &nbsp; tel: &nbsp;
-          {val ? <a href={`tel:${val}`}>{val}</a> : "not available"}
+          &nbsp; {label}: &nbsp;
+          {val ? <a href={`tel:${val}`}>{val}</a> : "Not available"}
         </p>
       )}
     />

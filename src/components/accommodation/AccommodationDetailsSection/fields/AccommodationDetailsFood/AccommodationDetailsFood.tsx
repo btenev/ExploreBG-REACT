@@ -26,16 +26,16 @@ const AccommodationDetailsFood = ({
   );
   return (
     <EditableFieldForm
-      label="food"
+      label="Food"
       initialValue={{ availableFood: initialValue }}
       canEdit={canEdit}
       useFormHook={useFoodAvailableForm}
       mutation={mutation}
       inputType="text"
-      renderValue={(val) => (
+      renderValue={(val, label) => (
         <p>
           <GiKnifeFork />
-          &nbsp; food: &nbsp;
+          &nbsp; {label}: &nbsp;
           {val}
         </p>
       )}

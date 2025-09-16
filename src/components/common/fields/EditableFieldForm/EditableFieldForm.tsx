@@ -29,7 +29,10 @@ interface Props<FormValues extends Record<string, any>> {
     isPending: boolean;
   };
   inputType?: React.HTMLInputTypeAttribute;
-  renderValue?: (value: FormValues[keyof FormValues]) => ReactElement;
+  renderValue?: (
+    value: FormValues[keyof FormValues],
+    label: string
+  ) => ReactElement;
   renderInput?: (fieldKey: keyof FormValues, register: any) => ReactElement;
 }
 
@@ -88,7 +91,7 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
         style={{ opacity: isEditing ? "0" : "1" }}
       >
         {renderValue ? (
-          renderValue(getValues()[fieldKey])
+          renderValue(getValues()[fieldKey], label)
         ) : (
           <details open>
             <summary>

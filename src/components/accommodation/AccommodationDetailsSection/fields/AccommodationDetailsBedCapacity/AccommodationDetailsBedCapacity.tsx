@@ -18,19 +18,19 @@ const AccommodationDetailsBedCapacity = ({
   const mutation = useUpdateAccommodationField("bedCapacity", accommodationId);
   return (
     <EditableFieldForm
-      label="bed capacity"
+      label="Bed capacity"
       initialValue={{ bedCapacity: initialValue }}
       canEdit={canEdit}
       useFormHook={useBedCapacityForm}
       mutation={mutation}
       inputType="number"
-      renderValue={(val) => (
+      renderValue={(val, label) => (
         <p>
           <FaBed />
-          &nbsp; bed capacity: &nbsp;
+          &nbsp; {label}: &nbsp;
           {val !== null
             ? `${val} ${val === 1 ? "bed" : "beds"}`
-            : "not available"}
+            : "Not available"}
         </p>
       )}
     />
