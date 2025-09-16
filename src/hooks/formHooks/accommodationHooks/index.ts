@@ -5,3 +5,4 @@ export * from "./usePhoneNumberForm";
 export * from "./useBedCapacityForm";
 export * from "./usePricePerBedForm";
 export * from "./useFoodAvailableForm";
+export * from "./useAccommodationAccessForm";
