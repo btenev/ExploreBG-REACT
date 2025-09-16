@@ -4,6 +4,7 @@ import { useAccommodationEnums } from "@hooks/dataHooks/utilityHooks";
 import { IAccommodation, StatusEnum } from "@types";
 
 import {
+  AccommodationDetailsAccess,
   AccommodationDetailsBedCapacity,
   AccommodationDetailsFood,
   AccommodationDetailsName,
@@ -84,6 +85,14 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
                 initialValue={accommodation.availableFood}
                 canEdit={candEdit}
                 formEnums={accommodationEnums?.availableFood ?? []}
+                isLoadingEnums={isLoadingEnums}
+              />
+
+              <AccommodationDetailsAccess
+                accommodationId={accommodation.id}
+                initialValue={accommodation.access}
+                canEdit={candEdit}
+                formEnums={accommodationEnums?.access ?? []}
                 isLoadingEnums={isLoadingEnums}
               />
             </FieldPair>

@@ -19,22 +19,22 @@ const AccommodationDetailsSite = ({
 
   return (
     <EditableFieldForm
-      label="site"
+      label="Site"
       initialValue={{ site: initialValue }}
       canEdit={canEdit}
       useFormHook={useSiteForm}
       mutation={mutation}
       inputType="text"
-      renderValue={(val) => (
+      renderValue={(val, label) => (
         <p>
           <FaGlobe />
-          &nbsp; site: &nbsp;
+          &nbsp; {label}: &nbsp;
           {val ? (
             <a href={val} target="_blank" rel="noopener noreferrer">
               {val}
             </a>
           ) : (
-            "not available"
+            "Not available"
           )}
         </p>
       )}
