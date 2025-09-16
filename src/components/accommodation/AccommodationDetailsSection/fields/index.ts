@@ -5,3 +5,4 @@ export { default as AccommodationDetailsBedCapacity } from "./AccommodationDetai
 export { default as AccommodationDetailsPricePerBed } from "./AccommodationDetailsPricePerBed";
 export { default as AccommodationDetailsFood } from "./AccommodationDetailsFood";
 export { default as AccommodationDetailsAccess } from "./AccommodationDetailsAccess";
+export { default as AccommodationDetailsNextTo } from "./AccommodationDetailsNextTo";

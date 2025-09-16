@@ -8,6 +8,7 @@ import {
   AccommodationDetailsBedCapacity,
   AccommodationDetailsFood,
   AccommodationDetailsName,
+  AccommodationDetailsNextTo,
   AccommodationDetailsPhoneNumber,
   AccommodationDetailsPricePerBed,
   AccommodationDetailsSite,
@@ -45,11 +46,19 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
 
         {accommodation.detailsStatus !== StatusEnum.review && (
           <>
-            <AccommodationDetailsName
-              accommodationId={accommodation.id}
-              initialValue={accommodation.accommodationName}
-              canEdit={candEdit}
-            />
+            <FieldPair>
+              <AccommodationDetailsName
+                accommodationId={accommodation.id}
+                initialValue={accommodation.accommodationName}
+                canEdit={candEdit}
+              />
+
+              <AccommodationDetailsNextTo
+                accommodationId={accommodation.id}
+                initialValue={accommodation.nextTo}
+                canEdit={candEdit}
+              />
+            </FieldPair>
 
             <FieldPair>
               <AccommodationDetailsSite
