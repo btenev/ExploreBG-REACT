@@ -7,6 +7,7 @@ import {
   AccommodationDetailsAccess,
   AccommodationDetailsBedCapacity,
   AccommodationDetailsFood,
+  AccommodationDetailsInfo,
   AccommodationDetailsName,
   AccommodationDetailsNextTo,
   AccommodationDetailsPhoneNumber,
@@ -105,6 +106,12 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
                 isLoadingEnums={isLoadingEnums}
               />
             </FieldPair>
+
+            <AccommodationDetailsInfo
+              accommodationId={accommodation.id}
+              initialValue={accommodation.accommodationInfo}
+              canEdit={candEdit}
+            />
           </>
         )}
       </section>

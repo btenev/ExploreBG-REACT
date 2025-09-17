@@ -7,3 +7,4 @@ export * from "./usePricePerBedForm";
 export * from "./useFoodAvailableForm";
 export * from "./useAccommodationAccessForm";
 export * from "./useAccommodationNextToForm";
+export * from "./useAccommodationInfoForm";

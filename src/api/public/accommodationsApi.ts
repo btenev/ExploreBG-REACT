@@ -24,6 +24,7 @@ export type AccommodationFieldRequestMap = {
   availableFood: { availableFood: FoodAvailabilityEnum };
   access: { access: AccessibilityEnum };
   nextTo: { nextTo: string };
+  accommodationInfo: { accommodationInfo: string };
 };
 
 export type AccommodationFieldResponseMap = {
@@ -38,6 +39,7 @@ export type AccommodationFieldResponseMap = {
   };
   access: { access: AccessibilityEnum; lastUpdateDate: string };
   nextTo: { nextTo: string; lastUpdateDate: string };
+  accommodationInfo: { accommodationInfo: string; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();
