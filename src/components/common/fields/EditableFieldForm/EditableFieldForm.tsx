@@ -1,4 +1,5 @@
 import { ReactElement, useRef, useState } from "react";
+import { Path, UseFormReturn } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -7,33 +8,30 @@ import { useCloseOnEscapeTabAndClickOutside } from "@hooks/uiHooks";
 
 import "./EditableFieldForm.scss";
 
+interface Mutation<FormValues> {
+  mutate: (
+    data: FormValues,
+    options?: { onSuccess?: (response: any) => void }
+  ) => void;
+  isPending: boolean;
+}
+
 interface Props<FormValues extends Record<string, any>> {
   label: string;
   initialValue: FormValues;
   canEdit: boolean;
   formClassName?: string;
-  useFormHook: (defaultValues: FormValues) => {
-    register: any;
-    handleSubmit: (fn: (data: FormValues) => void) => (e?: any) => void;
-    errors: any;
-    reset: (values?: FormValues) => void;
-    getValues: () => FormValues;
-    isSubmitting: boolean;
-    isDirty: boolean;
-  };
-  mutation: {
-    mutate: (
-      data: FormValues,
-      options?: { onSuccess?: (response: any) => void }
-    ) => void;
-    isPending: boolean;
-  };
+  useFormHook: (defaultValues: FormValues) => UseFormReturn<FormValues>;
+  mutation: Mutation<FormValues>;
   inputType?: React.HTMLInputTypeAttribute;
   renderValue?: (
     value: FormValues[keyof FormValues],
     label: string
   ) => ReactElement;
-  renderInput?: (fieldKey: keyof FormValues, register: any) => ReactElement;
+  renderInput?: (
+    fieldKey: Path<FormValues>,
+    register: UseFormReturn<FormValues>["register"]
+  ) => ReactElement;
 }
 
 const EditableFieldForm = <FormValues extends Record<string, any>>({
@@ -51,10 +49,11 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
   const formRef = useRef<HTMLFormElement>(null);
 
   // Initialize form with defaultValues
-  const { register, handleSubmit, errors, reset, getValues, isDirty } =
+  const { register, handleSubmit, formState, reset, getValues } =
     useFormHook(initialValue);
+  const { errors, isDirty } = formState;
 
-  const fieldKey = Object.keys(initialValue)[0];
+  const fieldKey = Object.keys(initialValue)[0] as Path<FormValues>;
   console.log("Some", fieldKey);
 
   const handleSubmitMutation = (data: FormValues) => {
@@ -123,7 +122,7 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
             ) : (
               <input
                 id={`${fieldKey}-input`}
-                {...register(fieldKey)}
+                {...register(fieldKey as Path<FormValues>)}
                 type={inputType}
               />
             )}
@@ -137,12 +136,14 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
             </button>
           </form>
 
-          <div
-            style={{ display: isEditing ? "block" : "none" }}
-            className="error-message"
-          >
-            {errors[fieldKey] && errors[fieldKey]?.message}
-          </div>
+          {errors[fieldKey]?.message && (
+            <div
+              style={{ display: isEditing ? "block" : "none" }}
+              className="error-message"
+            >
+              {errors[fieldKey].message?.toString()}
+            </div>
+          )}
         </div>
       )}
     </div>

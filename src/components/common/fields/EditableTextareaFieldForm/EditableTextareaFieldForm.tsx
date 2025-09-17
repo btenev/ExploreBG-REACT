@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Path, UseFormReturn } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -11,15 +12,7 @@ interface Props<FormValues extends Record<string, any>> {
   initialValue: FormValues;
   canEdit: boolean;
   visibleTextLenght: number;
-  useFormHook: (defaultValues: FormValues) => {
-    register: any;
-    handleSubmit: (fn: (data: FormValues) => void) => (e?: any) => void;
-    errors: any;
-    reset: (values?: FormValues) => void;
-    getValues: () => FormValues;
-    isSubmitting: boolean;
-    isDirty: boolean;
-  };
+  useFormHook: (defaultValues: FormValues) => UseFormReturn<FormValues>;
   mutation: {
     mutate: (
       data: FormValues,
@@ -40,8 +33,9 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
   const formRef = useRef<HTMLFormElement>(null);
 
   // Initialize form with defaultValues
-  const { register, handleSubmit, errors, reset, getValues, isDirty } =
+  const { register, handleSubmit, reset, getValues, formState } =
     useFormHook(initialValue);
+  const { errors, isDirty } = formState;
 
   const fieldKey = Object.keys(initialValue)[0];
   console.log("Some", fieldKey);
@@ -100,7 +94,7 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
           >
             <textarea
               id={fieldKey}
-              {...register(fieldKey)}
+              {...register(fieldKey as Path<FormValues>)}
               aria-invalid={!!errors[fieldKey]}
               aria-describedby={`${fieldKey}-error`}
               cols={30}
@@ -118,8 +112,10 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
             </div>
           </form>
 
-          {errors[fieldKey] && (
-            <div className="error-message">{errors[fieldKey].message}</div>
+          {errors[fieldKey]?.message && (
+            <div className="error-message">
+              {errors[fieldKey]?.message.toString()}
+            </div>
           )}
         </CommonModal>
       )}

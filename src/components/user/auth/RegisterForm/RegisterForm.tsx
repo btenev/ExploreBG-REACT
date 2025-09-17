@@ -6,7 +6,11 @@ import { RegisterDto } from "@schemas/user";
 import PasswordInfo from "../PasswordInfo";
 
 const RegisterForm = () => {
-  const { register, handleSubmit, errors } = useRegisterForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useRegisterForm();
   const { mutate: login, isPending } = useRegister();
 
   const onSubmit = (data: RegisterDto) => {

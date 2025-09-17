@@ -42,8 +42,12 @@ const CreateTrailForm = ({
   availableDestinations,
   dataForReview,
 }: Props) => {
-  const { register, handleSubmit, control, errors } =
-    useCreateTrailForm(dataForReview);
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useCreateTrailForm(dataForReview);
   const { staffId } = useSessionInfo();
 
   const trailId = dataForReview?.id;

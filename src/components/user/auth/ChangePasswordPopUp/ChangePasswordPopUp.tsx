@@ -11,7 +11,11 @@ interface Props {
 }
 
 const ChangePasswordPopUp = ({ closePopUp }: Props) => {
-  const { register, handleSubmit, errors } = usePasswordForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = usePasswordForm();
   const { mutate: updatePassword } = useUpdateUserField("password");
 
   const onSubmit = (data: PasswordDto) => {

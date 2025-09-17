@@ -13,7 +13,11 @@ interface Props {
 
 const MyProfileUsernameField = ({ initialUsername }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const { handleSubmit, register, errors } = useUsernameForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useUsernameForm();
   const { mutate: updateUsername, isPending } = useUpdateUserField("username");
 
   const username =

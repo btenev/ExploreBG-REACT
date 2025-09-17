@@ -15,7 +15,11 @@ interface Props {
 const MyProfileEmailField = ({ initialEmail }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(initialEmail);
-  const { handleSubmit, register, errors } = useEmailForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useEmailForm();
   const { mutate: updateEmail, isPending } = useUpdateUserField(
     "email",
     setEmail

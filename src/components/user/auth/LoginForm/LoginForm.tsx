@@ -4,7 +4,12 @@ import { useLoginForm } from "@hooks/formHooks/authHooks";
 import { LoginDto } from "@schemas/user";
 
 const LoginForm = () => {
-  const { handleSubmit, register, errors } = useLoginForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useLoginForm();
+
   const { mutate: login, isPending } = useLogin();
 
   const onSubmit = (data: LoginDto) => {

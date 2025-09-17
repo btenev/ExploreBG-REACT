@@ -21,7 +21,8 @@ const CommentsForm = ({
   entity,
   disabled = false,
 }: Props) => {
-  const { register, handleSubmit, errors, setValue } = useCommentForm();
+  const { register, handleSubmit, formState, setValue } = useCommentForm();
+  const { errors } = formState;
   const { mutate: createComment, isPending } =
     useCreateComment(handleNewComment);
 

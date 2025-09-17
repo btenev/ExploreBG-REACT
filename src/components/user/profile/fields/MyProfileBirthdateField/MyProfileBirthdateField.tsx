@@ -18,7 +18,11 @@ const MyProfileBirthdateField = ({ birthdate }: Props) => {
   const [birthdateValue, setBirthdateValue] = useState<string | null>(
     birthdate
   );
-  const { handleSubmit, register, errors } = useUserBirthdateForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useUserBirthdateForm();
   const { mutate: updateUserBirthdate, isPending } = useUpdateUserField(
     "birthdate",
     setBirthdateValue
