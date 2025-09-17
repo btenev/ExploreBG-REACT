@@ -99,10 +99,10 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
             className="textarea-form"
           >
             <textarea
-              id="trailInfo"
-              {...register("trailInfo")}
-              aria-invalid={!!errors.trailInfo}
-              aria-describedby="trailInfo-error"
+              id={fieldKey}
+              {...register(fieldKey)}
+              aria-invalid={!!errors[fieldKey]}
+              aria-describedby={`${fieldKey}-error`}
               cols={30}
               rows={10}
             />
@@ -118,8 +118,8 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
             </div>
           </form>
 
-          {errors.trailInfo && (
-            <div className="error-message">{errors.trailInfo.message}</div>
+          {errors[fieldKey] && (
+            <div className="error-message">{errors[fieldKey].message}</div>
           )}
         </CommonModal>
       )}

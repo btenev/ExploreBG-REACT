@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 import { useFormWithSchema } from "@hooks/formHooks/base";
 import { createAccommodationSchema } from "@schemas/accommodation";
