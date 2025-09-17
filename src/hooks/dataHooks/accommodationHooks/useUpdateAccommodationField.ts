@@ -9,7 +9,7 @@ import {
 import { useLastUpdated } from "@context/LastUpdate";
 import { formatEntityLastUpdate } from "@utils/dateUtils";
 import { handleApiError } from "@utils/errorHandlers";
-import { capitalize } from "@utils/mixedUtils";
+import { capitalize, toKebabOrSpace } from "@utils/mixedUtils";
 
 type ExtractInnerValue<K extends keyof AccommodationFieldResponseMap> =
   AccommodationFieldResponseMap[K][K extends keyof AccommodationFieldResponseMap[K]
@@ -52,7 +52,9 @@ export const useUpdateAccommodationField = <
           exact: true,
           type: "all", // 'active' | 'inactive' | 'all' — 'all' includes mounted and unmounted queries
         });
-        toast.success(`You successfully updated ${field} field.`);
+        toast.success(
+          `You successfully updated ${toKebabOrSpace(field, false)} field.`
+        );
         toast.info(`Last updated: ${formatEntityLastUpdate(lastUpdated)}`);
 
         // Return the updated value so parent can use it with reset()

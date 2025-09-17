@@ -14,8 +14,10 @@ export const isOwner = <T extends CreatedByEntity>(
 export const capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-export const toKebabCase = (str: string) =>
-  str.replace(/([A-Z])/g, (letter) => "-" + letter.toLowerCase());
+export const toKebabOrSpace = (str: string, useKebab: boolean = true) => {
+  const delimiter = useKebab ? "-" : " ";
+  return str.replace(/([A-Z])/g, (match) => delimiter + match.toLowerCase());
+};
 
 export const roundToTwoDecimals = (value: number): number =>
   Math.round(value * 100) / 100;

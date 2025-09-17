@@ -10,7 +10,7 @@ import {
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
 } from "@types";
-import { toKebabCase } from "@utils/mixedUtils";
+import { toKebabOrSpace } from "@utils/mixedUtils";
 import { detailsStatusConverter } from "@utils/statusConverter";
 
 import { ApiClient } from "../base";
@@ -84,7 +84,7 @@ export const accommodationsApi = {
     accommodationId: number,
     data: AccommodationFieldRequestMap[K]
   ): Promise<AccommodationFieldResponseMap[K]> => {
-    const endPoint = toKebabCase(field as string);
+    const endPoint = toKebabOrSpace(field as string);
     return apiClient.patch(
       `${baseAccommodationUrl}/${accommodationId}/${endPoint}`,
       data

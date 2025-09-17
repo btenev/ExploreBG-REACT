@@ -13,7 +13,7 @@ import {
   ToggleFavoriteResponse,
   WaterAvailabilityEnum,
 } from "@types";
-import { toKebabCase } from "@utils/mixedUtils";
+import { toKebabOrSpace } from "@utils/mixedUtils";
 import { detailsStatusConverter } from "@utils/statusConverter";
 
 import { ApiClient } from "../base";
@@ -88,7 +88,7 @@ export const trailsApi = {
     trailId: number,
     data: HikingTraiFieldRequestMap[K]
   ): Promise<HikingTraiFieldResponseMap[K]> => {
-    const endPoint = toKebabCase(field as string);
+    const endPoint = toKebabOrSpace(field as string);
 
     return apiClient.patch(`${baseTrailsUrl}/${trailId}/${endPoint}`, data);
   },
