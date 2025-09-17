@@ -1,2 +1,0 @@
-import TrailLegacyDetailsWaterAvailabilityField from './TrailLegacyDetailsWaterAvailabilityField';
-export default TrailLegacyDetailsWaterAvailabilityField;

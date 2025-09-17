@@ -1,2 +1,0 @@
-import TrailLegacyDetailsStartPointField from './TrailLegacyDetailsStartPointField';
-export default TrailLegacyDetailsStartPointField;

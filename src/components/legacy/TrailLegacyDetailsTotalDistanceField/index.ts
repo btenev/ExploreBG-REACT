@@ -1,2 +1,0 @@
-import TrailLegacyDetailsTotalDistanceField from './TrailLegacyDetailsTotalDistanceField';
-export default TrailLegacyDetailsTotalDistanceField;

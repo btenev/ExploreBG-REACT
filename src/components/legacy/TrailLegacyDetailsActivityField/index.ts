@@ -1,2 +1,0 @@
-import TrailLegacyDetailsActivityField from './TrailLegacyDetailsActivityField';
-export default TrailLegacyDetailsActivityField;

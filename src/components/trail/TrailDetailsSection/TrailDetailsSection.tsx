@@ -54,22 +54,12 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
 
         {trail.detailsStatus != StatusEnum.review && (
           <>
-            {/* <TrailLegacyDetailsStartPointField
-              initialStartPoint={trail.startPoint}
-              trailId={trail.id}
-              isTrailOwner={canEdit}
-            /> */}
             <TrailDetailsStartPointField
               trailId={trail.id}
               initialValue={trail.startPoint}
               canEdit={canEdit}
             />
 
-            {/* <TrailLegacyDetailsEndPointField
-              initialEndPoint={trail.endPoint}
-              trailId={trail.id}
-              isTrailOwner={canEdit}
-            /> */}
             <TrailDetailsEndPointField
               trailId={trail.id}
               initialValue={trail.endPoint}
@@ -77,22 +67,12 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
             />
 
             <FieldPair>
-              {/* <TrailLegacyDetailsTotalDistanceField
-                initialTotalDistance={trail.totalDistance}
-                trailId={trail.id}
-                canEdit={canEdit}
-              /> */}
               <TrailDetailsTotalDistanceField
                 trailId={trail.id}
                 initialValue={trail.totalDistance}
                 canEdit={canEdit}
               />
 
-              {/* <TrailDetailsElevationField
-                initialElevation={trail.elevationGained}
-                trailId={trail.id}
-                canEdit={canEdit}
-              /> */}
               <TrailDetailsElevationField
                 trailId={trail.id}
                 initialValue={trail.elevationGained}
@@ -103,13 +83,6 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
             <FieldPair>
               <TrailDetailsSeasonVisited season={trail.seasonVisited} />
 
-              {/* <TrailLegacyDetailsActivityField
-                initialActivity={trail.activity}
-                trailId={trail.id}
-                canEdit={canEdit}
-                formEnums={trailEnums?.activity ?? []}
-                isLoadingEnums={isLoadingEnums}
-              /> */}
               <TrailDetailsActivityField
                 trailId={trail.id}
                 initialValue={trail.activity}
@@ -120,13 +93,6 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
             </FieldPair>
 
             <FieldPair>
-              {/* <TrailLegacyDetailsWaterAvailabilityField
-                initialWaterAvailability={trail.waterAvailability}
-                trailId={trail.id}
-                canEdit={canEdit}
-                formEnums={trailEnums?.waterAvailability ?? []}
-                isLoadingEnums={isLoadingEnums}
-              /> */}
               <TrailDetailsWaterAvailabilityField
                 trailId={trail.id}
                 initialValue={trail.waterAvailability}
@@ -135,13 +101,6 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
                 isLoadingEnums={isLoadingEnums}
               />
 
-              {/* <TrailLegacyDetailsDifficultyField
-                initialTrailDifficulty={trail.trailDifficulty}
-                trailId={trail.id}
-                canEdit={canEdit}
-                formEnums={trailEnums?.trailDifficulty ?? []}
-                isLoadingEnums={isLoadingEnums}
-              /> */}
               <TrailDetailsDifficultyField
                 trailId={trail.id}
                 initialValue={trail.trailDifficulty}
@@ -151,11 +110,6 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
               />
             </FieldPair>
 
-            {/* <TrailDetailsInfoField
-              initialInfo={trail.trailInfo}
-              trailId={trail.id}
-              canEdit={canEdit}
-            /> */}
             <TrailDetailsInfoField
               trailId={trail.id}
               initialValue={trail.trailInfo}
