@@ -9,3 +9,4 @@ export { default as UserProfile } from './UserProfile';
 export { default as AllUsers } from './AllUsers';
 export { default as WaitingApproval } from './WaitingAppoval';
 export { default as TrailReview } from './TrailReview';
+export { default as AccommodationDetails } from './AccommodationDetails';

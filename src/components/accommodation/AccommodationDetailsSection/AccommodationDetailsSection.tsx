@@ -1,4 +1,9 @@
-import { EntityCreatedBy, FavoriteToggle, FieldPair } from "@components/common";
+import {
+  EntityCreatedBy,
+  EntityDetailsLastUpdateField,
+  FavoriteToggle,
+  FieldPair,
+} from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
 import { useAccommodationEnums } from "@hooks/dataHooks/utilityHooks";
 import { IAccommodation, StatusEnum } from "@types";
@@ -26,36 +31,36 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
   const { data: accommodationEnums, isLoading: isLoadingEnums } =
     useAccommodationEnums(candEdit);
 
+  const { id, createdBy, detailsStatus } = accommodation;
+
   return (
     <LastUpdatedProvider>
       <section className="accommodation details-page-section">
         {!candEdit && (
           <FavoriteToggle
             liked={accommodation.likedByUser}
-            entityId={accommodation.id.toString()}
+            entityId={id.toString()}
             entity="accommodation"
           />
         )}
 
-        {accommodation.createdBy && (
-          <EntityCreatedBy createdBy={accommodation.createdBy} />
-        )}
+        {createdBy && <EntityCreatedBy createdBy={createdBy} />}
 
-        {accommodation.detailsStatus === StatusEnum.review && (
+        {detailsStatus === StatusEnum.review && (
           <p>Accommodation details are currently in review!</p>
         )}
 
-        {accommodation.detailsStatus !== StatusEnum.review && (
+        {detailsStatus !== StatusEnum.review && (
           <>
             <FieldPair>
               <AccommodationDetailsName
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.accommodationName}
                 canEdit={candEdit}
               />
 
               <AccommodationDetailsNextTo
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.nextTo}
                 canEdit={candEdit}
               />
@@ -63,13 +68,13 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
 
             <FieldPair>
               <AccommodationDetailsSite
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.site}
                 canEdit={candEdit}
               />
 
               <AccommodationDetailsPhoneNumber
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.phoneNumber}
                 canEdit={candEdit}
               />
@@ -77,13 +82,13 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
 
             <FieldPair>
               <AccommodationDetailsBedCapacity
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.bedCapacity}
                 canEdit={candEdit}
               />
 
               <AccommodationDetailsPricePerBed
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.pricePerBed}
                 canEdit={candEdit}
               />
@@ -91,7 +96,7 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
 
             <FieldPair>
               <AccommodationDetailsFood
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.availableFood}
                 canEdit={candEdit}
                 formEnums={accommodationEnums?.availableFood ?? []}
@@ -99,7 +104,7 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
               />
 
               <AccommodationDetailsAccess
-                accommodationId={accommodation.id}
+                accommodationId={id}
                 initialValue={accommodation.access}
                 canEdit={candEdit}
                 formEnums={accommodationEnums?.access ?? []}
@@ -108,12 +113,15 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
             </FieldPair>
 
             <AccommodationDetailsInfo
-              accommodationId={accommodation.id}
+              accommodationId={id}
               initialValue={accommodation.accommodationInfo}
               canEdit={candEdit}
             />
           </>
         )}
+        <EntityDetailsLastUpdateField
+          lastUpdateDate={accommodation.lastUpdateDate}
+        />
       </section>
     </LastUpdatedProvider>
   );
