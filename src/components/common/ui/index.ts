@@ -9,3 +9,4 @@ export { default as PaginationControls } from "./PaginationControls";
 export { default as ViewDetails } from "./ViewDetails";
 export { default as EntityCreatedBy } from "./EntityCreatedBy";
 export { default as IntersectionObserverComponent } from "./IntersectionObserverComponent";
+export { default as EntityDetailsLastUpdateField } from "./EntityDetailsLastUpdateField";

@@ -32,4 +32,5 @@ export interface IAccommodation extends IAccommodationCard {
   images: TPhoto[];
   comments: IComment[];
   detailsStatus: StatusEnum;
+  lastUpdateDate: string;
 }
