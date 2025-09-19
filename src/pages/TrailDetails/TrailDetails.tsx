@@ -41,6 +41,7 @@ const TrailDetails = () => {
               entityId={trail.id}
               photos={trail.images}
               canEdit={canEdit}
+              entityType="trail"
               folder="Trails"
             />
           )}

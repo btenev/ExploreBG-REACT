@@ -1,5 +1,5 @@
 import { PhotosProvider } from "@context/Photos";
-import { TPhoto } from "@types";
+import { EntityType, TPhoto } from "@types";
 
 import PhotoActionButtons from "./PhotoActionButtons";
 import ThumbnailGallery from "./ThumbnailGallery";
@@ -11,15 +11,26 @@ interface Props {
   photos: TPhoto[];
   canEdit: boolean;
   folder: string;
+  entityType: EntityType;
 }
 
-const PhotosSection = ({ entityId, photos, canEdit, folder }: Props) => {
+const PhotosSection = ({
+  entityId,
+  photos,
+  canEdit,
+  folder,
+  entityType,
+}: Props) => {
   return (
     <PhotosProvider initialPhotos={photos}>
       <section className="photos-wrapper details-page-section">
         {canEdit && <PhotoActionButtons entityId={entityId} folder={folder} />}
 
-        <ThumbnailGallery entityId={entityId} canEdit={canEdit} />
+        <ThumbnailGallery
+          entityId={entityId}
+          canEdit={canEdit}
+          entityType={entityType}
+        />
       </section>
     </PhotosProvider>
   );

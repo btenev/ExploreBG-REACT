@@ -28,6 +28,9 @@ export const PUBLIC_ROUTES = {
         `${ACCOMMODATIONS}/${accommodationId}`,
     },
 
+    updateMainAccommodationPhoto: (accommodationId: string | number) =>
+      `${ACCOMMODATIONS}/${accommodationId}/main-image`,
+
     availableAccommodation: `${ACCOMMODATIONS}/select` as const, // simple
 
     favoriteStatus: (accommodationId: string | number) =>
@@ -42,6 +45,9 @@ export const PUBLIC_ROUTES = {
 
   destination: {
     random: `${DESTINATIONS}/random` as const, // simple
+
+    updateMainDestinationPhoto: (destinationId: string | number) =>
+      `${DESTINATIONS}/${destinationId}/main-image`,
 
     availableDestination: `${DESTINATIONS}/select` as const, // simple
 

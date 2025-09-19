@@ -91,6 +91,15 @@ export const accommodationsApi = {
     );
   },
 
+  updateMainAccommodationPhoto: (
+    accommodationId: string,
+    data: { imageId: string }
+  ): Promise<{ imageId: number }> =>
+    apiClient.patch(
+      PUBLIC_ROUTES.accommodation.updateMainAccommodationPhoto(accommodationId),
+      data
+    ),
+
   getAccommodationComments: (accommodationId: string): Promise<IComment[]> =>
     apiClient.get<IComment[]>(
       PUBLIC_ROUTES.accommodation.accommodationComments(accommodationId)

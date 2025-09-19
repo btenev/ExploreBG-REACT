@@ -3,14 +3,16 @@ import { useState } from "react";
 import { LoadingSpinner, ZoomPhoto } from "@components/common";
 import { ALLOWED_PHOTO_UPLOAD_COUNT } from "@constants";
 import { usePhotosDispatch, usePhotosState } from "@context/Photos";
-import { useUpdateMainTrailPhoto } from "@hooks/dataHooks/trailHooks";
+import { useUpdateMainEntityPhoto } from "@hooks/dataHooks/crossEntityHooks";
+import { EntityType } from "@types";
 
 interface Props {
   entityId: number;
   canEdit: boolean;
+  entityType: EntityType;
 }
 
-const ThumbnailGallery = ({ entityId, canEdit }: Props) => {
+const ThumbnailGallery = ({ entityId, canEdit, entityType }: Props) => {
   const [zoomPhoto, setZoomPhoto] = useState<{
     imageUrl: string;
     index: number;
@@ -24,7 +26,10 @@ const ThumbnailGallery = ({ entityId, canEdit }: Props) => {
   } = usePhotosState();
   const dispatch = usePhotosDispatch();
 
-  const { mutate: updateMainPhoto } = useUpdateMainTrailPhoto(dispatch);
+  const { mutate: updateMainPhoto } = useUpdateMainEntityPhoto(
+    entityType,
+    dispatch
+  );
 
   const handleCheckboxClick = (id: number) => {
     dispatch({
@@ -37,7 +42,7 @@ const ThumbnailGallery = ({ entityId, canEdit }: Props) => {
 
   const handleChangeMainPhoto = (id: number) => {
     updateMainPhoto({
-      trailId: entityId.toString(),
+      entityId: entityId.toString(),
       data: { imageId: id.toString() },
     });
 

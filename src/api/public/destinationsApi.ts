@@ -16,6 +16,15 @@ export const destinationsApi = {
   get4RandomDestinations: (): Promise<IDestinationCard[]> =>
     apiClient.get(PUBLIC_ROUTES.destination.random),
 
+  updateMainDestinationPhoto: (
+    destinationnId: string,
+    data: { imageId: string }
+  ): Promise<{ imageId: number }> =>
+    apiClient.patch(
+      PUBLIC_ROUTES.destination.updateMainDestinationPhoto(destinationnId),
+      data
+    ),
+
   getAvailableDestinations: (): Promise<IPlace[]> =>
     apiClient.get(PUBLIC_ROUTES.destination.availableDestination),
 
