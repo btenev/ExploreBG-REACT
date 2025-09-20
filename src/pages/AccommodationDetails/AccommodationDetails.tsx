@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 
 import AccommodationDetailsSection from "@components/accommodation/AccommodationDetailsSection";
 import {
+  CommentsSection,
   EntityDetailsNav,
   EntityDetailsWrapper,
   ImportantNotice,
@@ -25,7 +26,7 @@ const AccommodationDetails = () => {
       paramName="accommodationId"
       fetchHook={useGetAccommodation}
     >
-      {(accommodation, canEdit) => {
+      {(accommodation, canEdit, userId) => {
         // Update photoCount on first render if it’s 0
         if (photoCount === 0 && accommodation.images.length > 0) {
           setPhotoCount(accommodation.images.length);
@@ -62,6 +63,13 @@ const AccommodationDetails = () => {
                 onPhotosChange={handlePhotosChange}
               />
             )}
+
+            <span id="comments" />
+            <CommentsSection
+              userId={userId}
+              entity="accommodation"
+              entityId={accommodation.id.toString()}
+            />
           </main>
         );
       }}

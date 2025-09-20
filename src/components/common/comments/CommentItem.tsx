@@ -35,7 +35,12 @@ const CommentItem = ({
   onUpdateComment,
   isSubmitting = false,
 }: Props) => {
-  const { register, handleSubmit, setValue, errors } = useCommentForm({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useCommentForm({
     message: comment.message,
   });
 
