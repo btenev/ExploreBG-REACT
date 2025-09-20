@@ -1,4 +1,4 @@
-import { DestinationTypeEnum, StatusEnum, TPhoto } from "../shared";
+import { DestinationTypeEnum, IOwner, StatusEnum, TPhoto } from "../shared";
 
 export interface IPlace {
   id: number;
@@ -8,9 +8,11 @@ export interface IPlace {
 export interface IDestinationCard extends IPlace {
   imageUrl: string;
   nextTo: string;
+  likedByUser: boolean;
 }
 
 export interface IDestination extends IDestinationCard {
+  createdBy: IOwner;
   location: string;
   destinationInfo: string;
   type: DestinationTypeEnum;
