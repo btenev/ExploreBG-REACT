@@ -1,4 +1,4 @@
-import { IComment } from '../shared/comment';
+import { DestinationTypeEnum, StatusEnum, TPhoto } from "../shared";
 
 export interface IPlace {
   id: number;
@@ -13,6 +13,8 @@ export interface IDestinationCard extends IPlace {
 export interface IDestination extends IDestinationCard {
   location: string;
   destinationInfo: string;
-  type: string;
-  comments: IComment[];
+  type: DestinationTypeEnum;
+  images: TPhoto[];
+  detailsStatus: StatusEnum;
+  lastUpdateDate: string;
 }

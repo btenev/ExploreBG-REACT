@@ -2,7 +2,6 @@ import {
   AccessibilityEnum,
   AccommodationTypeEnum,
   FoodAvailabilityEnum,
-  IComment,
   IOwner,
   StatusEnum,
   TPhoto,
@@ -30,7 +29,6 @@ export interface IAccommodation extends IAccommodationCard {
   type: AccommodationTypeEnum;
   nextTo: string;
   images: TPhoto[];
-  comments: IComment[];
   detailsStatus: StatusEnum;
   lastUpdateDate: string;
 }

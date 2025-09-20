@@ -46,6 +46,12 @@ export const PUBLIC_ROUTES = {
   destination: {
     random: `${DESTINATIONS}/random` as const, // simple
 
+    details: {
+      path: `${DESTINATIONS}/:destinationId` as const, // dynamic
+      build: (destinationId: string | number) =>
+        `${DESTINATIONS}/${destinationId}`,
+    },
+
     updateMainDestinationPhoto: (destinationId: string | number) =>
       `${DESTINATIONS}/${destinationId}/main-image`,
 

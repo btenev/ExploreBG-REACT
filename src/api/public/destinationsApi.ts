@@ -2,11 +2,13 @@ import { PUBLIC_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import {
   IComment,
+  IDestination,
   IDestinationCard,
   IPlace,
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
 } from "@types";
+import { detailsStatusConverter } from "@utils/statusConverter";
 
 import { ApiClient } from "../base";
 
@@ -15,6 +17,21 @@ const apiClient = new ApiClient();
 export const destinationsApi = {
   get4RandomDestinations: (): Promise<IDestinationCard[]> =>
     apiClient.get(PUBLIC_ROUTES.destination.random),
+
+  getDestination: async (destinationId: string): Promise<IDestination> => {
+    try {
+      const response = await apiClient.get<IDestination>(
+        PUBLIC_ROUTES.destination.details.build(destinationId)
+      );
+      const detailsStatus = detailsStatusConverter(response.detailsStatus);
+      return { ...response, detailsStatus };
+    } catch (error) {
+      console.error("Error fetching destination:", error);
+      throw new Error(
+        "Failed to load destination due to invalid details status"
+      );
+    }
+  },
 
   updateMainDestinationPhoto: (
     destinationnId: string,
@@ -62,3 +79,23 @@ export const destinationsApi = {
       )
     ),
 };
+
+/*
+  getAccommodation: async (
+    accommodationId: string
+  ): Promise<IAccommodation> => {
+    try {
+      const response = await apiClient.get<IAccommodation>(
+        PUBLIC_ROUTES.accommodation.details.build(accommodationId)
+      );
+      const detailsStatus = detailsStatusConverter(response.detailsStatus);
+      return { ...response, detailsStatus };
+    } catch (error) {
+      console.error("Error fetching accommodation:", error);
+      throw new Error(
+        "Failed to load accommodation due to invalid details status"
+      );
+    }
+  },
+
+*/

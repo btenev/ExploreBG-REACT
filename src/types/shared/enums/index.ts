@@ -8,3 +8,4 @@ export * from "./ReviewStatusEnum";
 export * from "./AccessibilityEnum";
 export * from "./AccommodationTypeEnum";
 export * from "./FoodAvailabilityEnum";
+export * from "./DestinationTypeEnum";
