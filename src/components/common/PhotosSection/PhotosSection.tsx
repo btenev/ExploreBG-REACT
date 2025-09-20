@@ -1,8 +1,7 @@
 import { PhotosProvider } from "@context/Photos";
 import { EntityType, TPhoto } from "@types";
 
-import PhotoActionButtons from "./PhotoActionButtons";
-import ThumbnailGallery from "./ThumbnailGallery";
+import PhotosConsumer from "./PhotosConsumer";
 
 import "./PhotosSection.scss";
 
@@ -12,6 +11,7 @@ interface Props {
   canEdit: boolean;
   folder: string;
   entityType: EntityType;
+  onPhotosChange: (newPhotos: TPhoto[]) => void;
 }
 
 const PhotosSection = ({
@@ -20,18 +20,17 @@ const PhotosSection = ({
   canEdit,
   folder,
   entityType,
+  onPhotosChange,
 }: Props) => {
   return (
     <PhotosProvider initialPhotos={photos}>
-      <section className="photos-wrapper details-page-section">
-        {canEdit && <PhotoActionButtons entityId={entityId} folder={folder} />}
-
-        <ThumbnailGallery
-          entityId={entityId}
-          canEdit={canEdit}
-          entityType={entityType}
-        />
-      </section>
+      <PhotosConsumer
+        entityId={entityId}
+        canEdit={canEdit}
+        folder={folder}
+        entityType={entityType}
+        onPhotosChange={onPhotosChange}
+      />
     </PhotosProvider>
   );
 };

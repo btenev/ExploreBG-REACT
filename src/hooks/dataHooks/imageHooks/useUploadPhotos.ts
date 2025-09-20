@@ -28,20 +28,21 @@ export const useUploadPhotos = (dispatch: Dispatch<PhotosAction>) => {
       dispatch({ type: "APPEND_PHOTOS", payload: data });
 
       const totalAfterUpload = previousPhotoCount + originalFileCount;
+      const uploadedWord = originalFileCount > 1 ? "photos were" : "photo was";
+      const remainingSlots = ALLOWED_PHOTO_UPLOAD_COUNT - previousPhotoCount;
 
       dispatch({ type: "SET_IS_UPLOADING", payload: false });
 
-      if (totalAfterUpload < ALLOWED_PHOTO_UPLOAD_COUNT) {
-        toast.success("Your photos were uploaded successfully.");
-      } else if (totalAfterUpload === ALLOWED_PHOTO_UPLOAD_COUNT) {
+      if (totalAfterUpload <= ALLOWED_PHOTO_UPLOAD_COUNT) {
+        const limitReached = totalAfterUpload === ALLOWED_PHOTO_UPLOAD_COUNT;
         toast.success(
-          "Your photos were uploaded successfully. Upload limit reached."
+          limitReached
+            ? `Your ${uploadedWord} uploaded successfully. Upload limit reached.`
+            : `Your ${uploadedWord} uploaded successfully.`
         );
       } else {
         toast.info(
-          `Only ${
-            ALLOWED_PHOTO_UPLOAD_COUNT - previousPhotoCount
-          } photo(s) were uploaded due to the upload limit.`
+          `Only ${remainingSlots} photo(s) were uploaded due to the upload limit.`
         );
       }
     },
