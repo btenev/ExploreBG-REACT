@@ -1,0 +1,27 @@
+@use "@styles/main" as gs;
+
+.destination-details {
+  background-image: url(../../assets/images/background.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  padding: 8rem 0 3rem 0;
+
+  & > h1 {
+    @include gs.titles();
+    margin-bottom: 2rem;
+  }
+
+  [data-theme="dark"] & > h1 {
+    @include gs.titles-dark();
+  }
+}
+
+[data-theme="light"] .destination-details {
+  color: #fff0db;
+  text-shadow: 1px 1px 3px black;
+}
+
+[data-theme="dark"] .destination-details {
+  background-image: url(../../assets/images/background-dark.png);
+}

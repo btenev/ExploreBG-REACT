@@ -15,6 +15,7 @@ import {
   WaitingApproval,
   TrailReview,
   AccommodationDetails,
+  DestinationDetails,
 } from "./pages";
 
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: PUBLIC_ROUTES.accommodation.details.path,
         element: <AccommodationDetails />,
+      },
+      {
+        path: PUBLIC_ROUTES.destination.details.path,
+        element: <DestinationDetails />,
       },
     ],
   },
