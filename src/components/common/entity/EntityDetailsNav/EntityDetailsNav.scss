@@ -16,10 +16,25 @@
       &:hover {
         color: gs.$middle-primary;
       }
+
+      &.disabled {
+        // TODO: Added by me for detials navigation - photos. Review for better solution
+        color: gs.$light-gray !important;
+        cursor: not-allowed;
+        pointer-events: none;
+
+        &:hover {
+          color: gs.$light-gray; // prevent hover color change
+        }
+      }
     }
   }
 
   [data-theme="dark"] & ul {
     color: gs.$bright-turquoise;
+    & a.disabled {
+      // TODO: Added by me for detials navigation - photos. Review for better solution
+      color: gs.$dark-gray !important;
+    }
   }
 }
