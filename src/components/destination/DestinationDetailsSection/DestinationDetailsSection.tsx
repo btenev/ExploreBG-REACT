@@ -1,6 +1,12 @@
-import { EntityCreatedBy, FavoriteToggle } from "@components/common";
+import {
+  EntityCreatedBy,
+  EntityDetailsLastUpdateField,
+  FavoriteToggle,
+} from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
 import { IDestination, StatusEnum } from "@types";
+
+import { DestinationDetailsName } from "./fields";
 
 import "./DestinationDetailsSection.scss";
 
@@ -28,6 +34,19 @@ const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
         {detailsStatus === StatusEnum.review && (
           <p>Destination details are currently in review!</p>
         )}
+
+        {detailsStatus !== StatusEnum.review && (
+          <>
+            <DestinationDetailsName
+              destinationId={id}
+              initialValue={destination.destinationName}
+              canEdit={candEdit}
+            />
+          </>
+        )}
+        <EntityDetailsLastUpdateField
+          lastUpdateDate={destination.lastUpdateDate}
+        />
       </section>
     </LastUpdatedProvider>
   );
