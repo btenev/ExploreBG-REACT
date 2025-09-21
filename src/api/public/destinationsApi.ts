@@ -8,11 +8,22 @@ import {
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
 } from "@types";
+import { toKebabOrSpace } from "@utils/mixedUtils";
 import { detailsStatusConverter } from "@utils/statusConverter";
 
 import { ApiClient } from "../base";
 
+export type DestinationFieldRequestMap = {
+  destinationName: { destinationName: string };
+};
+
+export type DestinationFieldResponseMap = {
+  destinationName: { destinationName: string; lastUpdateDate: string };
+};
+
 const apiClient = new ApiClient();
+
+const baseDestinationUrl = "/destinations";
 
 export const destinationsApi = {
   get4RandomDestinations: (): Promise<IDestinationCard[]> =>
@@ -31,6 +42,18 @@ export const destinationsApi = {
         "Failed to load destination due to invalid details status"
       );
     }
+  },
+
+  updateDestinationField: <K extends keyof DestinationFieldRequestMap>(
+    field: K,
+    accommodationId: number,
+    data: DestinationFieldRequestMap[K]
+  ): Promise<DestinationFieldResponseMap[K]> => {
+    const endPoint = toKebabOrSpace(field as string);
+    return apiClient.patch(
+      `${baseDestinationUrl}/${accommodationId}/${endPoint}`,
+      data
+    );
   },
 
   updateMainDestinationPhoto: (
