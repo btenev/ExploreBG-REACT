@@ -14,6 +14,9 @@ import {
   NEXT_TO_MIN_LENGTH,
   NEXT_TO_MAX_LENGTH,
   ACCOMMODATION_INFO_LENGTH,
+  DESTINATION_PLACE_MIN_LENGTH,
+  DESTINATION_PLACE_MAX_LENGTH,
+  DESTINATION_INFO_LENGTH,
 } from "@constants";
 import { roundToTwoDecimals } from "@utils/mixedUtils";
 
@@ -69,11 +72,12 @@ export const passwordSchema = z
 const createPlaceSchema = (
   fieldName: string,
   minLength: number,
-  maxLength: number
+  maxLength: number,
+  requiredLabel?: string
 ) =>
   z
     .string()
-    .nonempty(`Please enter your ${fieldName}.`)
+    .nonempty(`Please enter ${requiredLabel ?? `your ${fieldName}`}.`)
     .regex(placeRegex, TEXT_PATTERN_GENERIC)
     .min(
       minLength,
@@ -101,10 +105,22 @@ export const accommodationNameSchema = createPlaceSchema(
   ACCOMMODATION_PLACE_MIN_LENGTH,
   ACCOMMODATION_PLACE_MAX_LENGTH
 );
+/*Destination*/
+export const destinationNameSchema = createPlaceSchema(
+  "destination name",
+  DESTINATION_PLACE_MIN_LENGTH,
+  DESTINATION_PLACE_MAX_LENGTH
+);
 export const nextToSchema = createPlaceSchema(
   "nearby village, town, or city.",
   NEXT_TO_MIN_LENGTH,
   NEXT_TO_MAX_LENGTH
+);
+export const locationSchema = createPlaceSchema(
+  "location",
+  2,
+  30,
+  "the location of your destination."
 );
 
 export const totalDistanceSchema = z
@@ -151,6 +167,7 @@ const infoSchema = (maxLength: number) =>
 
 export const trailInfoSchema = infoSchema(TRAIL_INFO_MAX_LENGTH);
 export const accommodationInfoSchema = infoSchema(ACCOMMODATION_INFO_LENGTH);
+export const destinationInfoSchema = infoSchema(DESTINATION_INFO_LENGTH);
 
 export const messageSchema = z
   .string()

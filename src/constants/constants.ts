@@ -29,6 +29,10 @@ export const COMMENT_MAX_LENGTH = 1000;
 export const ACCOMMODATION_PLACE_MIN_LENGTH = 3;
 export const ACCOMMODATION_PLACE_MAX_LENGTH = 30;
 export const ACCOMMODATION_INFO_LENGTH = 800;
+/*Destination*/
+export const DESTINATION_PLACE_MIN_LENGTH = 3;
+export const DESTINATION_PLACE_MAX_LENGTH = 30;
+export const DESTINATION_INFO_LENGTH = 800;
 
 export const NEXT_TO_MIN_LENGTH = 3;
 export const NEXT_TO_MAX_LENGTH = 20;
