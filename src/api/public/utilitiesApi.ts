@@ -1,10 +1,12 @@
 import { PUBLIC_ROUTES } from "@constants";
 import { accommodationEnumsSchema } from "@schemas/accommodation";
+import { destinationEnumsSchema } from "@schemas/destination";
 import { trailEnumsSchema } from "@schemas/trail";
 import { registerEnumsSchema } from "@schemas/user";
 import {
   AccessibilityEnum,
   AccommodationTypeEnum,
+  DestinationTypeEnum,
   DifficultyLevelEnum,
   FoodAvailabilityEnum,
   GenderEnum,
@@ -33,6 +35,10 @@ export interface AccommodationEnumResponse {
   type: AccommodationTypeEnum[];
   access: AccessibilityEnum[];
   availableFood: FoodAvailabilityEnum[];
+}
+
+export interface DestinationEnumsResponse {
+  type: DestinationTypeEnum[];
 }
 
 export const utilitiesApi = {
@@ -66,6 +72,17 @@ export const utilitiesApi = {
       accommodationEnumsSchema,
       response,
       "Failed to load accommodation enums. Please try again later."
+    );
+  },
+
+  getDestinationEnums: async (): Promise<DestinationEnumsResponse> => {
+    const response = await apiClient.get<DestinationEnumsResponse>(
+      PUBLIC_ROUTES.utilities.destinationEnums
+    );
+    return safeParseOrThrow(
+      destinationEnumsSchema,
+      response,
+      "Failed to load destination enums. Please try again later."
     );
   },
 };

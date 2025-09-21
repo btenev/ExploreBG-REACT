@@ -114,6 +114,8 @@ export const PUBLIC_ROUTES = {
     trailEnums: "/utilities/create/trail-enums" as const, // simple
 
     accommodationEnums: "/utilities/create/accommodation-enums" as const, // simple
+
+    destinationEnums: "/utilities/create/destination-enums" as const, // simple
   },
 };
 
