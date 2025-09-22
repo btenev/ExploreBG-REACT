@@ -1,6 +1,7 @@
 import { PUBLIC_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import {
+  DestinationTypeEnum,
   IComment,
   IDestination,
   IDestinationCard,
@@ -15,10 +16,12 @@ import { ApiClient } from "../base";
 
 export type DestinationFieldRequestMap = {
   destinationName: { destinationName: string };
+  type: { type: DestinationTypeEnum };
 };
 
 export type DestinationFieldResponseMap = {
   destinationName: { destinationName: string; lastUpdateDate: string };
+  type: { type: DestinationTypeEnum; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();
