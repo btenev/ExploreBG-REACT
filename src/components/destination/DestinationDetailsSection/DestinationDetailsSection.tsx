@@ -4,9 +4,10 @@ import {
   FavoriteToggle,
 } from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
+import { useDestinationEnums } from "@hooks/dataHooks/utilityHooks";
 import { IDestination, StatusEnum } from "@types";
 
-import { DestinationDetailsName } from "./fields";
+import { DestinationDetailsName, DestinationDetailsType } from "./fields";
 
 import "./DestinationDetailsSection.scss";
 
@@ -16,6 +17,9 @@ interface Props {
 }
 
 const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
+  const { data: destinationEnums, isLoading: isLoadingEnums } =
+    useDestinationEnums(candEdit);
+
   const { id, createdBy, detailsStatus } = destination;
 
   return (
@@ -41,6 +45,14 @@ const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
               destinationId={id}
               initialValue={destination.destinationName}
               canEdit={candEdit}
+            />
+
+            <DestinationDetailsType
+              destinationId={id}
+              initialValue={destination.type}
+              canEdit={candEdit}
+              formEnums={destinationEnums?.type ?? []}
+              isLoadingEnums={isLoadingEnums}
             />
           </>
         )}
