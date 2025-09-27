@@ -15,22 +15,33 @@ const TrailDetailsTotalDistanceField = ({
   initialValue,
   canEdit,
 }: Props) => {
-  // Mutation for updating the totalDistance field
   const mutation = useUpdateHikingTrailField("totalDistance", trailId);
 
   return (
     <EditableFieldForm
-      label="distance"
+      label="Distance"
       initialValue={{ totalDistance: initialValue }}
       canEdit={canEdit}
       useFormHook={useTotalDistanceForm}
       mutation={mutation}
-      inputType="number"
-      renderValue={(val) => (
+      helperMessage="Enter distance in kilometers. Use decimals for meters, e.g. 3.20 = 3 km 200 m."
+      renderValue={(val, label) => (
         <p>
           <GiPathDistance />
-          &nbsp; distance: &nbsp; {val ? `${val} km` : "Not available"}
+          &nbsp; {label}: &nbsp;
+          {val?.totalDistance !== null
+            ? `${val.totalDistance} km`
+            : "Not available"}
         </p>
+      )}
+      renderInput={(register, id) => (
+        <input
+          id={id}
+          {...register("totalDistance")}
+          placeholder="km"
+          type="number"
+          step="0.01"
+        />
       )}
     />
   );

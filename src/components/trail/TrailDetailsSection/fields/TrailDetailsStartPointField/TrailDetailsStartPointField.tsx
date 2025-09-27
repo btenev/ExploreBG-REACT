@@ -13,17 +13,30 @@ const TrailDetailsStartPointField = ({
   initialValue,
   canEdit,
 }: Props) => {
-  // Mutation for updating the startPoint field
   const mutation = useUpdateHikingTrailField("startPoint", trailId);
 
   return (
     <EditableFieldForm<StartPointDto>
-      label="from"
+      label="From"
       initialValue={{ startPoint: initialValue }}
       canEdit={canEdit}
       useFormHook={useStartPointForm}
       mutation={mutation}
-      inputType="text"
+      renderValue={(val, label) => (
+        <details open>
+          <summary>
+            {label}:&nbsp; <strong>{val.startPoint}</strong>
+          </summary>
+        </details>
+      )}
+      renderInput={(register, id) => (
+        <input
+          id={id}
+          {...register("startPoint")}
+          placeholder="Start point name"
+          type="text"
+        />
+      )}
     />
   );
 };

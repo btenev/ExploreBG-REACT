@@ -52,19 +52,17 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
 
         {detailsStatus !== StatusEnum.review && (
           <>
-            <FieldPair>
-              <AccommodationDetailsName
-                accommodationId={id}
-                initialValue={accommodation.accommodationName}
-                canEdit={candEdit}
-              />
+            <AccommodationDetailsName
+              accommodationId={id}
+              initialValue={accommodation.accommodationName}
+              canEdit={candEdit}
+            />
 
-              <AccommodationDetailsNextTo
-                accommodationId={id}
-                initialValue={accommodation.nextTo}
-                canEdit={candEdit}
-              />
-            </FieldPair>
+            <AccommodationDetailsNextTo
+              accommodationId={id}
+              initialValue={accommodation.nextTo}
+              canEdit={candEdit}
+            />
 
             <FieldPair>
               <AccommodationDetailsSite

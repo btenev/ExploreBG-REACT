@@ -24,19 +24,27 @@ const AccommodationDetailsSite = ({
       canEdit={canEdit}
       useFormHook={useSiteForm}
       mutation={mutation}
-      inputType="text"
+      helperMessage="Optional: official website or booking page for the accommodation."
       renderValue={(val, label) => (
         <p>
           <FaGlobe />
           &nbsp; {label}: &nbsp;
-          {val ? (
-            <a href={val} target="_blank" rel="noopener noreferrer">
-              {val}
+          {val?.site ? (
+            <a href={val.site} target="_blank" rel="noopener noreferrer">
+              {val.site}
             </a>
           ) : (
             "Not available"
           )}
         </p>
+      )}
+      renderInput={(register, id) => (
+        <input
+          id={id}
+          {...register("site")}
+          placeholder="Site url"
+          type="text"
+        />
       )}
     />
   );

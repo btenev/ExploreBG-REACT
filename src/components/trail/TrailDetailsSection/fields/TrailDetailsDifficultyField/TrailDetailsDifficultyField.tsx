@@ -36,27 +36,32 @@ const TrailDetailsDifficultyField = ({
   };
 
   const maxDifficultyLevel = formEnums?.length;
+
   return (
     <EditableFieldForm
-      label="difficulty"
+      label="Difficulty"
       initialValue={{ trailDifficulty: initialValue }}
       canEdit={canEdit}
       useFormHook={useTrailDifficultyForm}
       mutation={mutation}
-      renderValue={(val) => (
+      helperMessage="Select the difficulty level of the trail from easiest to hardest."
+      renderValue={(val, label) => (
         <div className="editable-field__difficulty">
-          <p>difficulty</p>:&nbsp;&nbsp;
-          <div>{repeatIcon(Number(val))}</div>
+          <p>{label}</p>:&nbsp;&nbsp;
+          <div>{repeatIcon(Number(val.trailDifficulty))}</div>
           <div className="editable-field__difficulty__empty">
-            {repeatIcon(maxDifficultyLevel - Number(val))}
+            {repeatIcon(maxDifficultyLevel - Number(val.trailDifficulty))}
           </div>
         </div>
       )}
-      renderInput={(fieldKey, register) =>
+      renderInput={(register, id) =>
         isLoadingEnums ? (
           <p>Loading trail difficulty options...</p>
         ) : (
-          <select {...register(fieldKey, { valueAsNumber: true })}>
+          <select
+            id={id}
+            {...register("trailDifficulty", { valueAsNumber: true })}
+          >
             {formEnums.map((v) => (
               <option key={v} value={v}>
                 {v}

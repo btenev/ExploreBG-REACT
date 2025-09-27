@@ -24,22 +24,23 @@ const TrailDetailsWaterAvailabilityField = ({
 
   return (
     <EditableFieldForm
-      label="waterAvailability"
+      label="Water sources"
       initialValue={{ waterAvailability: initialValue }}
       canEdit={canEdit}
       useFormHook={useWaterAvailabilityForm}
       mutation={mutation}
-      renderValue={(val) => (
+      helperMessage="Indicate if drinkable water is available along the trail"
+      renderValue={(val, label) => (
         <p>
           <FaHandHoldingWater />
-          &nbsp;&nbsp; water sources: &nbsp;{val}
+          &nbsp;&nbsp; {label}: &nbsp;{val.waterAvailability}
         </p>
       )}
-      renderInput={(fieldKey, register) =>
+      renderInput={(register, id) =>
         isLoadingEnums ? (
           <p>Loading water availability options...</p>
         ) : (
-          <select {...register(fieldKey)}>
+          <select id={id} {...register("waterAvailability")}>
             {formEnums.map((v) => (
               <option key={v} value={v}>
                 {v}

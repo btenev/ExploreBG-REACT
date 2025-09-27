@@ -35,17 +35,18 @@ const TrailDetailsActivityField = ({
 
   return (
     <EditableFieldForm
-      label="activity"
+      label="Suitable for"
       initialValue={{ activity: initialValue }}
       canEdit={canEdit}
       formClassName="editable-field__form__checkbox"
       useFormHook={useActivityForm}
       mutation={mutation}
-      renderValue={(val) => (
+      helperMessage="Choose one or more activities that can be safely done on this trail, e.g., hiking, trail running, or mountain biking."
+      renderValue={(val, label) => (
         <>
-          suitable for: &nbsp;
+          {label}: &nbsp;
           <ul>
-            {(val as SuitableForEnum[]).map((a, i) => (
+            {val.activity.map((a, i) => (
               <li key={i}>
                 {getActivityIcon(a)} &nbsp; {a}
               </li>
@@ -53,23 +54,26 @@ const TrailDetailsActivityField = ({
           </ul>
         </>
       )}
-      renderInput={(fieldKey, register) =>
+      renderInput={(register, parentId) =>
         isLoadingEnums ? (
           <p>Loading activity options...</p>
         ) : (
           <>
-            <p>suitable for:</p>
-            {formEnums.map((a) => (
-              <div key={a}>
-                <input
-                  type="checkbox"
-                  id={`activity-${a}`}
-                  value={a}
-                  {...register(fieldKey)}
-                />
-                <label htmlFor={`activity-${a}`}>{a}</label>
-              </div>
-            ))}
+            <p>Suitable for:</p>
+            {formEnums.map((a) => {
+              const checkboxId = `${parentId}-${a.replace(/\s+/g, "-").toLowerCase()}`;
+              return (
+                <div key={a}>
+                  <input
+                    type="checkbox"
+                    id={checkboxId}
+                    value={a}
+                    {...register("activity")}
+                  />
+                  <label htmlFor={checkboxId}>{a}</label>
+                </div>
+              );
+            })}
           </>
         )
       }

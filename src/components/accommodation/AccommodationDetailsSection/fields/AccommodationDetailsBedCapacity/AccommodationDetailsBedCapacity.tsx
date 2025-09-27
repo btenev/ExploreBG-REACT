@@ -23,15 +23,18 @@ const AccommodationDetailsBedCapacity = ({
       canEdit={canEdit}
       useFormHook={useBedCapacityForm}
       mutation={mutation}
-      inputType="number"
+      helperMessage="Enter the total number of beds in the accommodation."
       renderValue={(val, label) => (
         <p>
           <FaBed />
           &nbsp; {label}: &nbsp;
-          {val !== null
-            ? `${val} ${val === 1 ? "bed" : "beds"}`
+          {val?.bedCapacity !== null
+            ? `${val.bedCapacity} bed${val.bedCapacity === 1 ? "" : "s"}`
             : "Not available"}
         </p>
+      )}
+      renderInput={(register, id) => (
+        <input id={id} {...register("bedCapacity")} type="number" step="1" />
       )}
     />
   );

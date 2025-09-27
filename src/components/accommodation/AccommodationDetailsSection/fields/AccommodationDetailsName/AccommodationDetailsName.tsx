@@ -28,7 +28,21 @@ const AccommodationDetailsName = ({
       canEdit={canEdit}
       useFormHook={useAccommodationNameForm}
       mutation={mutation}
-      inputType="text"
+      renderValue={(val, label) => (
+        <details open>
+          <summary>
+            {label}:&nbsp; <strong>{val.accommodationName}</strong>
+          </summary>
+        </details>
+      )}
+      renderInput={(register, id) => (
+        <input
+          id={id}
+          {...register("accommodationName")}
+          placeholder="Accommodation name"
+          type="text"
+        />
+      )}
     />
   );
 };

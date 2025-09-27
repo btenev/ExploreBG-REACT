@@ -1,9 +1,9 @@
-import { ReactElement, useRef, useState } from "react";
-import { Path, UseFormReturn } from "react-hook-form";
+import { ReactElement, useEffect, useRef, useState } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-import { SubmitButton } from "@components/common";
+import { HelperTooltip, SubmitButton } from "@components/common";
 import { useCloseOnEscapeTabAndClickOutside } from "@hooks/uiHooks";
 
 import "./EditableFieldForm.scss";
@@ -23,15 +23,13 @@ interface Props<FormValues extends Record<string, any>> {
   formClassName?: string;
   useFormHook: (defaultValues: FormValues) => UseFormReturn<FormValues>;
   mutation: Mutation<FormValues>;
-  inputType?: React.HTMLInputTypeAttribute;
-  renderValue?: (
-    value: FormValues[keyof FormValues],
-    label: string
+  showLabel?: boolean;
+  renderValue: (value: FormValues, label: string) => ReactElement;
+  renderInput: (
+    register: UseFormReturn<FormValues>["register"],
+    inputId: string
   ) => ReactElement;
-  renderInput?: (
-    fieldKey: Path<FormValues>,
-    register: UseFormReturn<FormValues>["register"]
-  ) => ReactElement;
+  helperMessage?: string;
 }
 
 const EditableFieldForm = <FormValues extends Record<string, any>>({
@@ -41,20 +39,19 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
   formClassName,
   useFormHook,
   mutation,
-  inputType,
   renderValue,
   renderInput,
+  showLabel = false,
+  helperMessage,
 }: Props<FormValues>) => {
   const [isEditing, setIsEditing] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const inputId = `editable-field-${label.replace(/\s+/g, "-").toLowerCase()}`;
 
   // Initialize form with defaultValues
   const { register, handleSubmit, formState, reset, getValues } =
     useFormHook(initialValue);
-  const { errors, isDirty } = formState;
-
-  const fieldKey = Object.keys(initialValue)[0] as Path<FormValues>;
-  console.log("Some", fieldKey);
+  const { isDirty } = formState;
 
   const handleSubmitMutation = (data: FormValues) => {
     console.log("isDirty:", isDirty, "values:", getValues());
@@ -66,12 +63,19 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
     mutation.mutate(data, {
       onSuccess: (response) => {
         // Reset only with the relevant field
-        reset({ [fieldKey]: response?.[fieldKey] } as FormValues);
+        reset(response);
 
         setIsEditing(false);
       },
     });
   };
+
+  useEffect(() => {
+    if (isEditing && formRef.current) {
+      const input = formRef.current.querySelector<HTMLInputElement>("input");
+      input?.focus();
+    }
+  }, [isEditing]);
 
   const handleCancel = () => {
     if (isDirty) {
@@ -82,6 +86,7 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
   };
 
   useCloseOnEscapeTabAndClickOutside(formRef, () => setIsEditing(false));
+
   return (
     <div className="editable-field">
       {/* Display Mode */}
@@ -89,21 +94,19 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
         className="editable-field__display"
         style={{ opacity: isEditing ? "0" : "1" }}
       >
-        {renderValue ? (
-          renderValue(getValues()[fieldKey], label)
-        ) : (
-          <details open>
-            <summary>
-              {label}: <strong>{getValues()[fieldKey]}</strong>
-            </summary>
-            {/* <GrMapLocation />&nbsp; 018293794663487685 */}
-          </details>
-        )}
+        {renderValue(getValues(), label)}
+
         {canEdit && (
-          <FaEdit
-            className="edit-icon"
-            onClick={() => setIsEditing((prev) => !prev)}
-          />
+          <>
+            <FaEdit
+              className="edit-icon"
+              onClick={() => setIsEditing((prev) => !prev)}
+              aria-label={`Edit ${label}`}
+            />
+            {!isEditing && helperMessage && (
+              <HelperTooltip message={helperMessage} />
+            )}
+          </>
         )}
       </div>
 
@@ -117,33 +120,36 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
             className={formClassName}
             style={{ display: isEditing ? "flex" : "none" }}
           >
-            {renderInput ? (
-              renderInput(fieldKey, register)
-            ) : (
-              <input
-                id={`${fieldKey}-input`}
-                {...register(fieldKey as Path<FormValues>)}
-                type={inputType}
-              />
-            )}
+            {/* Label for accessibility / optional visual */}
+            <label htmlFor={inputId} className={showLabel ? "" : "sr-only"}>
+              {label}
+            </label>
+
+            {renderInput(register, inputId)}
 
             <SubmitButton
               isSubmitting={mutation.isPending}
               buttonName="Change"
             />
-            <button type="button" onClick={handleCancel}>
+            <button
+              type="button"
+              onClick={handleCancel}
+              aria-label={`Cancel editing ${label}`}
+            >
               Cancel
             </button>
           </form>
 
-          {errors[fieldKey]?.message && (
+          {Object.entries(formState.errors).map(([key, error]) => (
             <div
-              style={{ display: isEditing ? "block" : "none" }}
+              key={key}
               className="error-message"
+              role="alert"
+              style={{ display: isEditing ? "block" : "none" }}
             >
-              {errors[fieldKey].message?.toString()}
+              {error?.message?.toString()}
             </div>
-          )}
+          ))}
         </div>
       )}
     </div>

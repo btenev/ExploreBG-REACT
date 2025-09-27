@@ -31,19 +31,19 @@ const AccommodationDetailsFood = ({
       canEdit={canEdit}
       useFormHook={useFoodAvailableForm}
       mutation={mutation}
-      inputType="text"
+      helperMessage="Indicates whether food is available at the accommodation."
       renderValue={(val, label) => (
         <p>
           <GiKnifeFork />
           &nbsp; {label}: &nbsp;
-          {val}
+          {val.availableFood}
         </p>
       )}
-      renderInput={(fieldKey, register) =>
+      renderInput={(register, id) =>
         isLoadingEnums ? (
-          <p>Loading water availability options...</p>
+          <p>Loading food availability options...</p>
         ) : (
-          <select {...register(fieldKey)}>
+          <select id={id} {...register("availableFood")}>
             {formEnums.map((v) => (
               <option key={v} value={v}>
                 {v}

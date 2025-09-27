@@ -23,13 +23,16 @@ const AccommodationDetailsNextTo = ({
       canEdit={canEdit}
       useFormHook={useAccommodationNextToForm}
       mutation={mutation}
-      inputType="text"
+      helperMessage="The name of a village, town or city close to the accommodation."
       renderValue={(val, label) => (
         <p>
           <FaBuilding />
           &nbsp; {label}: &nbsp;
-          {val}
+          {val.nextTo}
         </p>
+      )}
+      renderInput={(register, id) => (
+        <input id={id} {...register("nextTo")} type="text" />
       )}
     />
   );

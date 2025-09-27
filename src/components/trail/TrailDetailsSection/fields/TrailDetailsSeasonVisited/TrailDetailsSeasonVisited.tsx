@@ -1,9 +1,9 @@
-import { JSX } from 'react';
-import { BsThermometerSun } from 'react-icons/bs';
-import { FaSnowflake } from 'react-icons/fa6';
-import { GiBeech, GiFallingLeaf } from 'react-icons/gi';
+import { JSX } from "react";
+import { BsThermometerSun } from "react-icons/bs";
+import { FaSnowflake } from "react-icons/fa6";
+import { GiBeech, GiFallingLeaf } from "react-icons/gi";
 
-import './TrailDetailsSeasonVisited.scss';
+import "./TrailDetailsSeasonVisited.scss";
 
 interface Props {
   season?: string | null;
@@ -19,14 +19,15 @@ const seasonIcons: Record<string, JSX.Element> = {
 const TrailDetailsSeasonVisited = ({ season }: Props) => {
   const normalized = season?.toLowerCase();
   const icon = normalized ? seasonIcons[normalized] : null;
+
   return (
     <p className="trail__season">
       {icon ? (
         <>
-          {icon}&nbsp; visited in:&nbsp;{season}
+          {icon}&nbsp; Visited in:&nbsp;{season}
         </>
       ) : (
-        'not-available'
+        "Not available"
       )}
     </p>
   );

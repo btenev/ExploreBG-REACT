@@ -24,7 +24,21 @@ const DestinationDetailsName = ({
       canEdit={canEdit}
       useFormHook={useDestinationNameForm}
       mutation={mutation}
-      inputType="text"
+      renderValue={(val, label) => (
+        <details open>
+          <summary>
+            {label}: <strong>{val.destinationName}</strong>
+          </summary>
+        </details>
+      )}
+      renderInput={(register, id) => (
+        <input
+          id={id}
+          {...register("destinationName")}
+          placeholder="Destination name"
+          type="text"
+        />
+      )}
     />
   );
 };

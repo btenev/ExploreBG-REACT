@@ -23,13 +23,25 @@ const AccommodationDetailsPhoneNumber = ({
       canEdit={canEdit}
       useFormHook={usePhoneNumberForm}
       mutation={mutation}
-      inputType="tel"
+      helperMessage="Valid phone: +359 (intl) or 0 (local), codes 87/88/89/98/99. E.g., +359871234567 or 0871234567."
       renderValue={(val, label) => (
         <p>
           <MdPhone />
           &nbsp; {label}: &nbsp;
-          {val ? <a href={`tel:${val}`}>{val}</a> : "Not available"}
+          {val?.phoneNumber ? (
+            <a href={`tel:${val.phoneNumber}`}>{val.phoneNumber}</a>
+          ) : (
+            "Not available"
+          )}
         </p>
+      )}
+      renderInput={(register, id) => (
+        <input
+          id={id}
+          {...register("phoneNumber")}
+          placeholder="Phone number"
+          type="tel"
+        />
       )}
     />
   );

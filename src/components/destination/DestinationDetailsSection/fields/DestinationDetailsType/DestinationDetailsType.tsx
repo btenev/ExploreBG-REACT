@@ -39,17 +39,17 @@ const DestinationDetailsType = ({
       canEdit={canEdit}
       useFormHook={useDestinationTypeForm}
       mutation={mutation}
-      inputType="text"
+      helperMessage="Choose natural (e.g., waterfalls, mountains, lakes) or cultural (e.g., fortresses, churches, museums)."
       renderValue={(val, label) => (
         <p>
-          {typeIcons[val] ?? null}&nbsp; {label}: &nbsp;{val}
+          {typeIcons[val.type] ?? null}&nbsp; {label}: &nbsp;{val.type}
         </p>
       )}
-      renderInput={(fieldKey, register) =>
+      renderInput={(register, id) =>
         isLoadingEnums ? (
-          <p>Loading water availability options...</p>
+          <p>Loading destination type options...</p>
         ) : (
-          <select {...register(fieldKey)}>
+          <select id={id} {...register("type")}>
             {formEnums.map((v) => (
               <option key={v} value={v}>
                 {v}

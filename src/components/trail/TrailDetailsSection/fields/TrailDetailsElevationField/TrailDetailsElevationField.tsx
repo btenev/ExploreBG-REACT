@@ -19,18 +19,29 @@ const TrailDetailsElevationField = ({
 
   return (
     <EditableFieldForm
-      label="elevationGained"
+      label="Elevation"
       initialValue={{ elevationGained: initialValue }}
       canEdit={canEdit}
       useFormHook={useElevationGainedForm}
       mutation={mutation}
-      inputType="number"
-      renderValue={(val) => (
+      helperMessage="Enter the elevation gain of the trail in meters."
+      renderValue={(val, label) => (
         <p>
           <GiMountainRoad />
-          &nbsp; elevation: &nbsp;
-          {val ? `${val} m` : "not available"}
+          &nbsp; {label}: &nbsp;
+          {val.elevationGained !== null
+            ? `${val.elevationGained} m`
+            : "Not available"}
         </p>
+      )}
+      renderInput={(register, id) => (
+        <input
+          id={id}
+          {...register("elevationGained")}
+          placeholder="meters"
+          type="number"
+          step="1"
+        />
       )}
     />
   );

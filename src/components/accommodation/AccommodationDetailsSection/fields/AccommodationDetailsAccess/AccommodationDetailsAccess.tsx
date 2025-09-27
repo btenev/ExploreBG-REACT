@@ -28,19 +28,19 @@ const AccommodationDetailsAccess = ({
       canEdit={canEdit}
       useFormHook={useAccommodationAccessForm}
       mutation={mutation}
-      inputType="text"
+      helperMessage="Select the accessibility type. 'By car' implies the accommodation is also accessible on foot."
       renderValue={(val, label) => (
         <p>
           <ImAccessibility />
           &nbsp; {label}: &nbsp;
-          {val}
+          {val.access === "By car" ? "By car and on foot" : val.access}
         </p>
       )}
-      renderInput={(fieldKey, register) =>
+      renderInput={(register, id) =>
         isLoadingEnums ? (
-          <p>Loading water availability options...</p>
+          <p>Loading accessibility options...</p>
         ) : (
-          <select {...register(fieldKey)}>
+          <select id={id} {...register("access")}>
             {formEnums.map((v) => (
               <option key={v} value={v}>
                 {v}

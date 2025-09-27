@@ -23,9 +23,9 @@ const AccommodationDetailsPricePerBed = ({
       canEdit={canEdit}
       useFormHook={usePricePerBedForm}
       mutation={mutation}
-      inputType="number"
       renderValue={(val, label) => {
-        const numericVal = val !== null ? Number(val) : null;
+        const numericVal =
+          val?.pricePerBed !== null ? Number(val.pricePerBed) : null;
 
         return (
           <p>
@@ -37,11 +37,10 @@ const AccommodationDetailsPricePerBed = ({
           </p>
         );
       }}
-      renderInput={(fieldKey, register) => (
+      renderInput={(register) => (
         <input
-          {...register(fieldKey)}
+          {...register("pricePerBed")}
           type="number"
-          min={0}
           step={0.01}
           placeholder="0.00"
         />
