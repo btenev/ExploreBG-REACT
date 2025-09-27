@@ -9,7 +9,11 @@ import {
 import { useLastUpdated } from "@context/LastUpdate";
 import { formatEntityLastUpdate } from "@utils/dateUtils";
 import { handleApiError } from "@utils/errorHandlers";
-import { capitalize, toKebabOrSpace } from "@utils/mixedUtils";
+import {
+  capitalize,
+  formatCoordinate,
+  toKebabOrSpace,
+} from "@utils/mixedUtils";
 
 type ExtractInnerValue<K extends keyof DestinationFieldResponseMap> =
   DestinationFieldResponseMap[K][K extends keyof DestinationFieldResponseMap[K]
@@ -35,9 +39,26 @@ export const useUpdateDestinationField = <
         return;
       }
 
-      if (field in data) {
-        const extractedValue = Object.values(data)[0] as ExtractInnerValue<K>;
+      if (field === "location" || field in data) {
+        let extractedValue: ExtractInnerValue<K>;
         const lastUpdated = data.lastUpdateDate;
+
+        let successMsg: string;
+
+        if (field === "location") {
+          // location is flat: longitude + latitude
+          const { latitude, longitude } =
+            data as DestinationFieldResponseMap["location"];
+          extractedValue = { latitude, longitude } as ExtractInnerValue<K>;
+          successMsg = `You successfully updated location: ${formatCoordinate(latitude, longitude)}`;
+        } else {
+          // wrapped field, e.g. destinationName, type
+          extractedValue = Object.values(data)[0] as ExtractInnerValue<K>;
+          successMsg = `You successfully updated ${toKebabOrSpace(
+            field,
+            false
+          )} field.`;
+        }
 
         setLastUpdated(lastUpdated);
 
@@ -46,18 +67,15 @@ export const useUpdateDestinationField = <
           exact: true,
         });
 
-        // Refetch all queries matching the key, even if inactive
         queryClient.refetchQueries({
           queryKey: ["destination", destinationId],
           exact: true,
-          type: "all", // 'active' | 'inactive' | 'all' — 'all' includes mounted and unmounted queries
+          type: "all",
         });
-        toast.success(
-          `You successfully updated ${toKebabOrSpace(field, false)} field.`
-        );
+
+        toast.success(successMsg);
         toast.info(`Last updated: ${formatEntityLastUpdate(lastUpdated)}`);
 
-        // Return the updated value so parent can use it with reset()
         return extractedValue;
       }
     },

@@ -4,14 +4,16 @@ import { destinationTypeSchema } from "./destinationEnumsSchema";
 import {
   destinationInfoSchema,
   destinationNameSchema,
-  locationSchema,
+  latitudeSchema,
+  longitudeSchema,
   nextToSchema,
 } from "../common/fields";
 
 export const createDestinationSchema = z.object({
   destinationName: destinationNameSchema,
   nextTo: nextToSchema,
-  location: locationSchema,
+  latitude: latitudeSchema,
+  longitude: longitudeSchema,
   destinationInfo: destinationInfoSchema,
   type: destinationTypeSchema,
 });

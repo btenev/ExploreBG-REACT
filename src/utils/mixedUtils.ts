@@ -31,3 +31,20 @@ export const convertMetersToKmM = (meters: number) => {
 
 export const hasRole = (roles: IUser["roles"], roleToCheck: string): boolean =>
   roles.some((obj) => obj.role === roleToCheck);
+
+export const formatCoordinate = (
+  lat: number | null,
+  lon: number | null
+): string => {
+  if (lat == null || lon == null) {
+    return "Not specified";
+  }
+
+  const latDirection = lat >= 0 ? "N" : "S";
+  const lonDirection = lon >= 0 ? "E" : "W";
+
+  const absLat = Math.abs(lat).toFixed(5);
+  const absLon = Math.abs(lon).toFixed(5);
+
+  return `${absLat}° ${latDirection}, ${absLon}° ${lonDirection}`;
+};

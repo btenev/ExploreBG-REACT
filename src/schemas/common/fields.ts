@@ -112,7 +112,7 @@ export const destinationNameSchema = createPlaceSchema(
   DESTINATION_PLACE_MAX_LENGTH
 );
 export const nextToSchema = createPlaceSchema(
-  "nearby village, town, or city.",
+  "nearby village, town, or city",
   NEXT_TO_MIN_LENGTH,
   NEXT_TO_MAX_LENGTH
 );
@@ -278,3 +278,19 @@ export const siteUrlSchema = z
       message: "Please provide a valid URL (e.g. https://example.com).",
     }
   );
+
+export const longitudeSchema = z.preprocess((val) => {
+  if (typeof val === "string") {
+    const trimmed = val.trim();
+    return trimmed === "" ? null : Number(trimmed);
+  }
+  return val;
+}, z.number().min(-180, "Your longitude cannot be less than -180.").max(180, "Your longitude cannot be greater than 180.").nullable());
+
+export const latitudeSchema = z.preprocess((val) => {
+  if (typeof val === "string") {
+    const trimmed = val.trim();
+    return trimmed === "" ? null : Number(trimmed);
+  }
+  return val;
+}, z.number().min(-90, "Your latitude cannot be less than -90.").max(90, "Your latitude cannot be greater than 90.").nullable());

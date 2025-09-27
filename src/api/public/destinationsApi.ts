@@ -17,11 +17,17 @@ import { ApiClient } from "../base";
 export type DestinationFieldRequestMap = {
   destinationName: { destinationName: string };
   type: { type: DestinationTypeEnum };
+  location: { latitude: number | null; longitude: number | null };
 };
 
 export type DestinationFieldResponseMap = {
   destinationName: { destinationName: string; lastUpdateDate: string };
   type: { type: DestinationTypeEnum; lastUpdateDate: string };
+  location: {
+    latitude: number | null;
+    longitude: number | null;
+    lastUpdateDate: string;
+  };
 };
 
 const apiClient = new ApiClient();

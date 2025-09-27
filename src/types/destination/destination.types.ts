@@ -13,7 +13,8 @@ export interface IDestinationCard extends IPlace {
 
 export interface IDestination extends IDestinationCard {
   createdBy: IOwner;
-  location: string;
+  latitude: number;
+  longitude: number;
   destinationInfo: string;
   type: DestinationTypeEnum;
   images: TPhoto[];
