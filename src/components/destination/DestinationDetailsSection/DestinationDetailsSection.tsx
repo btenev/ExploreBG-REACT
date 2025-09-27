@@ -7,7 +7,11 @@ import { LastUpdatedProvider } from "@context/LastUpdate";
 import { useDestinationEnums } from "@hooks/dataHooks/utilityHooks";
 import { IDestination, StatusEnum } from "@types";
 
-import { DestinationDetailsName, DestinationDetailsType } from "./fields";
+import {
+  DestinationDetailsLocation,
+  DestinationDetailsName,
+  DestinationDetailsType,
+} from "./fields";
 
 import "./DestinationDetailsSection.scss";
 
@@ -53,6 +57,13 @@ const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
               canEdit={candEdit}
               formEnums={destinationEnums?.type ?? []}
               isLoadingEnums={isLoadingEnums}
+            />
+
+            <DestinationDetailsLocation
+              destinationId={id}
+              initialValueLatitude={destination.latitude}
+              initialValuelogitude={destination.longitude}
+              canEdit={candEdit}
             />
           </>
         )}

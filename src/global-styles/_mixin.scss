@@ -1,5 +1,5 @@
-@use './colors' as c;
-@use './breakpoints' as b;
+@use "./colors" as c;
+@use "./breakpoints" as b;
 
 @mixin flex($direction, $content, $items) {
   display: flex;
@@ -64,7 +64,7 @@
   z-index: 0;
 
   &::before {
-    content: '';
+    content: "";
     background: linear-gradient(
       45deg,
       #ff0000,
@@ -104,7 +104,7 @@
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
@@ -316,7 +316,7 @@
     }
   }
 
-  [data-theme='dark'] & > button {
+  [data-theme="dark"] & > button {
     color: black;
 
     &:hover {
@@ -330,6 +330,10 @@
   border-radius: 0.5rem;
   padding: 0.05rem;
   padding-right: 0.25rem;
+
+  // display: flex; // <-- added
+  // align-items: center; // <-- vertical center
+  // gap: 0.5rem;
 
   @include b.display(mobile) {
     @include flex(column, none, none);
