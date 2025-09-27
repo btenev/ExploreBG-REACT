@@ -16,6 +16,7 @@ export interface IDestination extends IDestinationCard {
   latitude: number;
   longitude: number;
   destinationInfo: string;
+  nextTo: string;
   type: DestinationTypeEnum;
   images: TPhoto[];
   detailsStatus: StatusEnum;

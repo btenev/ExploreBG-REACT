@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-import { useFormWithSchema } from "@hooks/formHooks/base";
 import { createAccommodationSchema } from "@schemas/accommodation";
+
+import { useFormWithSchema } from "../base";
 
 const accommodationNextToSchema = createAccommodationSchema.pick({
   nextTo: true,

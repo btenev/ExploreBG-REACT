@@ -18,6 +18,7 @@ export type DestinationFieldRequestMap = {
   destinationName: { destinationName: string };
   type: { type: DestinationTypeEnum };
   location: { latitude: number | null; longitude: number | null };
+  nextTo: { nextTo: string };
 };
 
 export type DestinationFieldResponseMap = {
@@ -28,6 +29,7 @@ export type DestinationFieldResponseMap = {
     longitude: number | null;
     lastUpdateDate: string;
   };
+  nextTo: { nextTo: string; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();
