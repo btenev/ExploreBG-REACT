@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Path, UseFormReturn } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -37,6 +37,13 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
     useFormHook(initialValue);
   const { errors, isDirty } = formState;
 
+  useEffect(() => {
+    if (isEditing && formRef.current) {
+      const input = formRef.current.querySelector<HTMLInputElement>("textarea");
+      input?.focus();
+    }
+  }, [isEditing]);
+
   const fieldKey = Object.keys(initialValue)[0];
   console.log("Some", fieldKey);
 
@@ -66,6 +73,7 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
   };
 
   useCloseOnEscapeTabAndClickOutside(formRef, () => setIsEditing(false));
+
   return (
     <div
       className="editable-textarea-field"
@@ -88,6 +96,7 @@ const EditableTextareaFieldForm = <FormValues extends Record<string, any>>({
       {isEditing && (
         <CommonModal>
           <form
+            ref={formRef}
             onSubmit={handleSubmit(handleSubmitMutation)}
             noValidate
             className="textarea-form"
