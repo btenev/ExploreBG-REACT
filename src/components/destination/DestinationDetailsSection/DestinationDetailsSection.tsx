@@ -2,6 +2,7 @@ import {
   EntityCreatedBy,
   EntityDetailsLastUpdateField,
   FavoriteToggle,
+  FieldPair,
 } from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
 import { useDestinationEnums } from "@hooks/dataHooks/utilityHooks";
@@ -10,6 +11,7 @@ import { IDestination, StatusEnum } from "@types";
 import {
   DestinationDetailsLocation,
   DestinationDetailsName,
+  DestinationDetailsNextTo,
   DestinationDetailsType,
 } from "./fields";
 
@@ -51,20 +53,28 @@ const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
               canEdit={candEdit}
             />
 
-            <DestinationDetailsType
+            <DestinationDetailsNextTo
               destinationId={id}
-              initialValue={destination.type}
+              initialValue={destination.nextTo}
               canEdit={candEdit}
-              formEnums={destinationEnums?.type ?? []}
-              isLoadingEnums={isLoadingEnums}
             />
 
-            <DestinationDetailsLocation
-              destinationId={id}
-              initialValueLatitude={destination.latitude}
-              initialValuelogitude={destination.longitude}
-              canEdit={candEdit}
-            />
+            <FieldPair>
+              <DestinationDetailsType
+                destinationId={id}
+                initialValue={destination.type}
+                canEdit={candEdit}
+                formEnums={destinationEnums?.type ?? []}
+                isLoadingEnums={isLoadingEnums}
+              />
+
+              <DestinationDetailsLocation
+                destinationId={id}
+                initialValueLatitude={destination.latitude}
+                initialValuelogitude={destination.longitude}
+                canEdit={candEdit}
+              />
+            </FieldPair>
           </>
         )}
         <EntityDetailsLastUpdateField
