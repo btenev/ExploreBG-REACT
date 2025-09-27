@@ -1,0 +1,52 @@
+.tooltip-wrapper {
+  position: relative;
+  display: inline-flex; /* instead of inline-block */
+  align-items: center; /* vertically center the icon */
+  justify-content: center;
+  cursor: help;
+  color: gray;
+  line-height: 1; /* prevents baseline shifts */
+  margin-left: 0.2rem;
+}
+
+.helper-icon {
+  font-size: 1rem;
+  display: block; /* avoids inline SVG baseline issues */
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: max-content;
+  max-width: 220px;
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* show above */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
