@@ -9,6 +9,7 @@ import { useDestinationEnums } from "@hooks/dataHooks/utilityHooks";
 import { IDestination, StatusEnum } from "@types";
 
 import {
+  DestinationDetailsInfo,
   DestinationDetailsLocation,
   DestinationDetailsName,
   DestinationDetailsNextTo,
@@ -75,6 +76,12 @@ const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
                 canEdit={candEdit}
               />
             </FieldPair>
+
+            <DestinationDetailsInfo
+              destinationId={id}
+              initialValue={destination.destinationInfo}
+              canEdit={candEdit}
+            />
           </>
         )}
         <EntityDetailsLastUpdateField

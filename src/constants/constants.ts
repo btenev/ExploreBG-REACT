@@ -39,3 +39,6 @@ export const NEXT_TO_MAX_LENGTH = 20;
 
 /*Accommodation info field visible text*/
 export const ACCOMMODATION_INFO_VISIBLE_TEXT_LENGHT = 155;
+
+/*Destination info field visible text*/
+export const DESTINATION_INFO_VISIBLE_TEXT_LENGHT = 155;
