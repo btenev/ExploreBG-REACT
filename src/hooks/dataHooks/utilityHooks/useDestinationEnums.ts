@@ -4,7 +4,7 @@ import { utilitiesApi } from "@api/public";
 
 export const useDestinationEnums = (enabled: boolean) => {
   return useQuery({
-    queryKey: ["accommodationEnums"],
+    queryKey: ["destinationEnums"],
     queryFn: () => utilitiesApi.getDestinationEnums(),
     enabled,
     refetchOnMount: false, // Only fetch on hard reloads

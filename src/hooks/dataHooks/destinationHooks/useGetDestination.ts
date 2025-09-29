@@ -4,7 +4,7 @@ import { destinationsApi } from "@api/public";
 
 export const useGetDestination = (destinationId: string) => {
   return useQuery({
-    queryKey: ["accommodation", destinationId],
+    queryKey: ["destination", destinationId],
     queryFn: () => destinationsApi.getDestination(destinationId),
     refetchOnMount: false, // Only fetch on hard reloads
     refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch

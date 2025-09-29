@@ -1,29 +1,31 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import {
+  CommentsSection,
   EntityDetailsNav,
   EntityDetailsWrapper,
   ImportantNotice,
+  PhotosSection,
 } from "@components/common";
 import DestinationDetailsSection from "@components/destination/DestinationDetailsSection";
 import { useGetDestination } from "@hooks/dataHooks/destinationHooks";
-// import { TPhoto } from "@types";
+import { TPhoto } from "@types";
 
 import "./DestinationDetails.scss";
 
 const DestinationDetails = () => {
   const [photoCount, setPhotoCount] = useState(0);
 
-  // const handlePhotosChange = useCallback((newPhotos: TPhoto[]) => {
-  //   setPhotoCount(newPhotos.length);
-  // }, []);
+  const handlePhotosChange = useCallback((newPhotos: TPhoto[]) => {
+    setPhotoCount(newPhotos.length);
+  }, []);
   return (
     <EntityDetailsWrapper
       entityType="destination"
       paramName="destinationId"
       fetchHook={useGetDestination}
     >
-      {(destination, canEdit) => {
+      {(destination, canEdit, userId) => {
         if (photoCount === 0 && destination.images.length > 0) {
           setPhotoCount(destination.images.length);
         }
@@ -46,6 +48,25 @@ const DestinationDetails = () => {
             <DestinationDetailsSection
               candEdit={canEdit}
               destination={destination}
+            />
+
+            <span id="photos" />
+            {(canEdit || photoCount > 0) && (
+              <PhotosSection
+                entityId={destination.id}
+                photos={destination.images}
+                canEdit={canEdit}
+                entityType="destination"
+                folder="Destinations"
+                onPhotosChange={handlePhotosChange}
+              />
+            )}
+
+            <span id="comments" />
+            <CommentsSection
+              userId={userId}
+              entity="destination"
+              entityId={destination.id.toString()}
             />
           </main>
         );
