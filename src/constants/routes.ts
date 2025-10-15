@@ -91,6 +91,14 @@ export const PUBLIC_ROUTES = {
 
   hike: {
     random: `${HIKES}/random` as const, // simple
+
+    favoriteStatus: (hikeId: string | number) =>
+      `${HIKES}/${hikeId}/like` as const,
+
+    hikeComments: (hikeId: string | number) => `${HIKES}/${hikeId}/comments`,
+
+    deleteHikeComment: (hikeId: string, commentId: string) =>
+      `${HIKES}/${hikeId}/comments/${commentId}`,
   },
 
   image: {

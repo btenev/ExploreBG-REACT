@@ -2,14 +2,19 @@ import { useMutation } from "@tanstack/react-query";
 import { Dispatch } from "react";
 import { toast } from "react-toastify";
 
-import { accommodationsApi, destinationsApi, trailsApi } from "@api/public";
+import {
+  accommodationsApi,
+  destinationsApi,
+  hikesApi,
+  trailsApi,
+} from "@api/public";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
-import { EntityType, IComment } from "@types";
+import { CommentEntityType, IComment } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 
 export const useCreateComment = (handleNewComment: Dispatch<IComment>) => {
   const apiMapper: Record<
-    EntityType,
+    CommentEntityType,
     (entityId: string, data: CommentDataDto) => Promise<IComment>
   > = {
     trail: (entityId, data) => trailsApi.createTrailComment(entityId, data),
@@ -17,6 +22,7 @@ export const useCreateComment = (handleNewComment: Dispatch<IComment>) => {
       accommodationsApi.createAccommodationComment(entityId, data),
     destination: (entityId, data) =>
       destinationsApi.createDestinationComment(entityId, data),
+    hike: (entityId, data) => hikesApi.createHikeComment(entityId, data),
   };
 
   return useMutation({
@@ -27,7 +33,7 @@ export const useCreateComment = (handleNewComment: Dispatch<IComment>) => {
       data,
     }: {
       entityId: string;
-      entity: EntityType;
+      entity: CommentEntityType;
       data: CommentDataDto;
     }) => apiMapper[entity](entityId, data),
     onSuccess: (data) => {

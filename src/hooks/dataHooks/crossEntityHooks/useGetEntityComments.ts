@@ -1,13 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { destinationsApi, trailsApi, accommodationsApi } from "@api/public";
-import { EntityType, IComment } from "@types";
+import {
+  destinationsApi,
+  trailsApi,
+  accommodationsApi,
+  hikesApi,
+} from "@api/public";
+import { CommentEntityType, IComment } from "@types";
 
-export const useGetEntityComments = (entity: EntityType, entityId: string) => {
-  const apiMapper: Record<EntityType, (id: string) => Promise<IComment[]>> = {
+export const useGetEntityComments = (
+  entity: CommentEntityType,
+  entityId: string
+) => {
+  const apiMapper: Record<
+    CommentEntityType,
+    (id: string) => Promise<IComment[]>
+  > = {
     trail: trailsApi.getTrailComments,
     accommodation: accommodationsApi.getAccommodationComments,
     destination: destinationsApi.getDestinationComments,
+    hike: hikesApi.getHikeComments,
   };
 
   return useQuery({

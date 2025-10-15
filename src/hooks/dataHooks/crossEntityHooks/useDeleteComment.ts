@@ -2,8 +2,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 
-import { accommodationsApi, destinationsApi, trailsApi } from "@api/public";
-import { EntityType, IComment, ExtendedDeleteParams } from "@types";
+import {
+  accommodationsApi,
+  destinationsApi,
+  hikesApi,
+  trailsApi,
+} from "@api/public";
+import { DeletableEntityType, IComment, ExtendedDeleteParams } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 
 export const useDeleteComment = (
@@ -12,7 +17,7 @@ export const useDeleteComment = (
   const queryClient = useQueryClient();
 
   const apiMapper: Record<
-    EntityType,
+    DeletableEntityType,
     (params: ExtendedDeleteParams) => Promise<void>
   > = {
     trail: ({ entityId, secondaryId }) =>
@@ -21,6 +26,8 @@ export const useDeleteComment = (
       accommodationsApi.deleteAccommodationComment(entityId, secondaryId),
     destination: ({ entityId, secondaryId }) =>
       destinationsApi.deleteDestinationComment(entityId, secondaryId),
+    hike: ({ entityId, secondaryId }) =>
+      hikesApi.deleteHikeComment(entityId, secondaryId),
   };
 
   return useMutation({
