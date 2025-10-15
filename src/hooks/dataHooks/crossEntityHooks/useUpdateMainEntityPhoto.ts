@@ -4,15 +4,15 @@ import { toast } from "react-toastify";
 
 import { accommodationsApi, destinationsApi, trailsApi } from "@api/public";
 import { PhotosAction } from "@context/Photos";
-import { EntityType } from "@types";
+import { PhotoEntityType } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 
 export const useUpdateMainEntityPhoto = (
-  entityType: EntityType,
+  entityType: PhotoEntityType,
   dispatch: Dispatch<PhotosAction>
 ) => {
   const apiMapper: Record<
-    EntityType,
+    PhotoEntityType,
     ({
       entityId,
       data,

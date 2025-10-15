@@ -8,7 +8,7 @@ import {
   trailReviewApi,
 } from "@api/moderation";
 import { MODERATION_ROUTES } from "@constants";
-import { EntityType, ReviewStatusEnum } from "@types";
+import { PhotoEntityType, ReviewStatusEnum } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 
 export const useApproveEntityImages = () => {
@@ -19,14 +19,14 @@ export const useApproveEntityImages = () => {
     mutationKey: ["approveEntityImages"],
     mutationFn: ({
       entityId,
-      entityType,
+      photoEntityType,
       imageIds,
     }: {
       entityId: string;
-      entityType: EntityType;
+      photoEntityType: PhotoEntityType;
       imageIds: number[];
     }) => {
-      switch (entityType) {
+      switch (photoEntityType) {
         case "trail":
           return trailReviewApi.approveTrailImages(entityId, imageIds);
         case "accommodation":
@@ -40,7 +40,7 @@ export const useApproveEntityImages = () => {
             imageIds
           );
         default:
-          throw new Error(`Unsupported entity type: ${entityType}`);
+          throw new Error(`Unsupported entity type: ${photoEntityType}`);
       }
     },
 

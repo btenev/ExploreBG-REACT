@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { usePhotosState } from "@context/Photos";
-import { EntityType, TPhoto } from "@types";
+import { PhotoEntityType, TPhoto } from "@types";
 
 import PhotoActionButtons from "../PhotoActionButtons";
 import ThumbnailGallery from "../ThumbnailGallery";
@@ -10,13 +10,13 @@ const PhotosConsumer = ({
   entityId,
   canEdit,
   folder,
-  entityType,
+  photoEntityType,
   onPhotosChange,
 }: {
   entityId: number;
   canEdit: boolean;
   folder: string;
-  entityType: EntityType;
+  photoEntityType: PhotoEntityType;
   onPhotosChange: (newPhotos: TPhoto[]) => void;
 }) => {
   const { photos } = usePhotosState();
@@ -32,7 +32,7 @@ const PhotosConsumer = ({
       <ThumbnailGallery
         entityId={entityId}
         canEdit={canEdit}
-        entityType={entityType}
+        photoEntityType={photoEntityType}
       />
     </section>
   );

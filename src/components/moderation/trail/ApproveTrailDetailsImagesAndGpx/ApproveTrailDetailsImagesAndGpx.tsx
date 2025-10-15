@@ -36,7 +36,7 @@ const ApproveTrailDetailsImagesAndGpx = ({
           <ApproveEntityImages
             key="approve-trail-images"
             entityId={dataForReview.id}
-            entityType="trail"
+            photoEntityType="trail"
             imagesForReview={dataForReview.images}
           />,
         ]

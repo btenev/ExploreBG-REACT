@@ -1,5 +1,5 @@
 import { PhotosProvider } from "@context/Photos";
-import { EntityType, TPhoto } from "@types";
+import { PhotoEntityType, TPhoto } from "@types";
 
 import PhotosConsumer from "./PhotosConsumer";
 
@@ -10,7 +10,7 @@ interface Props {
   photos: TPhoto[];
   canEdit: boolean;
   folder: string;
-  entityType: EntityType;
+  photoEntityType: PhotoEntityType;
   onPhotosChange: (newPhotos: TPhoto[]) => void;
 }
 
@@ -19,7 +19,7 @@ const PhotosSection = ({
   photos,
   canEdit,
   folder,
-  entityType,
+  photoEntityType,
   onPhotosChange,
 }: Props) => {
   return (
@@ -28,7 +28,7 @@ const PhotosSection = ({
         entityId={entityId}
         canEdit={canEdit}
         folder={folder}
-        entityType={entityType}
+        photoEntityType={photoEntityType}
         onPhotosChange={onPhotosChange}
       />
     </PhotosProvider>

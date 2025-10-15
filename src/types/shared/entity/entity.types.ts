@@ -1,9 +1,13 @@
-import { StatusEnum } from '../enums';
-import { TImagesForReview } from '../photo';
-import { TReviewedBy } from '../reviewer';
+import { StatusEnum } from "../enums";
+import { TImagesForReview } from "../photo";
+import { TReviewedBy } from "../reviewer";
 
-export type EntityType = 'trail' | 'accommodation' | 'destination';
-export type CollectionType = `${EntityType}s`;
+export type EntityType = "trail" | "accommodation" | "destination" | "hike";
+export type PhotoEntityType = Exclude<EntityType, "hike">;
+export type LikeableEntityType = EntityType;
+export type CommentEntityType = EntityType;
+export type DeletableEntityType = EntityType;
+export type CollectionType = `${PhotoEntityType}s`;
 
 export interface IWaitingReviewEntity {
   id: number;

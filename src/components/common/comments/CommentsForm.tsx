@@ -4,13 +4,13 @@ import { toast } from "react-toastify";
 
 import { useCreateComment } from "@hooks/dataHooks/crossEntityHooks";
 import { CommentDataDto, useCommentForm } from "@hooks/formHooks/commentHooks";
-import { EntityType, IComment } from "@types";
+import { CommentEntityType, IComment } from "@types";
 
 interface Props {
   entityId: string;
   userId: number | null;
   handleNewComment: Dispatch<IComment>;
-  entity: EntityType;
+  entity: CommentEntityType;
   disabled?: boolean;
 }
 

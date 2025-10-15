@@ -6,7 +6,7 @@ import {
   destinationReviewApi,
   trailReviewApi,
 } from "@api/moderation";
-import { EntityType } from "@types";
+import { PhotoEntityType } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 
 export const useToggleReviewImages = () => {
@@ -17,15 +17,15 @@ export const useToggleReviewImages = () => {
     mutationFn: ({
       entityId,
       imageId,
-      entityType,
+      photoEntityType,
       shouldClaim,
     }: {
       entityId: string;
       imageId: string;
-      entityType: EntityType;
+      photoEntityType: PhotoEntityType;
       shouldClaim: boolean;
     }) => {
-      switch (entityType) {
+      switch (photoEntityType) {
         case "trail":
           return shouldClaim
             ? trailReviewApi.claimForReviewTrailImages(entityId)
@@ -41,7 +41,7 @@ export const useToggleReviewImages = () => {
             ? destinationReviewApi.claimForReviewDestinationImages(entityId)
             : destinationReviewApi.unclaimForReviewDestinationImages(entityId);
         default:
-          throw new Error(`Unsupported entity type: ${entityType}`);
+          throw new Error(`Unsupported entity type: ${photoEntityType}`);
       }
     },
 

@@ -1,7 +1,7 @@
-import { EntityType } from '../entity';
+import { DeletableEntityType } from "../entity";
 
 export type BasicDeleteParams = {
-  entity: EntityType;
+  entity: DeletableEntityType;
   entityId: string;
 };
 

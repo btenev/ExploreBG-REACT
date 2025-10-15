@@ -4,15 +4,15 @@ import { LoadingSpinner, ZoomPhoto } from "@components/common";
 import { ALLOWED_PHOTO_UPLOAD_COUNT } from "@constants";
 import { usePhotosDispatch, usePhotosState } from "@context/Photos";
 import { useUpdateMainEntityPhoto } from "@hooks/dataHooks/crossEntityHooks";
-import { EntityType } from "@types";
+import { PhotoEntityType } from "@types";
 
 interface Props {
   entityId: number;
   canEdit: boolean;
-  entityType: EntityType;
+  photoEntityType: PhotoEntityType;
 }
 
-const ThumbnailGallery = ({ entityId, canEdit, entityType }: Props) => {
+const ThumbnailGallery = ({ entityId, canEdit, photoEntityType }: Props) => {
   const [zoomPhoto, setZoomPhoto] = useState<{
     imageUrl: string;
     index: number;
@@ -27,7 +27,7 @@ const ThumbnailGallery = ({ entityId, canEdit, entityType }: Props) => {
   const dispatch = usePhotosDispatch();
 
   const { mutate: updateMainPhoto } = useUpdateMainEntityPhoto(
-    entityType,
+    photoEntityType,
     dispatch
   );
 

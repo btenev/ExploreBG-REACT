@@ -7,19 +7,19 @@ import {
   useApproveEntityImages,
 } from "@hooks/dataHooks/moderation/crossEntityReviewHooks";
 import { useGetImageReviewer } from "@hooks/dataHooks/moderation/imageReviewHooks";
-import { EntityType, StatusEnum, TPhoto } from "@types";
+import { PhotoEntityType, StatusEnum, TPhoto } from "@types";
 import { capitalize } from "@utils/mixedUtils";
 import { useSessionInfo } from "@utils/sessionUtils";
 
 interface Props {
   entityId: number;
-  entityType: EntityType;
+  photoEntityType: PhotoEntityType;
   imagesForReview: TPhoto[];
 }
 
 const ApproveEntityImages = ({
   entityId,
-  entityType,
+  photoEntityType,
   imagesForReview,
 }: Props) => {
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<number[]>([]);
@@ -46,7 +46,7 @@ const ApproveEntityImages = ({
       toggleImageReview.mutate({
         entityId: String(entityId),
         imageId: String(imageId),
-        entityType: entityType,
+        photoEntityType: photoEntityType,
         shouldClaim: true,
       });
     } else {
@@ -54,7 +54,7 @@ const ApproveEntityImages = ({
       toggleImageReview.mutate({
         entityId: String(entityId),
         imageId: String(imageId),
-        entityType: entityType,
+        photoEntityType: photoEntityType,
         shouldClaim: false,
       });
     }
@@ -76,7 +76,7 @@ const ApproveEntityImages = ({
 
     approveImages({
       entityId: String(entityId),
-      entityType: entityType,
+      entityType: photoEntityType,
       imageIds: selectedPhotoIds,
     });
   };
@@ -103,7 +103,7 @@ const ApproveEntityImages = ({
               onClick={() => setZoomPhoto({ imageUrl: p.imageUrl, index })}
               width={150}
               height={150}
-              alt={capitalize(entityType) + "photo"}
+              alt={capitalize(photoEntityType) + "photo"}
             />
           </figure>
         </div>

@@ -2,13 +2,13 @@ import { useState } from "react";
 
 import { ConfirmationModal } from "@components/common";
 import { useDeleteEntity } from "@hooks/dataHooks/crossEntityHooks";
-import { EntityType } from "@types";
+import { DeletableEntityType } from "@types";
 
 import "./DeleteItem.scss";
 
 interface Props {
   deletionObj: string;
-  entity: EntityType;
+  entity: DeletableEntityType;
   entityId: string;
 }
 

@@ -3,16 +3,15 @@ import { AiOutlineFieldNumber } from "react-icons/ai";
 import { Link, useSearchParams } from "react-router-dom";
 
 import { WaitingApprovalCountResponse } from "@api/moderation/moderationDashboardApi";
-import { DEFAULT_CARDS_PER_PAGE, DEFAULT_PAGE_NUMBER } from "@constants";
-import { useGetWaitingApprovalEntities } from "@hooks/dataHooks/moderation/crossEntityReviewHooks";
-import { CollectionType, StatusEnum, TImagesForReview } from "@types";
-import { formatFullDate } from "@utils/dateUtils";
-
 import {
   LoadingSpinner,
   PaginationControls,
   ViewDetails,
-} from "../../../common";
+} from "@components/common";
+import { DEFAULT_CARDS_PER_PAGE, DEFAULT_PAGE_NUMBER } from "@constants";
+import { useGetWaitingApprovalEntities } from "@hooks/dataHooks/moderation/crossEntityReviewHooks";
+import { CollectionType, StatusEnum, TImagesForReview } from "@types";
+import { formatFullDate } from "@utils/dateUtils";
 
 interface Props {
   waitingApprovalCount: WaitingApprovalCountResponse;

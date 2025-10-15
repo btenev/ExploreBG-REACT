@@ -4,7 +4,7 @@ import {
   useGetEntityComments,
   useDeleteComment,
 } from "@hooks/dataHooks/crossEntityHooks";
-import { EntityType, IComment } from "@types";
+import { CommentEntityType, IComment } from "@types";
 
 import CommentsForm from "./CommentsForm";
 import RenderComments from "./RenderComments";
@@ -12,7 +12,7 @@ import ConfirmationModal from "../modals/ConfirmationModal";
 
 interface Props {
   userId: number | null;
-  entity: EntityType;
+  entity: CommentEntityType;
   entityId: string;
 }
 

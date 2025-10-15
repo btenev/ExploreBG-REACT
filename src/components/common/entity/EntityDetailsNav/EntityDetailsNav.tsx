@@ -1,4 +1,4 @@
-import { EntityType } from "@types";
+import { DeletableEntityType } from "@types";
 
 import DeleteItem from "./DeleteItem";
 
@@ -7,7 +7,7 @@ import "./EntityDetailsNav.scss";
 interface Props {
   canEdit: boolean;
   deletionObj: string;
-  entity: EntityType;
+  entity: DeletableEntityType;
   entityId: string;
   imageAvailable: boolean;
   gpxFileAvailable: boolean;
