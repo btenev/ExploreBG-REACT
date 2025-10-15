@@ -6,15 +6,16 @@ export interface IPlace {
 }
 
 export interface IDestinationCard extends IPlace {
-  imageUrl: string;
+  imageUrl: string | null;
   nextTo: string;
-  likedByUser: boolean;
+  likedByUser?: boolean;
+  createdById?: number;
 }
 
 export interface IDestination extends IDestinationCard {
   createdBy: IOwner;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   destinationInfo: string;
   nextTo: string;
   type: DestinationTypeEnum;

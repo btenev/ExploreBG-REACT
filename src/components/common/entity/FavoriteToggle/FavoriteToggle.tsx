@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import { useToggleFavoriteStatus } from "@hooks/dataHooks/crossEntityHooks";
-import { EntityType } from "@types";
+import { LikeableEntityType } from "@types";
 
 import "./FavoriteToggle.scss";
 
 interface Props {
-  liked: boolean;
+  liked?: boolean;
   entityId: string;
-  entity: EntityType;
+  entity: LikeableEntityType;
 }
 
 const FavoriteToggle = ({ liked, entityId, entity }: Props) => {
-  const [isLiked, setIsLiked] = useState<boolean>(liked);
+  const [isLiked, setIsLiked] = useState<boolean>(liked ?? false);
   const { mutate: toggleStatus, isPending } =
     useToggleFavoriteStatus(setIsLiked);
+
+  useEffect(() => {
+    setIsLiked(liked ?? false);
+  }, [liked]);
 
   const handleLikeClick = () => {
     if (isPending) return;

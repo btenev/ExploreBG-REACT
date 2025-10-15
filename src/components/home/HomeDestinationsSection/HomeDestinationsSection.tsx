@@ -8,9 +8,10 @@ interface Props {
     "backgr-img-info": string;
     "btn-view-all": string;
   };
+  sessionUserId: number | null;
 }
 
-const HomeDestinationsSection = ({ destinationContent }: Props) => {
+const HomeDestinationsSection = ({ destinationContent, sessionUserId }: Props) => {
   /*TODO: fetch token from local storage if available*/
   const { data, isLoading, error } = useRandomDestinations();
 
@@ -30,7 +31,7 @@ const HomeDestinationsSection = ({ destinationContent }: Props) => {
 
           {data.map((destination) => (
             <article key={destination.id} className="card hidden">
-              <DestinationCard card={destination} />
+              <DestinationCard card={destination} sessionUserId={sessionUserId}/>
             </article>
           ))}
         </section>

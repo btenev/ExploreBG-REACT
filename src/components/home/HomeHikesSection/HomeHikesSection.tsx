@@ -8,9 +8,10 @@ interface Props {
     "btn-view-all": string;
     "btn-create": string;
   };
+  sessionUserId: number | null;
 }
 
-const HomeHikesSection = ({ hikeContent }: Props) => {
+const HomeHikesSection = ({ hikeContent, sessionUserId }: Props) => {
   /*TODO: fetch token from local storage if available*/
   const { data, isLoading, error } = useRandomHikes();
 
@@ -28,7 +29,7 @@ const HomeHikesSection = ({ hikeContent }: Props) => {
 
           {data.map((hike) => (
             <article key={hike.id} className="card hidden">
-              <HikeCard card={hike} />
+              <HikeCard card={hike} sessionUserId={sessionUserId} />
             </article>
           ))}
         </section>

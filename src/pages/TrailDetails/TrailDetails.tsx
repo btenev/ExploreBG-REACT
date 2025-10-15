@@ -55,7 +55,7 @@ const TrailDetails = () => {
                 entityId={trail.id}
                 photos={trail.images}
                 canEdit={canEdit}
-                entityType="trail"
+                photoEntityType="trail"
                 folder="Trails"
                 onPhotosChange={handlePhotosChange}
               />

@@ -1,40 +1,25 @@
-import { Link } from "react-router-dom";
-
-import defaultImg from "@assets/images/hike-default.jpg";
+import BaseCard from "@components/common/cards";
 import { ITrailCard } from "@types";
+import { getOwnershipFlags } from "@utils/ownershipUtils";
 
 interface Props {
   card: ITrailCard;
+  sessionUserId: number | null;
 }
 
-const TrailCard = ({ card }: Props) => {
+const TrailCard = ({ card, sessionUserId }: Props) => {
+  const { canLike } = getOwnershipFlags(sessionUserId, card.createdById);
   return (
-    <>
-      <figure>
-        {/* {token && (
-            <CAddToOrRemoveFromFavorite
-                liked={card.likedByUser}
-                entityId={card.id}
-                userToken={token}
-            />
-        )} */}
-
-        <img
-          src={card.imageUrl || defaultImg}
-          width={200}
-          height={200}
-          loading="lazy"
-          alt={`Trail image - ${card.trailName}`}
-          title={card.trailName}
-        />
-      </figure>
-
-      <h4>{card.trailName}</h4>
-      <p>
-        {card.trailInfo.slice(0, 145)} {card.trailInfo.length > 145 && "....."}
-      </p>
-      <Link to={`/trails/${card.id}`}>Learn more</Link>
-    </>
+    <BaseCard
+      id={card.id}
+      name={card.trailName}
+      imageUrl={card.imageUrl}
+      likedByUser={card.likedByUser}
+      entity="trail"
+      canLike={canLike}
+      linkTo={`/trails/${card.id}`}
+      description={card.trailInfo}
+    />
   );
 };
 

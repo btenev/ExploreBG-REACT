@@ -8,9 +8,10 @@ interface Props {
     "btn-view-all": string;
     "btn-create": string;
   };
+  sessionUserId: number | null;
 }
 
-const HomeTrailsSection = ({ trailContent }: Props) => {
+const HomeTrailsSection = ({ trailContent, sessionUserId }: Props) => {
   /*TODO: fetch token from local storage if available*/
   const { data, isLoading, error } = useRandomTrails();
 
@@ -28,7 +29,7 @@ const HomeTrailsSection = ({ trailContent }: Props) => {
 
           {data.map((trail) => (
             <article key={trail.id} className="card hidden">
-              <TrailCard card={trail} />
+              <TrailCard card={trail} sessionUserId={sessionUserId} />
             </article>
           ))}
         </section>

@@ -15,22 +15,23 @@ export interface ITrailCard {
   id: number;
   trailName: string;
   trailInfo: string;
-  imageUrl: string;
-  likedByUser: boolean;
+  imageUrl: string | null;
+  likedByUser?: boolean;
+  createdById?: number;
 }
 
 export interface ITrail extends ITrailCard {
   createdBy: IOwner;
   startPoint: string;
   endPoint: string;
-  totalDistance: number;
+  totalDistance: number | null;
   seasonVisited: SeasonEnum;
   waterAvailability: WaterAvailabilityEnum;
   availableHuts: IHut[];
   trailDifficulty: DifficultyLevelEnum;
   activity: SuitableForEnum[];
   comments: IComment[];
-  elevationGained: number;
+  elevationGained: number | null;
   nextTo: string;
   destinations: IDestination[];
   images: TPhoto[];

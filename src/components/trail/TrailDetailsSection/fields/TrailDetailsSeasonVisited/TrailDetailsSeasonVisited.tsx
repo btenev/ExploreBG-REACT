@@ -6,7 +6,7 @@ import { GiBeech, GiFallingLeaf } from "react-icons/gi";
 import "./TrailDetailsSeasonVisited.scss";
 
 interface Props {
-  season?: string | null;
+  season: string;
 }
 
 const seasonIcons: Record<string, JSX.Element> = {

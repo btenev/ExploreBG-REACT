@@ -5,12 +5,19 @@ import {
   HomeDestinationsSection,
   HomeHikesSection,
 } from "@components/home";
+import { useSessionStore } from "@store/sessionStore";
 
 import { homeContent, homeTopImages } from "./homeConetent";
 
 import "./Home.scss";
 
 const Home = () => {
+  const { user, hasHydrated } = useSessionStore();
+
+  if (!hasHydrated) return null;
+
+  const userId = user?.userId ?? null;
+
   return (
     <main className="home">
       <IntersectionObserverComponent />
@@ -48,14 +55,22 @@ const Home = () => {
 
       <HomeDestinationsSection
         destinationContent={homeContent["section-destinations"]}
+        sessionUserId={userId}
       />
 
-      <HomeTrailsSection trailContent={homeContent["section-trails"]} />
+      <HomeTrailsSection
+        trailContent={homeContent["section-trails"]}
+        sessionUserId={userId}
+      />
 
-      <HomeHikesSection hikeContent={homeContent["section-hikes"]} />
+      <HomeHikesSection
+        hikeContent={homeContent["section-hikes"]}
+        sessionUserId={userId}
+      />
 
       <HomeAccommodationsSection
         accommodationContent={homeContent["section-accommodations"]}
+        sessionUserId={userId}
       />
     </main>
   );

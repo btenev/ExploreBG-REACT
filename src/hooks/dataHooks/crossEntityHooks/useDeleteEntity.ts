@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { trailsApi } from "@api/public";
-import { EntityType, BasicDeleteParams } from "@types";
+import { DeletableEntityType, BasicDeleteParams } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 import { capitalize } from "@utils/mixedUtils";
 
@@ -15,7 +15,7 @@ export const useDeleteEntity = (
   const navigate = useNavigate();
 
   const apiMapper: Record<
-    EntityType,
+    DeletableEntityType,
     (params: BasicDeleteParams) => Promise<void>
   > = {
     trail: ({ entityId }) => trailsApi.deleteTrail(entityId),
@@ -23,6 +23,7 @@ export const useDeleteEntity = (
       console.log("Accommodation delete not implemented yet"), // Placeholder for accommodation delete;
     destination: async () =>
       console.log("Destination delete not implemented yet"), // Placeholder for destination delete;
+    hike: async () => console.log("Hike delete not implemented yet"),
   };
 
   return useMutation({

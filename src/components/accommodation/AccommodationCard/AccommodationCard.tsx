@@ -1,34 +1,24 @@
-import defaultImg from "@assets/images/accommodation-default.jpg";
+import BaseCard from "@components/common/cards";
 import { IAccommodationCard } from "@types";
+import { getOwnershipFlags } from "@utils/ownershipUtils";
 
 interface Props {
   card: IAccommodationCard;
+  sessionUserId: number | null;
 }
 
-const AccommodationCard = ({ card }: Props) => {
+const AccommodationCard = ({ card, sessionUserId }: Props) => {
+  const { canLike } = getOwnershipFlags(sessionUserId, card.createdById);
   return (
-    <>
-      <figure>
-        <img
-          src={card.imageUrl || defaultImg}
-          width={200}
-          height={200}
-          loading="lazy"
-          alt="Accommodation image"
-          title={card.accommodationName}
-        />
-      </figure>
-
-      <h4>{card.accommodationName}</h4>
-      {/* <Link
-        href={{
-          pathname: '/accommodations/[accommodationId]',
-          params: { accommodationId: card.id },
-        }}
-      >
-        {t('card-btn')}
-      </Link> */}
-    </>
+    <BaseCard
+      id={card.id}
+      name={card.accommodationName}
+      imageUrl={card.imageUrl}
+      likedByUser={card.likedByUser}
+      entity="accommodation"
+      canLike={canLike}
+      linkTo={`/accommodations/${card.id}`}
+    />
   );
 };
 

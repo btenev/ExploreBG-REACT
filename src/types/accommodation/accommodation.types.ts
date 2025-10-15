@@ -13,17 +13,18 @@ export interface IHut {
 }
 
 export interface IAccommodationCard extends IHut {
-  imageUrl: string;
-  likedByUser: boolean;
+  imageUrl: string | null;
+  likedByUser?: boolean;
+  createdById?: number;
 }
 
 export interface IAccommodation extends IAccommodationCard {
   createdBy: IOwner;
-  phoneNumber: string;
-  site: string;
+  phoneNumber: string | null;
+  site: string | null;
   accommodationInfo: string;
-  bedCapacity: number;
-  pricePerBed: number;
+  bedCapacity: number | null;
+  pricePerBed: number | null;
   availableFood: FoodAvailabilityEnum;
   access: AccessibilityEnum;
   type: AccommodationTypeEnum;

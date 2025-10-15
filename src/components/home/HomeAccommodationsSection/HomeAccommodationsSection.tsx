@@ -8,9 +8,13 @@ interface Props {
     "backgr-img-info": string;
     "btn-view-all": string;
   };
+  sessionUserId: number | null;
 }
 
-const HomeAccommodationsSection = ({ accommodationContent }: Props) => {
+const HomeAccommodationsSection = ({
+  accommodationContent,
+  sessionUserId,
+}: Props) => {
   /*TODO: fetch token from local storage if available*/
   const { data, isLoading, error } = useRandomAccommodations();
 
@@ -30,7 +34,10 @@ const HomeAccommodationsSection = ({ accommodationContent }: Props) => {
 
           {data.map((accommodation) => (
             <article key={accommodation.id} className="card hidden">
-              <AccommodationCard card={accommodation} />
+              <AccommodationCard
+                card={accommodation}
+                sessionUserId={sessionUserId}
+              />
             </article>
           ))}
 

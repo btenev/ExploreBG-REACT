@@ -1,64 +1,33 @@
-import defaultImg from "@assets/images/destination-default.jpg";
+import BaseCard from "@components/common/cards";
 import { IDestinationCard } from "@types";
+import { getOwnershipFlags } from "@utils/ownershipUtils";
 
 interface Props {
   card: IDestinationCard;
+  sessionUserId: number | null;
 }
 
-const DestinationCard = ({ card }: Props) => {
+const DestinationCard = ({ card, sessionUserId }: Props) => {
+  console.log({
+    sessionUserId,
+    createdById: card.createdById,
+    types: [typeof sessionUserId, typeof card.createdById],
+    likedBuser: card.likedByUser,
+  });
+  const { canLike } = getOwnershipFlags(sessionUserId, card.createdById);
+
   return (
-    <>
-      <figure>
-        <img
-          src={card.imageUrl || defaultImg}
-          width={200}
-          height={200}
-          loading="lazy"
-          alt={card.destinationName}
-          title={card.destinationName}
-        />
-      </figure>
-      <h4>{card.destinationName}</h4>
-      {card.nextTo && <p>close to: {card.nextTo}</p>}
-    </>
+    <BaseCard
+      id={card.id}
+      name={card.destinationName}
+      imageUrl={card.imageUrl}
+      likedByUser={card.likedByUser}
+      entity="destination"
+      canLike={canLike}
+      linkTo={`/destinations/${card.id}`}
+      subtitle={card.nextTo ? `close to: ${card.nextTo}` : undefined}
+    />
   );
 };
 
 export default DestinationCard;
-/*TODO: add link*/
-/*
-
-interface DestinationCardProps {
-    card: IDestinationCard
-}
-
-const DestinationCard: React.FC<DestinationCardProps> = ({ card }) => {
-    const t = useTranslations('cards');
-
-    return (
-        <>
-            <figure>
-                <Image
-                    src={card.imageUrl || '/images/destination-default.jpg'}
-                    width={200} height={200}
-                    loading="lazy" alt={card.destinationName}
-                    title={card.destinationName} priority={false}
-                />
-            </figure>
-
-            <h4>{card.destinationName}</h4>
-            {card.nextTo && <p>close to: {card.nextTo}</p>}
-            <Link href={{
-                pathname: '/destinations/[destinationId]',
-                params: { destinationId: card.id }
-            }}>
-                {t('card-btn')}
-            </Link>
-        </>
-    );
-};
-
-export default DestinationCard;
-
-
-*/
