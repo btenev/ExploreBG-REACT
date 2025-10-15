@@ -1,6 +1,10 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState } from "react";
 
-import './UserCreatedItems.scss';
+import "./UserCreatedItems.scss";
+
+interface HasId {
+  id: string | number;
+}
 
 interface Props<T> {
   items: T[];
@@ -9,7 +13,12 @@ interface Props<T> {
   renderItem: (item: T) => ReactNode;
 }
 
-const UserCreatedItems = <T,>({ items, title, itemsPerPage = 3, renderItem }: Props<T>) => {
+const UserCreatedItems = <T extends HasId>({
+  items,
+  title,
+  itemsPerPage = 3,
+  renderItem,
+}: Props<T>) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const endIndex = currentIndex + itemsPerPage;
@@ -38,25 +47,25 @@ const UserCreatedItems = <T,>({ items, title, itemsPerPage = 3, renderItem }: Pr
           <button
             onClick={onPrevClick}
             disabled={currentIndex == 0}
-            className={`user-items-section${currentIndex != 0 ? '__active-btn' : ''}`}
+            className={`user-items-section${currentIndex != 0 ? "__active-btn" : ""}`}
             aria-label={`Previous ${title}s`}
           >
-            {'<'}
+            {"<"}
           </button>
           <button
             onClick={onNextClick}
             disabled={endIndex >= items.length}
-            className={`user-items-section${endIndex < items.length ? '__active-btn' : ''}`}
+            className={`user-items-section${endIndex < items.length ? "__active-btn" : ""}`}
             aria-label={`Next ${title}s`}
           >
-            {'>'}
+            {">"}
           </button>
         </>
       )}
 
       <div className="user-items-section__created-items">
-        {itemsForDisplay.map((item, index) => (
-          <article key={index} className="card">
+        {itemsForDisplay.map((item) => (
+          <article key={item.id} className="card">
             {renderItem(item)}
           </article>
         ))}

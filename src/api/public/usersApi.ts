@@ -1,6 +1,12 @@
 import { PUBLIC_ROUTES } from "@constants";
 import { genderEnumSchema } from "@schemas/user";
-import { IHikeCard, ITrailCard, GenderEnum } from "@types";
+import {
+  IHikeCard,
+  ITrailCard,
+  GenderEnum,
+  IAccommodationCard,
+  IDestinationCard,
+} from "@types";
 import { safeParseOrThrow } from "@utils/zodHelpers";
 
 import { ApiClient } from "../base";
@@ -8,21 +14,35 @@ import { ApiClient } from "../base";
 const apiClient = new ApiClient();
 const baseUrl = "/users";
 
-interface MyProfileResponse {
+interface UserProfileResponse {
+  id: number;
+  username: string;
+  gender: GenderEnum;
+  birthdate: string | null;
+  imageUrl: string | null;
+  userInfo: string | null;
+  createdHikes: IHikeCard[];
+  createdTrails: ITrailCard[];
+  createdAccommodations: IAccommodationCard[];
+  createdDestinations: IDestinationCard[];
+}
+
+interface UserOwnProfileResponse {
   id: number;
   username: string;
   email: string;
   gender: GenderEnum;
-  birthdate: string;
-  imageUrl: string;
-  userInfo: string;
+  birthdate: string | null;
+  imageUrl: string | null;
+  userInfo: string | null;
   createdHikes: IHikeCard[];
   createdTrails: ITrailCard[];
+  createdAccommodations: IAccommodationCard[];
+  createdDestinations: IDestinationCard[];
 }
 
 export type UserFieldRequestMap = {
   username: { username: string };
-  email: { email: string };
   birthdate: { birthdate: string | null };
   gender: { gender: GenderEnum };
   userInfo: { userInfo: string | null };
@@ -43,9 +63,9 @@ export type UserFieldResponseMap = {
 };
 
 export const usersApi = {
-  getMyProfile: async (): Promise<MyProfileResponse> => {
+  getMyProfile: async (): Promise<UserOwnProfileResponse> => {
     try {
-      const response = await apiClient.get<MyProfileResponse>(
+      const response = await apiClient.get<UserOwnProfileResponse>(
         PUBLIC_ROUTES.user.myProfile
       );
       const gender = genderConverter(response.gender);
@@ -56,9 +76,9 @@ export const usersApi = {
     }
   },
 
-  getUserProfile: async (userId: string): Promise<MyProfileResponse> => {
+  getUserProfile: async (userId: string): Promise<UserProfileResponse> => {
     try {
-      const response = await apiClient.get<MyProfileResponse>(
+      const response = await apiClient.get<UserProfileResponse>(
         PUBLIC_ROUTES.user.getProfile.build(userId)
       );
       const gender = genderConverter(response.gender);

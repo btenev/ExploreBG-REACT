@@ -1,3 +1,5 @@
+import { AccommodationCard } from "@components/accommodation";
+import { DestinationCard } from "@components/destination";
 import { HikeCard } from "@components/hike";
 import { TrailCard } from "@components/trail";
 import {
@@ -24,6 +26,7 @@ const MyProfile = () => {
   if (!data) return <p>Resource not found!</p>;
 
   const {
+    id,
     imageUrl,
     username,
     userInfo,
@@ -32,6 +35,8 @@ const MyProfile = () => {
     birthdate,
     createdHikes,
     createdTrails,
+    createdAccommodations,
+    createdDestinations,
   } = data;
 
   return (
@@ -57,7 +62,7 @@ const MyProfile = () => {
         <UserCreatedItems
           items={createdHikes}
           title="hike"
-          renderItem={(hike) => <HikeCard card={hike} />}
+          renderItem={(hike) => <HikeCard card={hike} sessionUserId={id} />}
         />
       )}
 
@@ -65,7 +70,27 @@ const MyProfile = () => {
         <UserCreatedItems
           items={createdTrails}
           title="trail"
-          renderItem={(trail) => <TrailCard card={trail} />}
+          renderItem={(trail) => <TrailCard card={trail} sessionUserId={id} />}
+        />
+      )}
+
+      {createdAccommodations?.length > 0 && (
+        <UserCreatedItems
+          items={createdAccommodations}
+          title="accommodation"
+          renderItem={(accommodation) => (
+            <AccommodationCard card={accommodation} sessionUserId={id} />
+          )}
+        />
+      )}
+
+      {createdDestinations?.length > 0 && (
+        <UserCreatedItems
+          items={createdDestinations}
+          title="destination"
+          renderItem={(destination) => (
+            <DestinationCard card={destination} sessionUserId={id} />
+          )}
         />
       )}
     </main>

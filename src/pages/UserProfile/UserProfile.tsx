@@ -1,14 +1,17 @@
+import { useEffect } from "react";
 import { FaFemale, FaMale, FaUserNinja } from "react-icons/fa";
-import { HiOutlineMail } from "react-icons/hi";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import defaultUserImg from "@assets/images/user-profile-pic.png";
+import { AccommodationCard } from "@components/accommodation";
 import { LoadingScreenWrapper, NotFoundModal } from "@components/common";
+import { DestinationCard } from "@components/destination";
 import { HikeCard } from "@components/hike";
 import { TrailCard } from "@components/trail";
 import { UserCreatedItems } from "@components/user/profile";
 import { useGetUserProfile } from "@hooks/dataHooks/userHooks";
+import { useSessionStore } from "@store/sessionStore";
 import { formatDate } from "@utils/dateUtils";
 import { isApiError } from "@utils/errorHandlers";
 
@@ -16,42 +19,53 @@ import "./UserProfile.scss";
 
 const UserProfile = () => {
   const { userId } = useParams<{ userId: string }>();
-
   const numericId = Number(userId);
-  if (!userId || isNaN(numericId))
-    return (
-      <NotFoundModal message="Oops! We couldn't find that user. Please check the link and try again." />
-    );
+  const isValid = !!userId && !isNaN(numericId);
+  const navigate = useNavigate();
+  const { user: sessionUser, hasHydrated } = useSessionStore();
+  const sessionUserId = sessionUser?.userId ?? null;
+
+  useEffect(() => {
+    if (!hasHydrated) return;
+
+    if (sessionUser && sessionUser.userId === numericId) {
+      navigate("/users/my-profile", { replace: true });
+    }
+  }, [sessionUser, numericId, navigate, hasHydrated]);
 
   const {
     data: user,
     error,
     isLoading,
-  } = useGetUserProfile(userId); /*TODO: update logic*/
+  } = useGetUserProfile(userId || "", isValid);
+
+  if (!isValid)
+    return (
+      <NotFoundModal message="Oops! We couldn't find that user. Please check the link and try again." />
+    );
 
   if (isLoading) return <LoadingScreenWrapper />;
 
-  if (error && isApiError(error) && error.status === 404) {
+  if (error && isApiError(error) && error.status === 404)
     return (
       <NotFoundModal message="The user you're looking for was not found." />
     );
-  }
 
-  if (!user) {
+  if (!user)
     return (
       <NotFoundModal message="The  user you're looking for was not found." />
     );
-  }
 
   const {
     username,
-    email,
     gender,
     birthdate,
     userInfo,
     imageUrl,
     createdHikes,
     createdTrails,
+    createdAccommodations,
+    createdDestinations,
   } = user;
 
   return (
@@ -61,9 +75,6 @@ const UserProfile = () => {
 
         <section>
           <aside>
-            <p>
-              <HiOutlineMail /> <strong>{email}</strong>
-            </p>
             {gender ? (
               <p>
                 {gender === "Male" && <FaMale />}
@@ -111,7 +122,9 @@ const UserProfile = () => {
         <UserCreatedItems
           items={createdHikes}
           title="hike"
-          renderItem={(hike) => <HikeCard card={hike} />}
+          renderItem={(hike) => (
+            <HikeCard card={hike} sessionUserId={sessionUserId} />
+          )}
         />
       )}
 
@@ -119,7 +132,32 @@ const UserProfile = () => {
         <UserCreatedItems
           items={createdTrails}
           title="trail"
-          renderItem={(trail) => <TrailCard card={trail} />}
+          renderItem={(trail) => (
+            <TrailCard card={trail} sessionUserId={sessionUserId} />
+          )}
+        />
+      )}
+
+      {createdAccommodations?.length > 0 && (
+        <UserCreatedItems
+          items={createdAccommodations}
+          title="accommodation"
+          renderItem={(accommodation) => (
+            <AccommodationCard
+              card={accommodation}
+              sessionUserId={sessionUserId}
+            />
+          )}
+        />
+      )}
+
+      {createdDestinations?.length > 0 && (
+        <UserCreatedItems
+          items={createdDestinations}
+          title="destination"
+          renderItem={(destination) => (
+            <DestinationCard card={destination} sessionUserId={sessionUserId} />
+          )}
         />
       )}
     </main>
