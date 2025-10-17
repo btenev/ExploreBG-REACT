@@ -34,15 +34,17 @@ const EntityDetailsNav = ({
         />
       )}
       <ul>
-        <li>
-          <a
-            href="#photos"
-            className={`entity-details__nav-link ${!imageAvailable ? "disabled" : ""}`}
-            tabIndex={imageAvailable ? 0 : -1}
-          >
-            photos
-          </a>
-        </li>
+        {imageAvailable && (
+          <li>
+            <a
+              href="#photos"
+              className={`entity-details__nav-link ${!imageAvailable ? "disabled" : ""}`}
+              tabIndex={imageAvailable ? 0 : -1}
+            >
+              photos
+            </a>
+          </li>
+        )}
 
         {gpxFileAvailable && (
           <li>

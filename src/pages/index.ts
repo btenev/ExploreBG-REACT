@@ -11,3 +11,4 @@ export { default as WaitingApproval } from "./WaitingAppoval";
 export { default as TrailReview } from "./TrailReview";
 export { default as AccommodationDetails } from "./AccommodationDetails";
 export { default as DestinationDetails } from "./DestinationDetails";
+export { default as HikeDetails } from "./HikeDetails";
