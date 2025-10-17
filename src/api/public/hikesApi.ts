@@ -1,19 +1,22 @@
+import { ApiClient } from "@api/base";
 import { PUBLIC_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import {
   IComment,
+  IHike,
   IHikeCard,
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
 } from "@types";
-
-import { ApiClient } from "../base";
 
 const apiClient = new ApiClient();
 
 export const hikesApi = {
   get4RandomHikes: (): Promise<IHikeCard[]> =>
     apiClient.get(PUBLIC_ROUTES.hike.random),
+
+  getHike: (hikeId: string): Promise<IHike> =>
+    apiClient.get(PUBLIC_ROUTES.hike.details.build(hikeId)),
 
   toggleFavoriteStatus: (
     hikeId: string,

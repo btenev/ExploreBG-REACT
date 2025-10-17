@@ -92,6 +92,11 @@ export const PUBLIC_ROUTES = {
   hike: {
     random: `${HIKES}/random` as const, // simple
 
+    details: {
+      path: `${HIKES}/:hikeId` as const, // dynamic
+      build: (hikeId: string | number) => `${HIKES}/${hikeId}`,
+    },
+
     favoriteStatus: (hikeId: string | number) =>
       `${HIKES}/${hikeId}/like` as const,
 

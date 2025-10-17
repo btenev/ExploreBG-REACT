@@ -13,6 +13,8 @@ export interface IHikeCard {
 }
 
 export interface IHike extends IHikeCard {
+  startPoint: string;
+  endPoint: string;
   nextTo: string;
   createdBy: IOwner;
   hikingTrail: ITrail | null;
