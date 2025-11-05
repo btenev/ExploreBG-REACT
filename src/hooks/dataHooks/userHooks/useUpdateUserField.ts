@@ -1,5 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
-import { Dispatch, SetStateAction } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -11,15 +10,15 @@ import {
 import { useSessionStore } from "@store/sessionStore";
 import { IUserSession } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
-import { capitalize } from "@utils/mixedUtils";
+import { capitalize, toKebabOrSpace } from "@utils/mixedUtils";
 
 type ExtractInnerValue<K extends keyof UserFieldResponseMap> =
   UserFieldResponseMap[K][keyof UserFieldResponseMap[K]];
 
 export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
-  field: K,
-  setStateValue?: Dispatch<SetStateAction<ExtractInnerValue<K>>>
+  field: K
 ) => {
+  const queryClient = useQueryClient();
   const store = useSessionStore((state) => state.updateUserFields);
   const clearSession = useSessionStore((state) => state.clearSession);
   const navigate = useNavigate();
@@ -45,7 +44,9 @@ export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
       }
 
       if (!data) {
-        toast.error(`Failed to update ${field}. Something went wrong.`);
+        toast.error(
+          `Failed to update ${toKebabOrSpace(field, false)}. Something went wrong.`
+        );
         return;
       }
 
@@ -53,11 +54,16 @@ export const useUpdateUserField = <K extends keyof UserFieldRequestMap>(
 
       if (sessionUpdatableFields.includes(field as keyof IUserSession)) {
         store({ [field]: value }); // Update session store with the new data
-      } else if (setStateValue) {
-        setStateValue(value);
       }
 
-      toast.success(`You successfully updated your ${field}`);
+      queryClient.setQueryData(["myProfile"], (old: any) => ({
+        ...old,
+        ...data,
+      }));
+
+      toast.success(
+        `You successfully updated your ${toKebabOrSpace(field, false)}`
+      );
     },
     onError: handleApiError,
   });

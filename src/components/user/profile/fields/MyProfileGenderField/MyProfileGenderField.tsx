@@ -1,117 +1,68 @@
-import { useEffect, useRef, useState } from "react";
-import { FaEdit, FaFemale, FaMale } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { JSX } from "react";
+import { FaFemale, FaMale } from "react-icons/fa";
 
-import { SubmitButton } from "@components/common";
+import { ProfileEditableFieldForm } from "@components/common";
 import { useUpdateUserField } from "@hooks/dataHooks/userHooks";
 import { useGenderEnums } from "@hooks/dataHooks/utilityHooks";
-import useCloseOnEscapeTabAndClickOutside from "@hooks/uiHooks/useCloseOnEscapeTabAndClickOutside";
-import { genderEnumSchema } from "@schemas/user";
+import { GenderDto, useGenderForm } from "@hooks/formHooks/userHooks";
 import { GenderEnum } from "@types";
+
+const genderIconMapper: Partial<Record<GenderEnum, JSX.Element>> = {
+  Male: <FaMale />,
+  Female: <FaFemale />,
+  Other: <></>,
+};
 
 interface Props {
   gender: GenderEnum;
 }
 
 const MyProfileGenderField = ({ gender }: Props) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [options, setOptions] = useState<GenderEnum[]>([]);
-  const [genderValue, setGenderValue] = useState<GenderEnum>(gender);
-  const [tempGenderValue, setTempGenderValue] = useState<GenderEnum>(gender);
+  const { data: enumOptions, isLoading } = useGenderEnums();
 
-  const {
-    data: server,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  } = useGenderEnums();
-  const { mutate: updateGender, isPending: isUpdatePending } =
-    useUpdateUserField("gender", setGenderValue);
+  const mutation = useUpdateUserField("gender");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (tempGenderValue === genderValue) {
-      setIsVisible(false);
-      return;
-    }
-
-    updateGender({ gender: tempGenderValue });
-    setIsVisible(false);
-  };
-
-  useEffect(() => {
-    if (server) {
-      setOptions(server.gender);
-    }
-  }, [server]);
-
-  const formRef = useRef<HTMLFormElement>(null);
-  useCloseOnEscapeTabAndClickOutside(formRef, () => setIsVisible(false));
-
-  if (isLoading) {
-    return <p>Loading gender options...</p>; // Shows only while initially loading
-  }
-
-  if (isFetching) {
-    return <p>Refreshing gender options...</p>; // Shows when refetching or fetching in the background
-  }
-
-  if (isError) {
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : "Failed to load gender options. Please try again later.";
-    toast.error(errorMessage);
-    return <p>{errorMessage}</p>;
-  }
-
+  const genderArray = enumOptions?.gender ?? [];
   return (
-    <div>
-      <p style={{ opacity: isVisible ? "0" : "1" }}>
-        {(genderValue == "Male" && <FaMale />) ||
-          (genderValue == "Female" && <FaFemale />)}
-        Gender:&nbsp; <strong>{genderValue ?? "....."}</strong>
-        <FaEdit className="edit" onClick={() => setIsVisible(!isVisible)} />
-      </p>
+    <ProfileEditableFieldForm<GenderDto>
+      label="Gender"
+      initialValue={{ gender: gender }}
+      useFormHook={useGenderForm}
+      mutation={mutation}
+      renderValue={(val, label) => (
+        <>
+          {genderIconMapper[val.gender]}
+          {label}:&nbsp; <strong>{val.gender}</strong>
+        </>
+      )}
+      renderInput={(register, id) => {
+        if (isLoading) {
+          return (
+            <select id={id} disabled>
+              <option>Loading gender options...</option>
+            </select>
+          );
+        }
 
-      <form
-        noValidate
-        ref={formRef}
-        onSubmit={handleSubmit}
-        style={{ display: isVisible ? "flex" : "none" }}
-      >
-        <select
-          id="gender"
-          value={tempGenderValue ?? ""}
-          onChange={(e) => {
-            const value = e.target.value;
-            const result = genderEnumSchema.safeParse(value);
-            if (result.success) {
-              setTempGenderValue(result.data);
-            } else {
-              const message =
-                import.meta.env.MODE !== "production"
-                  ? `Invalid gender selection - ${value}`
-                  : "Invalid selection. Please choose a valid gender.";
-              toast.error(message);
-            }
-          }}
-          className="gender-field"
-        >
-          {options.map((f) => (
-            <option key={f} value={f}>
-              {f}
-            </option>
-          ))}
-        </select>
+        if (genderArray.length === 0) {
+          return (
+            <select id={id} disabled>
+              <option>No gender options available</option>
+            </select>
+          );
+        }
 
-        <SubmitButton isSubmitting={isUpdatePending} buttonName="Change" />
-        <button type="button" onClick={() => setIsVisible(!isVisible)}>
-          Cancel
-        </button>
-      </form>
-    </div>
+        return (
+          <select id={id} {...register("gender")}>
+            {genderArray.map((v) => (
+              <option key={v} value={v}>
+                {v}
+              </option>
+            ))}
+          </select>
+        );
+      }}
+    />
   );
 };
 

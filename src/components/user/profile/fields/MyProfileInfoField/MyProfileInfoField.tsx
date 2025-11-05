@@ -11,48 +11,50 @@ interface Props {
 }
 
 const MyProfileInfoField = ({ userInfo }: Props) => {
-  const [infoValue, setInfoValue] = useState<string | null>(userInfo);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useUserInfoForm();
-  const { mutate: updateUserInfo, isPending } = useUpdateUserField(
-    "userInfo",
-    setInfoValue
-  );
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const { handleSubmit, register, formState, reset, getValues } =
+    useUserInfoForm({ userInfo });
+  const { isDirty, errors } = formState;
+
+  const { mutate: updateUserInfo, isPending } = useUpdateUserField("userInfo");
 
   const onSubmit = (data: UserInfoDto) => {
-    if (data.userInfo === infoValue) {
-      setIsVisible(false);
+    if (!isDirty) {
+      setIsEditing(false);
       return;
     }
 
-    if (data.userInfo === "" || data.userInfo === undefined) {
-      setInfoValue(null);
-      updateUserInfo({ userInfo: null });
-      setIsVisible(false);
-      return;
-    }
+    const normilizedData = {
+      ...data,
+      userInfo:
+        data.userInfo && data.userInfo.trim() !== ""
+          ? data.userInfo.trim()
+          : null,
+    };
 
-    updateUserInfo({ userInfo: data.userInfo });
-    setIsVisible(false);
+    updateUserInfo(normilizedData, {
+      onSuccess: (response) => {
+        reset({ ...getValues(), ...response });
+        requestAnimationFrame(() => setIsEditing(false));
+      },
+    });
+    setIsEditing(false);
   };
 
   return (
     <div>
       <p className="info-text">
-        {infoValue ?? (
+        {getValues("userInfo") ?? (
           <>
             <span>My info: </span>
             <strong>.........</strong>
           </>
         )}
-        <FaEdit className="edit" onClick={() => setIsVisible(!isVisible)} />
+        <FaEdit className="edit" onClick={() => setIsEditing(!isEditing)} />
       </p>
 
-      {isVisible && (
+      {isEditing && (
         <CommonModal>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -62,14 +64,13 @@ const MyProfileInfoField = ({ userInfo }: Props) => {
             <textarea
               id="userInfo"
               {...register("userInfo")}
-              defaultValue={infoValue ?? ""}
               // cols={30} rows={10}
               placeholder=" ........"
             />
 
             <div>
               <SubmitButton isSubmitting={isPending} buttonName="Change" />
-              <button type="button" onClick={() => setIsVisible(!isVisible)}>
+              <button type="button" onClick={() => setIsEditing(!isEditing)}>
                 Cancel
               </button>
             </div>

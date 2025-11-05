@@ -2,6 +2,7 @@ import { ChangeEvent, useRef } from "react";
 import { toast } from "react-toastify";
 
 import defaultUserImg from "@assets/images/user-profile-pic.png";
+import { LoadingSpinner } from "@components/common";
 import { useUpdateUserPhoto } from "@hooks/dataHooks/userHooks";
 import { compressImage } from "@utils/imageCompressor";
 import { useUserImage } from "@utils/sessionUtils";
@@ -9,12 +10,12 @@ import { useUserImage } from "@utils/sessionUtils";
 import "./MyProfilePhotoField.scss";
 
 interface Props {
-  initialImageUrl: string | null;
+  imageUrl: string | null;
 }
 
-const MyProfilePhotoField = ({ initialImageUrl }: Props) => {
+const MyProfilePhotoField = ({ imageUrl }: Props) => {
   const { mutate: userPhoto, isPending } = useUpdateUserPhoto();
-  const userImage = useUserImage() ?? initialImageUrl ?? defaultUserImg;
+  const userImage = useUserImage() ?? imageUrl ?? defaultUserImg;
   const lastUploadedFileRef = useRef<File | null>(null);
 
   const changePhoto = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,14 +54,18 @@ const MyProfilePhotoField = ({ initialImageUrl }: Props) => {
         tabIndex={0}
         aria-label="Upload profile photo"
       >
-        <img
-          src={userImage}
-          width={200}
-          height={200}
-          alt="User photo"
-          loading="eager"
-          title="User photo"
-        />
+        {isPending ? (
+          <LoadingSpinner uploadOrDelete="Uploading file..." />
+        ) : (
+          <img
+            src={userImage}
+            width={200}
+            height={200}
+            alt="User photo"
+            loading="eager"
+            title="User photo"
+          />
+        )}
       </label>
 
       <input

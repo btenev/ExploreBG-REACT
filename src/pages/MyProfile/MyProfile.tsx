@@ -1,29 +1,35 @@
 import { AccommodationCard } from "@components/accommodation";
+import { LoadingScreenWrapper, NotFoundModal } from "@components/common";
 import { DestinationCard } from "@components/destination";
 import { HikeCard } from "@components/hike";
 import { TrailCard } from "@components/trail";
 import {
   MyProfilePhotoField,
-  MyProfileUsernameField,
-  MyProfileBirthdateField,
-  MyProfileEmailField,
-  MyProfileGenderField,
   MyProfileInfoField,
   MyProfileButtons,
   UserCreatedItems,
+  MyProfileEmailField,
+  MyProfileUsernameField,
+  MyProfileGenderField,
+  MyProfileBirthdateField,
 } from "@components/user/profile";
 import { useMyProfile } from "@hooks/dataHooks/userHooks";
+import { isApiError } from "@utils/errorHandlers";
 
 import "./MyProfile.scss";
 
 const MyProfile = () => {
   const { data, isLoading, error } = useMyProfile();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingScreenWrapper />;
 
-  if (error) throw error;
+  if (error && isApiError(error) && error.status === 404) {
+    return <NotFoundModal message={"Your profile was not found."} />;
+  }
 
-  if (!data) return <p>Resource not found!</p>;
+  if (!data) {
+    return <NotFoundModal message={"Your profile was not found."} />;
+  }
 
   const {
     id,
@@ -45,10 +51,10 @@ const MyProfile = () => {
         <h1>My Profile</h1>
 
         <section>
-          <MyProfilePhotoField initialImageUrl={imageUrl} />
+          <MyProfilePhotoField imageUrl={imageUrl} />
 
-          <MyProfileUsernameField initialUsername={username} />
-          <MyProfileEmailField initialEmail={email} />
+          <MyProfileUsernameField username={username} />
+          <MyProfileEmailField email={email} />
           <MyProfileGenderField gender={gender} />
           <MyProfileBirthdateField birthdate={birthdate} />
 

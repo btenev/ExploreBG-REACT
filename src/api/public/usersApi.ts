@@ -43,6 +43,7 @@ interface UserOwnProfileResponse {
 
 export type UserFieldRequestMap = {
   username: { username: string };
+  email: { email: string };
   birthdate: { birthdate: string | null };
   gender: { gender: GenderEnum };
   userInfo: { userInfo: string | null };

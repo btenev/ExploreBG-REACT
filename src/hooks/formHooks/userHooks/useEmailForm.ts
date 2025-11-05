@@ -6,6 +6,7 @@ import { useFormWithSchema } from "../base";
 
 const emailSchema = registerBaseSchema.pick({ email: true });
 
-export const useEmailForm = () => useFormWithSchema(emailSchema);
+export const useEmailForm = (defaultValue?: EmailDto) =>
+  useFormWithSchema(emailSchema, defaultValue);
 
 export type EmailDto = z.infer<typeof emailSchema>;

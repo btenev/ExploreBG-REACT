@@ -9,7 +9,7 @@ export const userInfoSchema = z.object({
       userInfoMaxLength,
       `Your user info can be a maximum of ${userInfoMaxLength} characters long.`
     )
-    .optional(),
+    .nullable(),
 });
 
 export type UserInfoDto = z.infer<typeof userInfoSchema>;

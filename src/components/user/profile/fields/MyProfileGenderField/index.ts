@@ -1,2 +1,2 @@
-import MyProfileGenderField from './MyProfileGenderField';
+import MyProfileGenderField from "./MyProfileGenderField";
 export default MyProfileGenderField;

@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 import { imagesApi } from "@api/public";
@@ -7,6 +7,7 @@ import { ApiError } from "@types";
 
 export const useUpdateUserPhoto = () => {
   const store = useSessionStore((state) => state.updateUserFields);
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: ["userPhoto"],
@@ -16,6 +17,11 @@ export const useUpdateUserPhoto = () => {
         store({
           userImage: data.imageUrl,
         });
+
+        queryClient.setQueryData(["myProfile"], (old: any) => ({
+          ...old,
+          ...data,
+        }));
         toast.success("You successfully updated your profile photo!");
       } else {
         toast.error("Image upload succeeded, but no image URL returned.");

@@ -4,3 +4,4 @@ export { default as EditableTextareaFieldForm } from "./EditableTextareaFieldFor
 export { default as FormFieldInfo } from "./FormFieldInfo";
 export { default as FormInputSearch } from "./FormInputSearch";
 export { default as CustomSelect } from "./CustomSelect";
+export { default as ProfileEditableFieldForm } from "./ProfileEditableFieldForm";

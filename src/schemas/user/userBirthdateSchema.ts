@@ -8,17 +8,24 @@ export const userBirthdateSchema = z.object({
       .regex(/^\d{4}-\d{2}-\d{2}$/, {
         message: "Please enter the date in the format yyyy-MM-dd.",
       })
-      .refine(isValidPastDate, { message: "Please enter a date in the past." })
+      .refine(isValidPastDate, {
+        message: "Please enter a date in the past.",
+      })
       .nullable()
   ),
 });
 
-export type UserBithdateDto = z.infer<typeof userBirthdateSchema>;
+export type UserBirthdateDto = z.infer<typeof userBirthdateSchema>;
 
-// Utility to check if a string is a valid "yyyy-MM-dd" date and in the past
+// Utility to ensure the date string represents a past date
 function isValidPastDate(value: string | null): boolean {
-  if (!value) return true; // Allow null/undefined
-  const date = new Date(value);
+  if (!value) return true; // Allow null for optional field
+  const date = new Date(value + "T00:00:00"); // ensure consistent day comparison
   const today = new Date();
-  return !isNaN(date.getTime()) && date < today;
+  const todayOnly = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  return !isNaN(date.getTime()) && date < todayOnly;
 }

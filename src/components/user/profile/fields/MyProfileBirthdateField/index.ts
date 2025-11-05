@@ -1,2 +1,2 @@
-import MyProfileBirthdateField from './MyProfileBirthdateField';
+import MyProfileBirthdateField from "./MyProfileBirthdateField";
 export default MyProfileBirthdateField;

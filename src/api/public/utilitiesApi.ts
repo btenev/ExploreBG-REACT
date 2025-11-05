@@ -46,11 +46,14 @@ export const utilitiesApi = {
     const response = await apiClient.get<RegisterEnumsResponse>(
       PUBLIC_ROUTES.utilities.registerEnums
     );
-    return safeParseOrThrow(
+
+    const parsed = safeParseOrThrow(
       registerEnumsSchema,
       response,
       "Failed to load gender options. Please try again later."
     );
+
+    return { gender: parsed.gender ?? [] };
   },
 
   getTrailEnums: async (): Promise<TrailEnumsResponse> => {
