@@ -3,6 +3,7 @@ import {
   EntityDetailsWrapper,
   ImportantNotice,
 } from "@components/common";
+import HikeDetailsSection from "@components/hike/HikeDetailsSection";
 import { useGetHike } from "@hooks/dataHooks/hikeHooks";
 
 import "./HikeDetails.scss";
@@ -14,7 +15,7 @@ const HikeDetails = () => {
       paramName="hikeId"
       fetchHook={useGetHike}
     >
-      {(hike, canEdit, userId) => (
+      {(hike, canEdit, userId, canShowFavorite) => (
         <main className="hike-details">
           <h1>{`${hike.startPoint} - ${hike.endPoint} - hike details`}</h1>
 
@@ -27,6 +28,12 @@ const HikeDetails = () => {
             entityId={hike.id.toString()}
             imageAvailable={false}
             gpxFileAvailable={false}
+          />
+
+          <HikeDetailsSection
+            hike={hike}
+            canEdit={canEdit}
+            canShowFavorite={canShowFavorite}
           />
         </main>
       )}

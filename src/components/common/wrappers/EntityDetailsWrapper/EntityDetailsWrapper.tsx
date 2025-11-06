@@ -5,7 +5,7 @@ import { NotFoundModal, LoadingScreenWrapper } from "@components/common";
 import { EntityType } from "@types";
 import { isApiError } from "@utils/errorHandlers";
 import { isOwner } from "@utils/mixedUtils";
-import { getUserId } from "@utils/sessionUtils";
+import { useSessionInfo } from "@utils/sessionUtils";
 
 type UseDetailsOptions<T> = {
   paramName: string; // e.g. "trailId" | "accommodationId"
@@ -15,7 +15,12 @@ type UseDetailsOptions<T> = {
     isLoading: boolean;
   };
   entityType: EntityType;
-  children: (data: T, canEdit: boolean, userId: number | null) => JSX.Element;
+  children: (
+    data: NonNullable<T>,
+    canEdit: boolean,
+    userId: number | null,
+    canShowFavourite: boolean
+  ) => JSX.Element;
 };
 
 const EntityDetailsWrapper = <T,>({
@@ -29,6 +34,8 @@ const EntityDetailsWrapper = <T,>({
   const id = params[paramName];
   const numericId = Number(id);
 
+  const { hasHydrated, userId } = useSessionInfo();
+
   if (!id || isNaN(numericId)) {
     return (
       <NotFoundModal
@@ -39,7 +46,7 @@ const EntityDetailsWrapper = <T,>({
 
   const { data, error, isLoading } = fetchHook(id);
 
-  if (isLoading) return <LoadingScreenWrapper />;
+  if (isLoading || !hasHydrated) return <LoadingScreenWrapper />;
 
   if (error && isApiError(error) && error.status === 404) {
     return (
@@ -57,11 +64,11 @@ const EntityDetailsWrapper = <T,>({
     );
   }
 
-  const userId = getUserId();
-
   const canEdit = userId !== null && isOwner(data, userId);
 
-  return <>{children(data, canEdit, userId)}</>;
+  const canShowFavorite = userId !== null && !canEdit;
+
+  return <>{children(data, canEdit, userId, canShowFavorite)}</>;
 };
 
 export default EntityDetailsWrapper;

@@ -25,7 +25,7 @@ const DestinationDetails = () => {
       paramName="destinationId"
       fetchHook={useGetDestination}
     >
-      {(destination, canEdit, userId) => {
+      {(destination, canEdit, userId, canShowFavorite) => {
         if (photoCount === 0 && destination.images.length > 0) {
           setPhotoCount(destination.images.length);
         }
@@ -48,6 +48,7 @@ const DestinationDetails = () => {
             <DestinationDetailsSection
               candEdit={canEdit}
               destination={destination}
+              canShowFavorite={canShowFavorite}
             />
 
             <span id="photos" />
@@ -56,7 +57,7 @@ const DestinationDetails = () => {
                 entityId={destination.id}
                 photos={destination.images}
                 canEdit={canEdit}
-                entityType="destination"
+                photoEntityType="destination"
                 folder="Destinations"
                 onPhotosChange={handlePhotosChange}
               />

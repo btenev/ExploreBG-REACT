@@ -25,9 +25,10 @@ import "./TrailDetailsSection.scss";
 interface Props {
   trail: ITrail;
   canEdit: boolean;
+  canShowFavorite: boolean;
 }
 
-const TrailDetailsSection = ({ trail, canEdit }: Props) => {
+const TrailDetailsSection = ({ trail, canEdit, canShowFavorite }: Props) => {
   const { data: trailEnums, isLoading: isLoadingEnums } =
     useTrailEnums(canEdit);
   const { data: accommodations, isLoading: isLoadingAccommodations } =
@@ -38,7 +39,7 @@ const TrailDetailsSection = ({ trail, canEdit }: Props) => {
   return (
     <LastUpdatedProvider>
       <section className="trail details-page-section">
-        {!canEdit && (
+        {canShowFavorite && (
           <FavoriteToggle
             liked={trail.likedByUser}
             entityId={trail.id.toString()}

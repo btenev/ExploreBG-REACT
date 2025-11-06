@@ -1,12 +1,14 @@
-import { useSessionStore } from '../store/sessionStore';
+import { useSessionStore } from "../store/sessionStore";
 
-export const useHasSession = (): boolean => useSessionStore((state) => state.user !== null);
+export const useHasSession = (): boolean =>
+  useSessionStore((state) => state.user !== null);
 
-export const clearSession = (): void => useSessionStore.getState().clearSession();
+export const clearSession = (): void =>
+  useSessionStore.getState().clearSession();
 
 export const useIsAdminOrModerator = (): boolean =>
   useSessionStore((state) =>
-    ['ADMIN', 'MODERATOR'].some((role) => state.user?.userRoles.includes(role))
+    ["ADMIN", "MODERATOR"].some((role) => state.user?.userRoles.includes(role))
   );
 
 export const useSessionInfo = () => {
@@ -14,14 +16,16 @@ export const useSessionInfo = () => {
   const hasHydrated = useSessionStore((state) => state.hasHydrated);
 
   const sessionRoles = user?.userRoles ?? [];
-  const staffId = user?.userId ?? null;
+  const userId = user?.userId ?? null;
 
   return {
     sessionRoles,
-    isAdmin: sessionRoles.includes('ADMIN'),
-    isModerator: sessionRoles.includes('MODERATOR'),
-    isAdminOrModerator: ['ADMIN', 'MODERATOR'].some((r) => sessionRoles.includes(r)),
-    staffId,
+    isAdmin: sessionRoles.includes("ADMIN"),
+    isModerator: sessionRoles.includes("MODERATOR"),
+    isAdminOrModerator: ["ADMIN", "MODERATOR"].some((r) =>
+      sessionRoles.includes(r)
+    ),
+    userId,
     hasHydrated,
   };
 };
@@ -29,4 +33,5 @@ export const useSessionInfo = () => {
 export const useUserImage = (): string | null =>
   useSessionStore((state) => state.user?.userImage ?? null);
 
-export const getUserId = (): number | null => useSessionStore.getState().user?.userId ?? null;
+export const getUserId = (): number | null =>
+  useSessionStore.getState().user?.userId ?? null;

@@ -21,9 +21,14 @@ import "./DestinationDetailsSection.scss";
 interface Props {
   destination: IDestination;
   candEdit: boolean;
+  canShowFavorite: boolean;
 }
 
-const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
+const DestinationDetailsSection = ({
+  destination,
+  candEdit,
+  canShowFavorite,
+}: Props) => {
   const { data: destinationEnums, isLoading: isLoadingEnums } =
     useDestinationEnums(candEdit);
 
@@ -32,7 +37,7 @@ const DestinationDetailsSection = ({ destination, candEdit }: Props) => {
   return (
     <LastUpdatedProvider>
       <section className="destination details-page-section">
-        {!candEdit && (
+        {canShowFavorite && (
           <FavoriteToggle
             liked={destination.likedByUser}
             entityId={id.toString()}

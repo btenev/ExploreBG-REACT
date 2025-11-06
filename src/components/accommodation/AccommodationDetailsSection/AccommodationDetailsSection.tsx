@@ -25,9 +25,14 @@ import "./AccommodationDetailsSection.scss";
 interface Props {
   accommodation: IAccommodation;
   candEdit: boolean;
+  canShowFavorite: boolean;
 }
 
-const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
+const AccommodationDetailsSection = ({
+  candEdit,
+  accommodation,
+  canShowFavorite,
+}: Props) => {
   const { data: accommodationEnums, isLoading: isLoadingEnums } =
     useAccommodationEnums(candEdit);
 
@@ -36,7 +41,7 @@ const AccommodationDetailsSection = ({ candEdit, accommodation }: Props) => {
   return (
     <LastUpdatedProvider>
       <section className="accommodation details-page-section">
-        {!candEdit && (
+        {canShowFavorite && (
           <FavoriteToggle
             liked={accommodation.likedByUser}
             entityId={id.toString()}

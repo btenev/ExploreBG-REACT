@@ -26,7 +26,7 @@ const AccommodationDetails = () => {
       paramName="accommodationId"
       fetchHook={useGetAccommodation}
     >
-      {(accommodation, canEdit, userId) => {
+      {(accommodation, canEdit, userId, canShowFavorite) => {
         // Update photoCount on first render if it’s 0
         if (photoCount === 0 && accommodation.images.length > 0) {
           setPhotoCount(accommodation.images.length);
@@ -50,6 +50,7 @@ const AccommodationDetails = () => {
             <AccommodationDetailsSection
               candEdit={canEdit}
               accommodation={accommodation}
+              canShowFavorite={canShowFavorite}
             />
 
             <span id="photos" />
@@ -58,7 +59,7 @@ const AccommodationDetails = () => {
                 entityId={accommodation.id}
                 photos={accommodation.images}
                 canEdit={canEdit}
-                entityType="accommodation"
+                photoEntityType="accommodation"
                 folder="Accommodations"
                 onPhotosChange={handlePhotosChange}
               />

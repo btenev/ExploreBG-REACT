@@ -8,12 +8,6 @@ interface Props {
 }
 
 const DestinationCard = ({ card, sessionUserId }: Props) => {
-  console.log({
-    sessionUserId,
-    createdById: card.createdById,
-    types: [typeof sessionUserId, typeof card.createdById],
-    likedBuser: card.likedByUser,
-  });
   const { canLike } = getOwnershipFlags(sessionUserId, card.createdById);
 
   return (

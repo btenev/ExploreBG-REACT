@@ -27,7 +27,7 @@ const TrailDetails = () => {
       paramName="trailId"
       fetchHook={useTrail}
     >
-      {(trail, canEdit, userId) => {
+      {(trail, canEdit, userId, canShowFavorite) => {
         if (photoCount === 0 && trail.images.length > 0) {
           setPhotoCount(trail.images.length);
         }
@@ -47,7 +47,11 @@ const TrailDetails = () => {
               gpxFileAvailable={!!trail.gpxFile}
             />
 
-            <TrailDetailsSection trail={trail} canEdit={canEdit} />
+            <TrailDetailsSection
+              trail={trail}
+              canEdit={canEdit}
+              canShowFavorite={canShowFavorite}
+            />
 
             <span id="photos" />
             {(canEdit || trail.images.length > 0) && (
