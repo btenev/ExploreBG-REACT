@@ -17,6 +17,7 @@ import {
   DESTINATION_PLACE_MIN_LENGTH,
   DESTINATION_PLACE_MAX_LENGTH,
   DESTINATION_INFO_LENGTH,
+  HIKE_INFO_MAX_LENGTH,
 } from "@constants";
 import { roundToTwoDecimals } from "@utils/mixedUtils";
 
@@ -168,6 +169,7 @@ const infoSchema = (maxLength: number) =>
 export const trailInfoSchema = infoSchema(TRAIL_INFO_MAX_LENGTH);
 export const accommodationInfoSchema = infoSchema(ACCOMMODATION_INFO_LENGTH);
 export const destinationInfoSchema = infoSchema(DESTINATION_INFO_LENGTH);
+export const hikeInfoSchema = infoSchema(HIKE_INFO_MAX_LENGTH);
 
 export const messageSchema = z
   .string()
@@ -294,3 +296,27 @@ export const latitudeSchema = z.preprocess((val) => {
   }
   return val;
 }, z.number().min(-90, "Your latitude cannot be less than -90.").max(90, "Your latitude cannot be greater than 90.").nullable());
+
+export const hikeDateSchema = z.object({
+  hikeDate: z
+    .string()
+    .nonempty("Please enter the hike date.")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, {
+      message: "Please enter the date in the format yyyy-MM-dd.",
+    })
+    .refine(isValidFutureDate, {
+      message: "Please enter a date in the future.",
+    }),
+});
+
+function isValidFutureDate(value: string): boolean {
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(year, month - 1, day); // Local date
+  const today = new Date();
+  const todayOnly = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  return !isNaN(date.getTime()) && date > todayOnly;
+}

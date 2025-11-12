@@ -36,6 +36,8 @@ export const DESTINATION_INFO_LENGTH = 800;
 
 export const NEXT_TO_MIN_LENGTH = 3;
 export const NEXT_TO_MAX_LENGTH = 20;
+/*Hike*/
+export const HIKE_INFO_MAX_LENGTH = 6000;
 
 /*Accommodation info field visible text*/
 export const ACCOMMODATION_INFO_VISIBLE_TEXT_LENGHT = 155;
