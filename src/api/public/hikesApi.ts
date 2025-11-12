@@ -8,8 +8,19 @@ import {
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
 } from "@types";
+import { toKebabOrSpace } from "@utils/mixedUtils";
+
+export type HikeFieldRequestMap = {
+  startPoint: { startPoint: string };
+};
+
+export type HikeFieldResponseMap = {
+  startPoint: { startPoint: string; lastUpdateDate: string };
+};
 
 const apiClient = new ApiClient();
+
+const baseHikesUrl = "/hikes";
 
 export const hikesApi = {
   get4RandomHikes: (): Promise<IHikeCard[]> =>
@@ -23,6 +34,16 @@ export const hikesApi = {
     data: ToggleFavoriteRequest
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(PUBLIC_ROUTES.hike.favoriteStatus(hikeId), data),
+
+  updateHikeField: <K extends keyof HikeFieldRequestMap>(
+    field: K,
+    trailId: number,
+    data: HikeFieldRequestMap[K]
+  ): Promise<HikeFieldResponseMap[K]> => {
+    const endPoint = toKebabOrSpace(field as string);
+
+    return apiClient.patch(`${baseHikesUrl}/${trailId}/${endPoint}`, data);
+  },
 
   getHikeComments: (hikeId: string): Promise<IComment[]> =>
     apiClient.get<IComment[]>(PUBLIC_ROUTES.hike.hikeComments(hikeId)),
