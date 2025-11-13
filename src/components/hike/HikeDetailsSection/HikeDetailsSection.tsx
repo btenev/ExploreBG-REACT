@@ -1,5 +1,8 @@
 import { EntityCreatedBy, FavoriteToggle } from "@components/common";
+import { LastUpdatedProvider } from "@context/LastUpdate";
 import { IHike } from "@types";
+
+import { HikeDetailsStartPointField } from "./fields";
 
 import "./HikeDetailsSection.scss";
 
@@ -9,19 +12,28 @@ interface Props {
   canShowFavorite: boolean;
 }
 
-const HikeDetailsSection = ({ hike, canShowFavorite }: Props) => {
+const HikeDetailsSection = ({ hike, canEdit, canShowFavorite }: Props) => {
+  const { id } = hike;
   return (
-    <section className="hike details-page-section">
-      {canShowFavorite && (
-        <FavoriteToggle
-          liked={hike.likedByUser}
-          entityId={hike.id.toString()}
-          entity="hike"
-        />
-      )}
+    <LastUpdatedProvider>
+      <section className="hike details-page-section">
+        {canShowFavorite && (
+          <FavoriteToggle
+            liked={hike.likedByUser}
+            entityId={id.toString()}
+            entity="hike"
+          />
+        )}
 
-      {hike.createdBy && <EntityCreatedBy createdBy={hike.createdBy} />}
-    </section>
+        {hike.createdBy && <EntityCreatedBy createdBy={hike.createdBy} />}
+
+        <HikeDetailsStartPointField
+          hikeId={id}
+          startPoint={hike.startPoint}
+          canEdit={canEdit}
+        />
+      </section>
+    </LastUpdatedProvider>
   );
 };
 

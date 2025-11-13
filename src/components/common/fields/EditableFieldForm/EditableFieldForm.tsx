@@ -60,13 +60,11 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
       return;
     }
 
-    mutation.mutate(data, {
-      onSuccess: (response) => {
-        // Reset only with the relevant field
-        reset(response);
-
-        setIsEditing(false);
-      },
+    mutation.mutate(data, {                                                 //  1. getValues() grabs the current full form data (e.g. { birthdate: "2024-01-01" }).                                       
+      onSuccess: (response) => {                                            //  2. { ...getValues(), ...response } merges the new backend response into that object.
+        reset({ ...getValues(), ...response });                             //  So the updated field (birthdate) overwrites the old one, but all other fields stay intact.
+        requestAnimationFrame(() => setIsEditing(false));                   //  3. reset() applies that merged object as the new baseline.                                 
+      },                                                                    //  4. requestAnimationFrame(() => setIsEditing(false)) ensures React Hook Form finishes its reset cycle  before switching back to “view mode”, avoiding transient undefined values.
     });
   };
 
@@ -77,15 +75,17 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
     }
   }, [isEditing]);
 
-  const handleCancel = () => {
+  const discardChanges = () => {
     if (isDirty) {
       toast.info("Changes discarded");
+      reset(); // revert to last saved value
     }
-    reset(); // revert to last saved value
     setIsEditing(false);
   };
 
-  useCloseOnEscapeTabAndClickOutside(formRef, () => setIsEditing(false));
+  useCloseOnEscapeTabAndClickOutside(formRef, () => {
+    if (isEditing) discardChanges();
+  });
 
   return (
     <div className="editable-field">
@@ -133,7 +133,7 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
             />
             <button
               type="button"
-              onClick={handleCancel}
+              onClick={discardChanges}
               aria-label={`Cancel editing ${label}`}
             >
               Cancel
@@ -145,7 +145,9 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
               key={key}
               className="error-message"
               role="alert"
-              style={{ display: isEditing ? "block" : "none" }}
+              style={{
+                display: isEditing ? "block" : "none",
+              }}
             >
               {error?.message?.toString()}
             </div>
