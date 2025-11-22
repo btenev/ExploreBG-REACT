@@ -19,6 +19,7 @@ import {
   DESTINATION_INFO_LENGTH,
   HIKE_INFO_MAX_LENGTH,
 } from "@constants";
+import { parseToLocalDatetime } from "@utils/dateUtils";
 import { roundToTwoDecimals } from "@utils/mixedUtils";
 
 const placeRegex = /^[A-Z][a-z]+(\s[A-Za-z]+)*$/;
@@ -297,26 +298,22 @@ export const latitudeSchema = z.preprocess((val) => {
   return val;
 }, z.number().min(-90, "Your latitude cannot be less than -90.").max(90, "Your latitude cannot be greater than 90.").nullable());
 
-export const hikeDateSchema = z.object({
-  hikeDate: z
-    .string()
-    .nonempty("Please enter the hike date.")
-    .regex(/^\d{4}-\d{2}-\d{2}$/, {
-      message: "Please enter the date in the format yyyy-MM-dd.",
-    })
-    .refine(isValidFutureDate, {
-      message: "Please enter a date in the future.",
-    }),
-});
+export const hikeDateSchema = z
+  .string()
+  .nonempty("Please enter the hike date and time.")
+  .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/, {
+    message: "Please enter the date in the format yyyy-MM-ddTHH:mm.",
+  })
+  .refine(isValidFutureDateTime, {
+    message: "The hike must start at least 30 minutes from now.",
+  });
 
-function isValidFutureDate(value: string): boolean {
-  const [year, month, day] = value.split("-").map(Number);
-  const date = new Date(year, month - 1, day); // Local date
-  const today = new Date();
-  const todayOnly = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  );
-  return !isNaN(date.getTime()) && date > todayOnly;
+function isValidFutureDateTime(value: string): boolean {
+  const localDate = parseToLocalDatetime(value);
+  if (!localDate) return false;
+
+  const now = new Date();
+  const minStartTime = new Date(now.getTime() + 30 * 60 * 1000); // +30 minutes
+
+  return localDate > minStartTime;
 }
