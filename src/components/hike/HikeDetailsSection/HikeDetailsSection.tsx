@@ -2,7 +2,11 @@ import { EntityCreatedBy, FavoriteToggle } from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
 import { IHike } from "@types";
 
-import { HikeDetailsEndPointField, HikeDetailsStartPointField } from "./fields";
+import {
+  HikeDetailsEndPointField,
+  HikeDetailsStartPointField,
+  HikeDetailsDateField,
+} from "./fields";
 
 import "./HikeDetailsSection.scss";
 
@@ -36,6 +40,12 @@ const HikeDetailsSection = ({ hike, canEdit, canShowFavorite }: Props) => {
         <HikeDetailsEndPointField
           hikeId={id}
           endPoint={hike.endPoint}
+          canEdit={canEdit}
+        />
+
+        <HikeDetailsDateField
+          hikeId={id}
+          hikeDate={hike.hikeDate}
           canEdit={canEdit}
         />
       </section>
