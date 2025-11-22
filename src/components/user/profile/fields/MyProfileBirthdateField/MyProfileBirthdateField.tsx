@@ -19,7 +19,6 @@ const MyProfileBirthdateField = ({ birthdate }: Props) => {
       useFormHook={useUserBirthdateForm}
       mutation={mutation}
       renderValue={(val, label) => {
-        console.log("Render birthdate:", val.birthdate);
         return (
           <>
             <LiaBirthdayCakeSolid /> {label}:&nbsp;&nbsp;

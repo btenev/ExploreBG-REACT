@@ -5,6 +5,7 @@ import destinationDefault from "@assets/images/destination-default.jpg";
 import hikeDefault from "@assets/images/hike-default.jpg";
 import { FavoriteToggle } from "@components/common";
 import { EntityType } from "@types";
+import { formatFullDate, isValidIsoDate } from "@utils/dateUtils";
 
 interface Props {
   id: number;
@@ -38,6 +39,8 @@ const BaseCard = ({
     accommodation: accommodationDefault,
   };
 
+  const isValid = !!date && isValidIsoDate(date);
+
   const defaultImage = defaultImageMap[entity];
 
   return (
@@ -62,7 +65,11 @@ const BaseCard = ({
 
       <h4>{name}</h4>
 
-      {date && <time dateTime={date}>{date}</time>}
+      {date && (
+        <time dateTime={isValid ? date : undefined}>
+          {isValid ? formatFullDate(date) : "Date not set"}
+        </time>
+      )}
       {subtitle && <p>{subtitle}</p>}
       {description && (
         <p>

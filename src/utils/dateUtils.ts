@@ -1,4 +1,6 @@
-import { format } from "date-fns";
+import * as Sentry from "@sentry/react";
+import { format, parse, isValid } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 export const formatEntityLastUpdate = (dateString: string) => {
   const date = new Date(dateString);
@@ -21,21 +23,6 @@ export const formatEntityLastUpdate = (dateString: string) => {
   }
 };
 
-export const formatDateToDDMMMYYYY = (inputDate: string) => {
-  const date = new Date(inputDate);
-
-  if (isNaN(date.getTime())) return inputDate;
-
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = date.toLocaleString("default", { month: "short" });
-  const year = date.getFullYear();
-
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  return `${day} ${month} ${year}, ${hours}:${minutes}`;
-};
-
 export const formatDate = (inputDate: string | null): string | null => {
   if (!inputDate || typeof inputDate !== "string") return null;
 
@@ -52,5 +39,56 @@ export const formatDate = (inputDate: string | null): string | null => {
 
 export const formatFullDate = (input: string): string => {
   const date = new Date(input);
-  return format(date, "d MMMM yyyy -- HH:mm:ss");
+  const { timeZone, locale } = Intl.DateTimeFormat().resolvedOptions();
+
+  return new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone,
+  }).format(date);
+};
+
+// 1. Accept any valid ISO8601 date
+export const isValidIsoDate = (value: string): boolean => {
+  const isoWithMinutesRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(Z)?$/;
+
+  if (!isoWithMinutesRegex.test(value)) {
+    Sentry.addBreadcrumb({
+      category: "date-validation",
+      message: "ISO regex failed",
+      level: "warning",
+      data: { value },
+    });
+    return false;
+  }
+
+  const date = new Date(value);
+  const isValid = !isNaN(date.getTime());
+
+  if (!isValid) {
+    Sentry.captureMessage("Parsed date is invalid", {
+      level: "warning",
+      extra: { value },
+    });
+  }
+
+  return isValid;
+};
+
+// 2. Convert UTC ISO → "yyyy-MM-ddTHH:mm" (for <input type="datetime-local">)
+export const toDatetimeLocal = (utcString: string): string => {
+  const localDate = toZonedTime(
+    utcString,
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+  return format(localDate, "yyyy-MM-dd'T'HH:mm");
+};
+
+// 3. Parse local datetime string → real JS date (local time)
+export const parseToLocalDatetime = (localString: string): Date | null => {
+  const date = parse(localString, "yyyy-MM-dd'T'HH:mm", new Date());
+  return isValid(date) ? date : null;
 };

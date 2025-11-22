@@ -1,6 +1,5 @@
 import BaseCard from "@components/common/cards";
 import { IHikeCard } from "@types";
-import { formatDateToDDMMMYYYY } from "@utils/dateUtils";
 import { getOwnershipFlags } from "@utils/ownershipUtils";
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 
 const HikeCard = ({ card, sessionUserId }: Props) => {
   const { canLike } = getOwnershipFlags(sessionUserId, card.createdById);
-  const formattedHikeDate = formatDateToDDMMMYYYY(card.hikeDate);
+
   return (
     <BaseCard
       id={card.id}
@@ -21,7 +20,7 @@ const HikeCard = ({ card, sessionUserId }: Props) => {
       canLike={canLike}
       linkTo={`/hikes/${card.id}`}
       description={card.hikeInfo}
-      date={formattedHikeDate}
+      date={card.hikeDate}
     />
   );
 };
