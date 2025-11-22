@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import { HelperTooltip, SubmitButton } from "@components/common";
 import { useCloseOnEscapeTabAndClickOutside } from "@hooks/uiHooks";
+import { isValidIsoDate, toDatetimeLocal } from "@utils/dateUtils";
 
 import "./EditableFieldForm.scss";
 
@@ -49,7 +50,7 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
   const inputId = `editable-field-${label.replace(/\s+/g, "-").toLowerCase()}`;
 
   // Initialize form with defaultValues
-  const { register, handleSubmit, formState, reset, getValues } =
+  const { register, handleSubmit, formState, reset, getValues, trigger } =
     useFormHook(initialValue);
   const { isDirty } = formState;
 
@@ -60,11 +61,27 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
       return;
     }
 
-    mutation.mutate(data, {                                                 //  1. getValues() grabs the current full form data (e.g. { birthdate: "2024-01-01" }).                                       
-      onSuccess: (response) => {                                            //  2. { ...getValues(), ...response } merges the new backend response into that object.
-        reset({ ...getValues(), ...response });                             //  So the updated field (birthdate) overwrites the old one, but all other fields stay intact.
-        requestAnimationFrame(() => setIsEditing(false));                   //  3. reset() applies that merged object as the new baseline.                                 
-      },                                                                    //  4. requestAnimationFrame(() => setIsEditing(false)) ensures React Hook Form finishes its reset cycle  before switching back to “view mode”, avoiding transient undefined values.
+    mutation.mutate(data, {
+      //  1. getValues() grabs the current full form data (e.g. { birthdate: "2024-01-01" }).
+      onSuccess: (response) => {
+        // Convert date only for display/input
+        const newValues = {
+          ...getValues(),
+          ...Object.fromEntries(
+            Object.entries(response).map(([key, value]) => [
+              key,
+              key === "hikeDate" && typeof value === "string"
+                ? isValidIsoDate(value)
+                  ? toDatetimeLocal(value)
+                  : value
+                : value,
+            ])
+          ),
+        };
+        //  2. { ...getValues(), ...response } merges the new backend response into that object.
+        reset(newValues); //  So the updated field (birthdate) overwrites the old one, but all other fields stay intact.
+        requestAnimationFrame(() => setIsEditing(false)); //  3. reset() applies that merged object as the new baseline.
+      }, //  4. requestAnimationFrame(() => setIsEditing(false)) ensures React Hook Form finishes its reset cycle  before switching back to “view mode”, avoiding transient undefined values.
     });
   };
 
@@ -72,8 +89,10 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
     if (isEditing && formRef.current) {
       const input = formRef.current.querySelector<HTMLInputElement>("input");
       input?.focus();
+
+      trigger(); // validate on opening
     }
-  }, [isEditing]);
+  }, [isEditing, trigger]);
 
   const discardChanges = () => {
     if (isDirty) {

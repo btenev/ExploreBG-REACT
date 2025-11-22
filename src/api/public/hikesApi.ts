@@ -13,11 +13,13 @@ import { toKebabOrSpace } from "@utils/mixedUtils";
 export type HikeFieldRequestMap = {
   startPoint: { startPoint: string };
   endPoint: { endPoint: string };
+  hikeDate: { hikeDate: string };
 };
 
 export type HikeFieldResponseMap = {
   startPoint: { startPoint: string; lastUpdateDate: string };
   endPoint: { endPoint: string; lastUpdateDate: string };
+  hikeDate: { hikeDate: string; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();

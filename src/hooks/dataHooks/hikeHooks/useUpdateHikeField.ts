@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
@@ -7,6 +8,7 @@ import {
   hikesApi,
 } from "@api/public";
 import { useLastUpdated } from "@context/LastUpdate";
+import { ApiError } from "@types";
 import { formatEntityLastUpdate } from "@utils/dateUtils";
 import { handleApiError } from "@utils/errorHandlers";
 import { capitalize, toKebabOrSpace } from "@utils/mixedUtils";
@@ -26,10 +28,21 @@ export const useUpdateHikeField = <K extends keyof HikeFieldRequestMap>(
 
   return useMutation({
     mutationKey: [`update${capitalize(field)}`],
-    mutationFn: (data: HikeFieldRequestMap[K]) =>
-      hikesApi.updateHikeField(field, hikeId, data),
-    onSuccess: (data, variables, context) => {
+    mutationFn: (data: HikeFieldRequestMap[K]) => {
+      Sentry.addBreadcrumb({
+        category: "mutation",
+        message: `Updating hike field: ${field}`,
+        level: "info",
+        data: { hikeId, field },
+      });
+      return hikesApi.updateHikeField(field, hikeId, data);
+    },
+    onSuccess: (data) => {
       if (!data) {
+        Sentry.captureMessage(`Failed to update ${field}: empty response`, {
+          level: "error",
+          extra: { hikeId, field },
+        });
         toast.error(`Failed to update ${field}. Something went wrong.`);
         return;
       }
@@ -59,9 +72,16 @@ export const useUpdateHikeField = <K extends keyof HikeFieldRequestMap>(
         // Return the updated value so parent can use it with reset()
         return extractedValue;
       } else {
+        Sentry.captureMessage("Missing expected field in response", {
+          level: "warning",
+          extra: { field, data },
+        });
         toast.error(`Response did not contain expected field: ${field}`);
       }
     },
-    onError: handleApiError,
+    onError: (error: ApiError) => {
+      Sentry.captureException(error, { extra: { hikeId, field } });
+      handleApiError(error);
+    },
   });
 };
