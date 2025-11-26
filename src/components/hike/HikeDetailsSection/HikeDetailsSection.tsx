@@ -1,4 +1,4 @@
-import { EntityCreatedBy, FavoriteToggle } from "@components/common";
+import { EntityCreatedBy, FavoriteToggle, FieldPair } from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
 import { IHike } from "@types";
 
@@ -6,6 +6,8 @@ import {
   HikeDetailsEndPointField,
   HikeDetailsStartPointField,
   HikeDetailsDateField,
+  HikeDetailsNextToField,
+  HikeDetailsInfoField,
 } from "./fields";
 
 import "./HikeDetailsSection.scss";
@@ -43,9 +45,23 @@ const HikeDetailsSection = ({ hike, canEdit, canShowFavorite }: Props) => {
           canEdit={canEdit}
         />
 
-        <HikeDetailsDateField
+        <FieldPair>
+          <HikeDetailsDateField
+            hikeId={id}
+            hikeDate={hike.hikeDate}
+            canEdit={canEdit}
+          />
+
+          <HikeDetailsNextToField
+            hikeId={id}
+            nextTo={hike.nextTo}
+            canEdit={canEdit}
+          />
+        </FieldPair>
+
+        <HikeDetailsInfoField
           hikeId={id}
-          hikeDate={hike.hikeDate}
+          hikeInfo={hike.hikeInfo}
           canEdit={canEdit}
         />
       </section>

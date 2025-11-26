@@ -44,3 +44,6 @@ export const ACCOMMODATION_INFO_VISIBLE_TEXT_LENGHT = 155;
 
 /*Destination info field visible text*/
 export const DESTINATION_INFO_VISIBLE_TEXT_LENGHT = 155;
+
+/*Hike info field visible text*/
+export const HIKE_INFO_VISIBLE_TEXT_LENGHT = 800;

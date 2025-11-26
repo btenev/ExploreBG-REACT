@@ -31,9 +31,9 @@ const HikeDetailsDate = ({ hikeId, hikeDate, canEdit }: Props) => {
       canEdit={canEdit}
       useFormHook={useHikeDateForm}
       mutation={mutation}
+      helperMessage="Choose a future date and time for the hike."
       renderValue={(val, label) => {
         const isValid = isValidIsoDate(val.hikeDate);
-
         const displayText = isValid
           ? formatFullDate(val.hikeDate)
           : "Date not set";
