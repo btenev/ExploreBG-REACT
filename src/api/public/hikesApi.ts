@@ -14,12 +14,16 @@ export type HikeFieldRequestMap = {
   startPoint: { startPoint: string };
   endPoint: { endPoint: string };
   hikeDate: { hikeDate: string };
+  nextTo: { nextTo: string };
+  hikeInfo: { hikeInfo: string };
 };
 
 export type HikeFieldResponseMap = {
   startPoint: { startPoint: string; lastUpdateDate: string };
   endPoint: { endPoint: string; lastUpdateDate: string };
   hikeDate: { hikeDate: string; lastUpdateDate: string };
+  nextTo: { nextTo: string; lastUpdateDate: string };
+  hikeInfo: { hikeInfo: string; lastUpdateDate: string };
 };
 
 const apiClient = new ApiClient();
