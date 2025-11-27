@@ -1,4 +1,5 @@
 import {
+  CommentsSection,
   EntityDetailsNav,
   EntityDetailsWrapper,
   ImportantNotice,
@@ -34,6 +35,13 @@ const HikeDetails = () => {
             hike={hike}
             canEdit={canEdit}
             canShowFavorite={canShowFavorite}
+          />
+
+          <span id="comments" />
+          <CommentsSection
+            userId={userId}
+            entity="hike"
+            entityId={hike.id.toString()}
           />
         </main>
       )}
