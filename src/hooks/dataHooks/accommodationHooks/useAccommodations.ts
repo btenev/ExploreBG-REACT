@@ -1,0 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
+
+import { accommodationsApi } from "@api/public";
+
+export const useAccommodations = (query: string) => {
+  return useQuery({
+    queryKey: ["accommodations", query],
+    queryFn: () => accommodationsApi.getAllAccommodations(query),
+    refetchOnMount: false, // Only fetch on hard reloads
+    refetchOnWindowFocus: false, // Optional: prevent refetch on tab switch
+    refetchOnReconnect: false, // Optional: also disable on network recovery
+    staleTime: 60 * 60 * 1000, // 60min
+  });
+};

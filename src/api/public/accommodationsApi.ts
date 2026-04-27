@@ -42,6 +42,11 @@ export type AccommodationFieldResponseMap = {
   accommodationInfo: { accommodationInfo: string; lastUpdateDate: string };
 };
 
+type AllAccommodationsResponse = {
+  content: IAccommodationCard[];
+  totalElements: number;
+};
+
 const apiClient = new ApiClient();
 
 const baseAccommodationUrl = "/accommodations";
@@ -51,20 +56,26 @@ export const accommodationsApi = {
     apiClient.get(PUBLIC_ROUTES.accommodation.random),
 
   getAccommodation: async (
-    accommodationId: string
+    accommodationId: string,
   ): Promise<IAccommodation> => {
     try {
       const response = await apiClient.get<IAccommodation>(
-        PUBLIC_ROUTES.accommodation.details.build(accommodationId)
+        PUBLIC_ROUTES.accommodation.details.build(accommodationId),
       );
       const detailsStatus = detailsStatusConverter(response.detailsStatus);
       return { ...response, detailsStatus };
     } catch (error) {
       console.error("Error fetching accommodation:", error);
       throw new Error(
-        "Failed to load accommodation due to invalid details status"
+        "Failed to load accommodation due to invalid details status",
       );
     }
+  },
+
+  getAllAccommodations: (query: string): Promise<AllAccommodationsResponse> => {
+    return apiClient.get<AllAccommodationsResponse>(
+      `${baseAccommodationUrl}${query}`,
+    );
   },
 
   getAvailableAccommodations: (): Promise<IHut[]> =>
@@ -72,56 +83,56 @@ export const accommodationsApi = {
 
   toggleFavoriteStatus: (
     accommodationId: string,
-    data: ToggleFavoriteRequest
+    data: ToggleFavoriteRequest,
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(
       PUBLIC_ROUTES.accommodation.favoriteStatus(accommodationId),
-      data
+      data,
     ),
 
   updateAccommodationField: <K extends keyof AccommodationFieldRequestMap>(
     field: K,
     accommodationId: number,
-    data: AccommodationFieldRequestMap[K]
+    data: AccommodationFieldRequestMap[K],
   ): Promise<AccommodationFieldResponseMap[K]> => {
     const endPoint = toKebabOrSpace(field as string);
     return apiClient.patch(
       `${baseAccommodationUrl}/${accommodationId}/${endPoint}`,
-      data
+      data,
     );
   },
 
   updateMainAccommodationPhoto: (
     accommodationId: string,
-    data: { imageId: string }
+    data: { imageId: string },
   ): Promise<{ imageId: number }> =>
     apiClient.patch(
       PUBLIC_ROUTES.accommodation.updateMainAccommodationPhoto(accommodationId),
-      data
+      data,
     ),
 
   getAccommodationComments: (accommodationId: string): Promise<IComment[]> =>
     apiClient.get<IComment[]>(
-      PUBLIC_ROUTES.accommodation.accommodationComments(accommodationId)
+      PUBLIC_ROUTES.accommodation.accommodationComments(accommodationId),
     ),
 
   createAccommodationComment: (
     accommodationId: string,
-    data: CommentDataDto
+    data: CommentDataDto,
   ): Promise<IComment> =>
     apiClient.post(
       PUBLIC_ROUTES.accommodation.accommodationComments(accommodationId),
-      data
+      data,
     ),
 
   deleteAccommodationComment: (
     accommodationsId: string,
-    commentId: string
+    commentId: string,
   ): Promise<void> =>
     apiClient.delete(
       PUBLIC_ROUTES.accommodation.deleteAccommodationComment(
         accommodationsId,
-        commentId
-      )
+        commentId,
+      ),
     ),
 };
