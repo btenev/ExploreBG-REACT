@@ -7,8 +7,8 @@ import {
   useToggleReviewGpx,
   useApproveGpxFile,
 } from "@hooks/dataHooks/moderation/trailReviewHooks";
+import { useSession } from "@hooks/sessionHooks";
 import { ITrackInfo, StatusEnum, TGpxFile } from "@types";
-import { useSessionInfo } from "@utils/sessionUtils";
 
 import "./ApproveTrailGpx.scss";
 
@@ -22,7 +22,7 @@ const ApproveTrailGpx = ({ trailId, gpxFile }: Props) => {
     "approve" | "reject" | null
   >(null);
   const [, setTrackInfo] = useState<ITrackInfo | null>(null);
-  const { staffId } = useSessionInfo();
+  const { userId } = useSession();
 
   const gpxId = gpxFile.id;
   const gpxStatus = gpxFile.gpxStatus !== StatusEnum.approved;
@@ -31,7 +31,7 @@ const ApproveTrailGpx = ({ trailId, gpxFile }: Props) => {
   const { data: reviewerData } = useGetGpxReviewer(String(gpxId), enabled);
 
   const forReview =
-    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== staffId;
+    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== userId;
   console.log(forReview);
 
   const toggleGpxFileReview = useToggleReviewGpx();

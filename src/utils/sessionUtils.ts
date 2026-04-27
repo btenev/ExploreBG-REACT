@@ -8,27 +8,8 @@ export const clearSession = (): void =>
 
 export const useIsAdminOrModerator = (): boolean =>
   useSessionStore((state) =>
-    ["ADMIN", "MODERATOR"].some((role) => state.user?.userRoles.includes(role))
+    ["ADMIN", "MODERATOR"].some((role) => state.user?.userRoles.includes(role)),
   );
-
-export const useSessionInfo = () => {
-  const user = useSessionStore((state) => state.user);
-  const hasHydrated = useSessionStore((state) => state.hasHydrated);
-
-  const sessionRoles = user?.userRoles ?? [];
-  const userId = user?.userId ?? null;
-
-  return {
-    sessionRoles,
-    isAdmin: sessionRoles.includes("ADMIN"),
-    isModerator: sessionRoles.includes("MODERATOR"),
-    isAdminOrModerator: ["ADMIN", "MODERATOR"].some((r) =>
-      sessionRoles.includes(r)
-    ),
-    userId,
-    hasHydrated,
-  };
-};
 
 export const useUserImage = (): string | null =>
   useSessionStore((state) => state.user?.userImage ?? null);

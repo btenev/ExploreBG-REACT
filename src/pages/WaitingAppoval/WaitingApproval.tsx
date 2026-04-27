@@ -6,17 +6,17 @@ import {
 } from "@components/common";
 import { AllWaitingApprovalTable } from "@components/moderation/cross-entity";
 import { useGetWaitingApprovalCount } from "@hooks/dataHooks/moderation/dashboardModerationHooks";
-import { useSessionInfo } from "@utils/sessionUtils";
+import { useSession } from "@hooks/sessionHooks";
 
 const WaitingApproval = () => {
-  const { isAdminOrModerator, hasHydrated, staffId } = useSessionInfo();
+  const { isAdminOrModerator, hasHydrated, userId } = useSession();
 
-  const isAuthenticated = staffId !== null;
+  const isAuthenticated = userId !== null;
 
   const { data: entitiesApprovalCount, isLoading } = useGetWaitingApprovalCount(
     {
       enabled: hasHydrated && isAuthenticated && isAdminOrModerator,
-    }
+    },
   );
 
   if (!hasHydrated) return <LoadingScreenWrapper />;
@@ -35,7 +35,7 @@ const WaitingApproval = () => {
       {entitiesApprovalCount && (
         <AllWaitingApprovalTable
           waitingApprovalCount={entitiesApprovalCount}
-          staffId={staffId}
+          staffId={userId}
         />
       )}
     </AdminProtectedPage>

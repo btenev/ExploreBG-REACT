@@ -2,10 +2,10 @@ import { JSX } from "react";
 import { useParams } from "react-router-dom";
 
 import { NotFoundModal, LoadingScreenWrapper } from "@components/common";
+import { useSession } from "@hooks/sessionHooks";
 import { EntityType } from "@types";
 import { isApiError } from "@utils/errorHandlers";
 import { isOwner } from "@utils/mixedUtils";
-import { useSessionInfo } from "@utils/sessionUtils";
 
 type UseDetailsOptions<T> = {
   paramName: string; // e.g. "trailId" | "accommodationId"
@@ -19,7 +19,7 @@ type UseDetailsOptions<T> = {
     data: NonNullable<T>,
     canEdit: boolean,
     userId: number | null,
-    canShowFavourite: boolean
+    canShowFavourite: boolean,
   ) => JSX.Element;
 };
 
@@ -34,7 +34,7 @@ const EntityDetailsWrapper = <T,>({
   const id = params[paramName];
   const numericId = Number(id);
 
-  const { hasHydrated, userId } = useSessionInfo();
+  const { hasHydrated, userId } = useSession();
 
   if (!id || isNaN(numericId)) {
     return (

@@ -13,8 +13,8 @@ import { useAvailableAccommodations } from "@hooks/dataHooks/accommodationHooks"
 import { useAvailableDestinations } from "@hooks/dataHooks/destinationHooks";
 import { useGetCreatedTrailForReview } from "@hooks/dataHooks/moderation/trailReviewHooks";
 import { useTrailEnums } from "@hooks/dataHooks/utilityHooks";
+import { useSession } from "@hooks/sessionHooks";
 import { isApiError } from "@utils/errorHandlers";
-import { useSessionInfo } from "@utils/sessionUtils";
 
 const TrailReview = () => {
   const { trailId } = useParams<{ trailId: string }>();
@@ -22,8 +22,8 @@ const TrailReview = () => {
   const numericId = Number(trailId);
   const invalidId = !trailId || isNaN(numericId);
 
-  const { isAdminOrModerator, hasHydrated, staffId } = useSessionInfo();
-  const isAuthenticated = staffId !== null;
+  const { isAdminOrModerator, hasHydrated, userId } = useSession();
+  const isAuthenticated = userId !== null;
 
   const enabled =
     !invalidId && hasHydrated && isAuthenticated && isAdminOrModerator;

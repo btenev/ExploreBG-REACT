@@ -6,13 +6,12 @@ import {
 } from "@components/common";
 import { AllUsersTable } from "@components/moderation/user";
 import { useGetAllUsers } from "@hooks/dataHooks/moderation/userModerationHooks";
-import { useSessionInfo } from "@utils/sessionUtils";
+import { useSession } from "@hooks/sessionHooks";
 
 const AllUsers = () => {
-  const { isAdminOrModerator, isAdmin, hasHydrated, staffId } =
-    useSessionInfo();
+  const { isAdminOrModerator, isAdmin, hasHydrated, userId } = useSession();
 
-  const isAuthenticated = staffId !== null;
+  const isAuthenticated = userId !== null;
 
   const { data: users, isLoading } = useGetAllUsers({
     enabled: hasHydrated && isAuthenticated && isAdminOrModerator,
@@ -32,7 +31,7 @@ const AllUsers = () => {
   return (
     <AdminProtectedPage>
       {users && (
-        <AllUsersTable users={users} isAdmin={isAdmin} staffId={staffId} />
+        <AllUsersTable users={users} isAdmin={isAdmin} staffId={userId} />
       )}
     </AdminProtectedPage>
   );

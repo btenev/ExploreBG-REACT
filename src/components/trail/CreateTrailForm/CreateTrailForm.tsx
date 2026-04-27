@@ -15,6 +15,7 @@ import {
 } from "@hooks/dataHooks/moderation/trailReviewHooks";
 import { useCreateTrail } from "@hooks/dataHooks/trailHooks";
 import { useCreateTrailForm } from "@hooks/formHooks/trailHooks";
+import { useSession } from "@hooks/sessionHooks";
 import { CreateTrailDto } from "@schemas/trail";
 import {
   IHut,
@@ -24,7 +25,6 @@ import {
   StatusEnum,
   WaterAvailabilityEnum,
 } from "@types";
-import { useSessionInfo } from "@utils/sessionUtils";
 
 const TRAIL_INFO =
   "Share the details of your favorite trail with us—describe the scenery, the difficulty level, any wildlife you encountered, and the special moments that made your hike memorable. Your insights could inspire fellow hikers and help them discover new paths to explore!";
@@ -48,7 +48,7 @@ const CreateTrailForm = ({
     control,
     formState: { errors },
   } = useCreateTrailForm(dataForReview);
-  const { staffId } = useSessionInfo();
+  const { userId } = useSession();
 
   const trailId = dataForReview?.id;
   const detailsStatus = dataForReview?.detailsStatus !== StatusEnum.approved;
@@ -61,7 +61,7 @@ const CreateTrailForm = ({
   const toggleReview = useToggleReviewTrailDetails();
 
   const forReview =
-    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== staffId;
+    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== userId;
 
   const onSubmit = (trailData: CreateTrailDto) => {
     if (dataForReview && !forReview) {
@@ -93,7 +93,7 @@ const CreateTrailForm = ({
 
   return (
     <>
-      {!staffId && (
+      {!userId && (
         <RequireAuthModal message="Only logged-in users can access this page." />
       )}
 
