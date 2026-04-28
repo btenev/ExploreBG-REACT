@@ -4,8 +4,6 @@ import { CreateTrailDto } from "@schemas/trail";
 import {
   DifficultyLevelEnum,
   IComment,
-  IHut,
-  IPlace,
   ITrail,
   ITrailCard,
   SuitableForEnum,
@@ -18,6 +16,21 @@ import { detailsStatusConverter } from "@utils/statusConverter";
 
 import { ApiClient } from "../base";
 
+export interface ISelectableItem {
+  id: number;
+  name: string;
+}
+
+type UpdateItemsResponse<T> = {
+  items: T[];
+  lastUpdateDate: string;
+};
+
+type AllTrailsResponse = {
+  content: ITrailCard[];
+  totalElements: number;
+};
+
 export type HikingTraiFieldRequestMap = {
   startPoint: { startPoint: string };
   endPoint: { endPoint: string };
@@ -27,8 +40,8 @@ export type HikingTraiFieldRequestMap = {
   trailInfo: { trailInfo: string };
   elevationGained: { elevationGained: number | null };
   trailDifficulty: { trailDifficulty: DifficultyLevelEnum };
-  availableHuts: { availableHuts: { id: number }[] | [] };
-  destinations: { destinations: { id: number }[] | [] };
+  availableHuts: { items: { id: number }[] | [] };
+  destinations: { items: { id: number }[] | [] };
 };
 
 export type HikingTraiFieldResponseMap = {
@@ -46,8 +59,9 @@ export type HikingTraiFieldResponseMap = {
     trailDifficulty: DifficultyLevelEnum;
     lastUpdateDate: string;
   };
-  availableHuts: { availableHuts: IHut[] | []; lastUpdateDate: string };
-  destinations: { destinations: IPlace[] | []; lastUpdateDate: string };
+
+  availableHuts: UpdateItemsResponse<ISelectableItem>;
+  destinations: UpdateItemsResponse<ISelectableItem>;
 };
 
 const apiClient = new ApiClient();
@@ -64,7 +78,7 @@ export const trailsApi = {
   getTrail: async (trailId: string): Promise<ITrail> => {
     try {
       const response = await apiClient.get<ITrail>(
-        PUBLIC_ROUTES.trail.details.build(trailId)
+        PUBLIC_ROUTES.trail.details.build(trailId),
       );
       const detailsStatus = detailsStatusConverter(response.detailsStatus);
       return { ...response, detailsStatus };
@@ -74,19 +88,23 @@ export const trailsApi = {
     }
   },
 
+  getAllTrails: (query: string): Promise<AllTrailsResponse> => {
+    return apiClient.get<AllTrailsResponse>(`${baseTrailsUrl}${query}`);
+  },
+
   deleteTrail: (trailId: string): Promise<void> =>
     apiClient.delete(PUBLIC_ROUTES.trail.details.build(trailId)),
 
   toggleFavoriteStatus: (
     trailId: string,
-    data: ToggleFavoriteRequest
+    data: ToggleFavoriteRequest,
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(PUBLIC_ROUTES.trail.favoriteTrail(trailId), data),
 
   updateHikingTrailField: <K extends keyof HikingTraiFieldRequestMap>(
     field: K,
     trailId: number,
-    data: HikingTraiFieldRequestMap[K]
+    data: HikingTraiFieldRequestMap[K],
   ): Promise<HikingTraiFieldResponseMap[K]> => {
     const endPoint = toKebabOrSpace(field as string);
 
@@ -95,7 +113,7 @@ export const trailsApi = {
 
   updateMainTrailPhoto: (
     trailId: string,
-    data: { imageId: string }
+    data: { imageId: string },
   ): Promise<{ imageId: number }> =>
     apiClient.patch(PUBLIC_ROUTES.trail.updateMainTrailPhoto(trailId), data),
 
@@ -104,12 +122,12 @@ export const trailsApi = {
 
   createTrailComment: (
     trailId: string,
-    data: CommentDataDto
+    data: CommentDataDto,
   ): Promise<IComment> =>
     apiClient.post(PUBLIC_ROUTES.trail.trailComments(trailId), data),
 
   deleteTrailComment: (trailId: string, commentId: string): Promise<void> =>
     apiClient.delete(
-      PUBLIC_ROUTES.trail.deleteTrailComment(trailId, commentId)
+      PUBLIC_ROUTES.trail.deleteTrailComment(trailId, commentId),
     ),
 };
