@@ -1,4 +1,4 @@
-import BaseCard from "@components/common/cards";
+import { BaseCard } from "@components/common/cards";
 import { IAccommodationCard } from "@types";
 import { getOwnershipFlags } from "@utils/ownershipUtils";
 
