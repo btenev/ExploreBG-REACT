@@ -6,10 +6,12 @@ export const BG_GPS_COORDINATES: [number, number] = [42.7249925, 25.4833039];
 export const DEFAULT_MAP_ZOOM = 7;
 
 /*Pagination*/
-export const DEFAULT_PAGE_NUMBER = 1;
-export const DEFAULT_CARDS_PER_PAGE = 3;
+export const DEFAULT_PAGE_NUMBER = "1";
+export const DEFAULT_CARDS_PER_PAGE = "3";
 
-export const DEFAULT_SORT_BY = "id";
+export const TRAILS_ALPHABETICALLY_SEARCH_PARAM = "startPoint";
+
+export const DEFAULT_SORT_BY = "creationDate";
 export const SORT_DIR_DESC = "DESC";
 
 /*Trail info field visible text*/
