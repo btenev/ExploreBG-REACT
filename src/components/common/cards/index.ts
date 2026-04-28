@@ -1,2 +1,2 @@
-import BaseCard from "./BaseCard";
-export default BaseCard;
+export { default as BaseCard } from "./BaseCard";
+export * from "./BaseCardSkeleton";

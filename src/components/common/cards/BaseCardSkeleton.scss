@@ -1,0 +1,67 @@
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+%shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.4rem;
+}
+
+.card--skeleton {
+  // inherits all .card dimensions — min/max width, padding, border-radius, shadow
+  pointer-events: none;
+
+  &__figure {
+    @extend %shimmer;
+    width: 200px;
+    height: 200px;
+    border-radius: 0.5rem;
+  }
+
+  &__title {
+    @extend %shimmer;
+    width: 60%;
+    height: 1.2rem;
+  }
+
+  &__subtitle {
+    @extend %shimmer;
+    width: 45%;
+    height: 1rem;
+  }
+
+  &__description {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    div {
+      @extend %shimmer;
+      height: 0.9rem;
+
+      &:last-child {
+        width: 60%; // last line is shorter, mimics real text
+      }
+    }
+  }
+
+  &__link {
+    @extend %shimmer;
+    width: 30%;
+    height: 1rem;
+    margin-top: auto;
+  }
+}
