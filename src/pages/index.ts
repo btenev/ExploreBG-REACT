@@ -12,3 +12,7 @@ export { default as TrailReview } from "./TrailReview";
 export { default as AccommodationDetails } from "./AccommodationDetails";
 export { default as DestinationDetails } from "./DestinationDetails";
 export { default as HikeDetails } from "./HikeDetails";
+export { default as AllTrails } from "./AllTrails";
+export { default as AllDestinations } from "./AllDestinations";
+export { default as AllAccommodations } from "./AllAccommodations";
+export { default as AllHikes } from "./AllHikes";

@@ -1,4 +1,4 @@
-import BaseCard from "@components/common/cards";
+import { BaseCard } from "@components/common/cards";
 import { ITrailCard } from "@types";
 import { getOwnershipFlags } from "@utils/ownershipUtils";
 
@@ -9,6 +9,7 @@ interface Props {
 
 const TrailCard = ({ card, sessionUserId }: Props) => {
   const { canLike } = getOwnershipFlags(sessionUserId, card.createdById);
+
   return (
     <BaseCard
       id={card.id}
