@@ -26,6 +26,11 @@ export type HikeFieldResponseMap = {
   hikeInfo: { hikeInfo: string; lastUpdateDate: string };
 };
 
+type AllHikesResponse = {
+  content: IHikeCard[];
+  totalElements: number;
+};
+
 const apiClient = new ApiClient();
 
 const baseHikesUrl = "/hikes";
@@ -37,16 +42,20 @@ export const hikesApi = {
   getHike: (hikeId: string): Promise<IHike> =>
     apiClient.get(PUBLIC_ROUTES.hike.details.build(hikeId)),
 
+  getAllHikes: (query: string): Promise<AllHikesResponse> => {
+    return apiClient.get<AllHikesResponse>(`${baseHikesUrl}${query}`);
+  },
+
   toggleFavoriteStatus: (
     hikeId: string,
-    data: ToggleFavoriteRequest
+    data: ToggleFavoriteRequest,
   ): Promise<ToggleFavoriteResponse> =>
     apiClient.patch(PUBLIC_ROUTES.hike.favoriteStatus(hikeId), data),
 
   updateHikeField: <K extends keyof HikeFieldRequestMap>(
     field: K,
     trailId: number,
-    data: HikeFieldRequestMap[K]
+    data: HikeFieldRequestMap[K],
   ): Promise<HikeFieldResponseMap[K]> => {
     const endPoint = toKebabOrSpace(field as string);
 
@@ -58,7 +67,7 @@ export const hikesApi = {
 
   createHikeComment: (
     hikeId: string,
-    data: CommentDataDto
+    data: CommentDataDto,
   ): Promise<IComment> =>
     apiClient.post(PUBLIC_ROUTES.hike.hikeComments(hikeId), data),
 
