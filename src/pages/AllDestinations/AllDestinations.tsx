@@ -7,6 +7,7 @@ const AllDestinations = () => {
   return (
     <CatalogPage
       heading="Explore unforgettable destinations"
+      link={{ to: "/destinations/create", children: "Create Destination" }}
       renderContent={(userId) => (
         <CatalogClient
           alphabeticallySearchParam="destinationName"

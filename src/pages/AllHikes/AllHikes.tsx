@@ -7,6 +7,7 @@ const AllHikes = () => {
   return (
     <CatalogPage
       heading="Explore unforgettable hikes"
+      link={{ to: "/hikes/create", children: "Create Hike" }}
       renderContent={(userId) => (
         <CatalogClient
           alphabeticallySearchParam="startPoint"

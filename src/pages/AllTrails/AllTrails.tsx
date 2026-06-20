@@ -7,6 +7,7 @@ const AllTrails = () => {
   return (
     <CatalogPage
       heading="Find exciting trails"
+      link={{ to: "/trails/create", children: "Create Trail" }}
       renderContent={(userId) => (
         <CatalogClient
           alphabeticallySearchParam="startPoint"
