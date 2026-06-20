@@ -5,13 +5,13 @@ import { RegisterDto } from "@schemas/user";
 
 import PasswordInfo from "../PasswordInfo";
 
-const RegisterForm = () => {
+const RegisterForm = ({ redirectTo }: { redirectTo?: string }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useRegisterForm();
-  const { mutate: login, isPending } = useRegister();
+  const { mutate: login, isPending } = useRegister(redirectTo);
 
   const onSubmit = (data: RegisterDto) => {
     login(data);

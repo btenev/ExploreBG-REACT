@@ -3,14 +3,14 @@ import { useLogin } from "@hooks/dataHooks/authHooks";
 import { useLoginForm } from "@hooks/formHooks/authHooks";
 import { LoginDto } from "@schemas/user";
 
-const LoginForm = () => {
+const LoginForm = ({ redirectTo }: { redirectTo?: string }) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useLoginForm();
 
-  const { mutate: login, isPending } = useLogin();
+  const { mutate: login, isPending } = useLogin(redirectTo);
 
   const onSubmit = (data: LoginDto) => {
     login(data);

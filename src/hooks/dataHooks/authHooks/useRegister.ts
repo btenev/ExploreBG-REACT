@@ -8,7 +8,7 @@ import { RegisterDto } from "@schemas/user";
 import { useSessionStore } from "@store/sessionStore";
 import { handleApiError } from "@utils/errorHandlers";
 
-export const useRegister = () => {
+export const useRegister = (redirectTo?: string) => {
   const store = useSessionStore((state) => state.setUser);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export const useRegister = () => {
         userRoles: data.roles,
       });
       toast.success(`Welcome ${data.username}!`);
-      navigate(PUBLIC_ROUTES.user.myProfile);
+      navigate(redirectTo ?? PUBLIC_ROUTES.user.myProfile, { replace: true });
     },
     onError: handleApiError,
   });

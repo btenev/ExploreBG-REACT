@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { BackButton } from "@components/common";
 import { PUBLIC_ROUTES } from "@constants";
@@ -10,11 +10,15 @@ interface Props {
 }
 
 const RequireAuthModal = ({ message }: Props) => {
+  const location = useLocation();
+
   return (
     <CommonModal>
       <p>{message}</p>
       <BackButton />
-      <Link to={PUBLIC_ROUTES.authentication}>Log in or Register</Link>
+      <Link to={PUBLIC_ROUTES.authentication} state={{ from: location }}>
+        Log in or Register
+      </Link>
     </CommonModal>
   );
 };
