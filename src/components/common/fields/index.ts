@@ -3,5 +3,6 @@ export { default as EditableFieldForm } from "./EditableFieldForm";
 export { default as EditableTextareaFieldForm } from "./EditableTextareaFieldForm";
 export { default as FormFieldInfo } from "./FormFieldInfo";
 export { default as FormInputSearch } from "./FormInputSearch";
+export { default as FormInputSearchAdvanced } from "./FormInputSearchAdvanced";
 export { default as CustomSelect } from "./CustomSelect";
 export { default as ProfileEditableFieldForm } from "./ProfileEditableFieldForm";

@@ -7,9 +7,9 @@ import {
   useApproveEntityImages,
 } from "@hooks/dataHooks/moderation/crossEntityReviewHooks";
 import { useGetImageReviewer } from "@hooks/dataHooks/moderation/imageReviewHooks";
+import { useSession } from "@hooks/sessionHooks";
 import { PhotoEntityType, StatusEnum, TPhoto } from "@types";
 import { capitalize } from "@utils/mixedUtils";
-import { useSessionInfo } from "@utils/sessionUtils";
 
 interface Props {
   entityId: number;
@@ -27,7 +27,7 @@ const ApproveEntityImages = ({
     imageUrl: string;
     index: number;
   } | null>(null);
-  const { staffId } = useSessionInfo();
+  const { userId } = useSession();
 
   const imageId = imagesForReview[0]?.id;
   const imageStatus = imagesForReview[0]?.imageStatus !== StatusEnum.approved;
@@ -38,7 +38,7 @@ const ApproveEntityImages = ({
   const { mutate: approveImages, isPending } = useApproveEntityImages();
 
   const forReview =
-    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== staffId;
+    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== userId;
 
   const handleReviewClick = () => {
     if (forReview) {
@@ -64,7 +64,7 @@ const ApproveEntityImages = ({
     setSelectedPhotoIds((prev) =>
       prev.includes(imageId)
         ? prev.filter((id) => id !== imageId)
-        : [...prev, imageId]
+        : [...prev, imageId],
     );
   };
 
@@ -76,7 +76,7 @@ const ApproveEntityImages = ({
 
     approveImages({
       entityId: String(entityId),
-      entityType: photoEntityType,
+      photoEntityType: photoEntityType,
       imageIds: selectedPhotoIds,
     });
   };
