@@ -20,7 +20,11 @@ export const PUBLIC_ROUTES = {
   },
 
   accommodation: {
+    page: `${ACCOMMODATIONS}` as const, // simple
+
     random: `${ACCOMMODATIONS}/random` as const, // simple
+
+    create: `${ACCOMMODATIONS}/create` as const, // simple
 
     details: {
       path: `${ACCOMMODATIONS}/:accommodationId` as const, // dynamic
@@ -44,7 +48,11 @@ export const PUBLIC_ROUTES = {
   },
 
   destination: {
+    page: `${DESTINATIONS}` as const, // simple
+
     random: `${DESTINATIONS}/random` as const, // simple
+
+    create: `${DESTINATIONS}/create` as const, // simple
 
     details: {
       path: `${DESTINATIONS}/:destinationId` as const, // dynamic
@@ -68,14 +76,18 @@ export const PUBLIC_ROUTES = {
   },
 
   trail: {
+    page: `${TRAILS}` as const, // simple
+
     random: `${TRAILS}/random` as const, // simple`
 
-    create: `${TRAILS}` as const, // simple
+    create: `${TRAILS}/create` as const, // simple
 
     details: {
       path: `${TRAILS}/:trailId` as const, // dynamic
       build: (trailId: string | number) => `${TRAILS}/${trailId}`,
     },
+
+    availableTrails: `${TRAILS}/select` as const, // simple,
 
     favoriteTrail: (trailId: string | number) => `${TRAILS}/${trailId}/like`,
 
@@ -90,7 +102,11 @@ export const PUBLIC_ROUTES = {
   },
 
   hike: {
+    page: `${HIKES}` as const, // simple
+
     random: `${HIKES}/random` as const, // simple
+
+    create: `${HIKES}/create` as const, // simple
 
     details: {
       path: `${HIKES}/:hikeId` as const, // dynamic

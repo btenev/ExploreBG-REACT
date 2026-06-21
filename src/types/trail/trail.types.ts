@@ -11,9 +11,12 @@ import {
   TPhoto,
 } from "../shared";
 
-export interface ITrailCard {
+export interface ITrailIdentifier {
   id: number;
   trailName: string;
+}
+
+export interface ITrailCard extends ITrailIdentifier {
   trailInfo: string;
   imageUrl: string | null;
   likedByUser?: boolean;

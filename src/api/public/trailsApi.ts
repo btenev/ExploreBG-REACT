@@ -6,6 +6,7 @@ import {
   IComment,
   ITrail,
   ITrailCard,
+  ITrailIdentifier,
   SuitableForEnum,
   ToggleFavoriteRequest,
   ToggleFavoriteResponse,
@@ -21,7 +22,7 @@ export interface ISelectableItem {
   name: string;
 }
 
-type UpdateItemsResponse<T> = {
+export type UpdateItemsResponse<T> = {
   items: T[];
   lastUpdateDate: string;
 };
@@ -91,6 +92,9 @@ export const trailsApi = {
   getAllTrails: (query: string): Promise<AllTrailsResponse> => {
     return apiClient.get<AllTrailsResponse>(`${baseTrailsUrl}${query}`);
   },
+
+  getAvailableTrails: (): Promise<ITrailIdentifier[]> =>
+    apiClient.get(PUBLIC_ROUTES.trail.availableTrails),
 
   deleteTrail: (trailId: string): Promise<void> =>
     apiClient.delete(PUBLIC_ROUTES.trail.details.build(trailId)),
