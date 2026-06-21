@@ -1,5 +1,11 @@
-import { EntityCreatedBy, FavoriteToggle, FieldPair } from "@components/common";
+import {
+  EntityCreatedBy,
+  EntityDetailsLastUpdateField,
+  FavoriteToggle,
+  FieldPair,
+} from "@components/common";
 import { LastUpdatedProvider } from "@context/LastUpdate";
+import { useAvailableTrails } from "@hooks/dataHooks/trailHooks";
 import { IHike } from "@types";
 
 import {
@@ -8,6 +14,7 @@ import {
   HikeDetailsDateField,
   HikeDetailsNextToField,
   HikeDetailsInfoField,
+  HikeDetailsHikingTrailField,
 } from "./fields";
 
 import "./HikeDetailsSection.scss";
@@ -19,7 +26,10 @@ interface Props {
 }
 
 const HikeDetailsSection = ({ hike, canEdit, canShowFavorite }: Props) => {
+  const { data: trails, isLoading: isLoadingTrails } =
+    useAvailableTrails(canEdit);
   const { id } = hike;
+
   return (
     <LastUpdatedProvider>
       <section className="hike details-page-section">
@@ -59,11 +69,21 @@ const HikeDetailsSection = ({ hike, canEdit, canShowFavorite }: Props) => {
           />
         </FieldPair>
 
+        <HikeDetailsHikingTrailField
+          initialTrail={hike.trail}
+          hikeId={id}
+          canEdit={canEdit}
+          availableTrails={trails || []}
+          isLoadingTrails={isLoadingTrails}
+        />
+
         <HikeDetailsInfoField
           hikeId={id}
           hikeInfo={hike.hikeInfo}
           canEdit={canEdit}
         />
+
+        <EntityDetailsLastUpdateField lastUpdateDate={hike.lastUpdateDate} />
       </section>
     </LastUpdatedProvider>
   );
