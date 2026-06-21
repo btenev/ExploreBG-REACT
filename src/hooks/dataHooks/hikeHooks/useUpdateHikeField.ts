@@ -2,26 +2,30 @@ import * as Sentry from "@sentry/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
-import {
-  HikeFieldResponseMap,
-  HikeFieldRequestMap,
-  hikesApi,
-} from "@api/public";
+import { HikeFieldRequestMap, hikesApi } from "@api/public";
 import { useLastUpdated } from "@context/LastUpdate";
 import { ApiError } from "@types";
-import { formatEntityLastUpdate } from "@utils/dateUtils";
 import { handleApiError } from "@utils/errorHandlers";
 import { capitalize, toKebabOrSpace } from "@utils/mixedUtils";
 
-type ExtractInnerValue<K extends keyof HikeFieldResponseMap> =
-  HikeFieldResponseMap[K][K extends keyof HikeFieldResponseMap[K] ? K : never];
+// type ExtractInnerValue<K extends keyof HikeFieldResponseMap> =
+//   HikeFieldResponseMap[K][K extends keyof HikeFieldResponseMap[K] ? K : never];
+
+const isItemsField = (f: keyof HikeFieldRequestMap): f is "trail" =>
+  f === "trail";
+
+const isItemsResponse = (
+  data: any,
+): data is { items: any[]; lastUpdate: string } => {
+  return data && "items" in data && "lastUpdate" in data;
+};
 
 /**
  * Updated hook: pass React Hook Form's reset function instead of setState
  */
 export const useUpdateHikeField = <K extends keyof HikeFieldRequestMap>(
   field: K,
-  hikeId: number
+  hikeId: number,
 ) => {
   const queryClient = useQueryClient();
   const { setLastUpdated } = useLastUpdated();
@@ -47,37 +51,64 @@ export const useUpdateHikeField = <K extends keyof HikeFieldRequestMap>(
         return;
       }
 
-      if (field in data) {
-        const extractedValue = Object.values(data)[0] as ExtractInnerValue<K>;
-        const lastUpdated = data.lastUpdateDate;
+      let extractedValue: any;
+      let lastUpdated: string;
 
-        setLastUpdated(lastUpdated);
-
-        queryClient.invalidateQueries({
-          queryKey: ["hike", hikeId],
-          exact: true,
-        });
-
-        // Refetch all queries matching the key, even if inactive
-        queryClient.refetchQueries({
-          queryKey: ["hike", hikeId],
-          exact: true,
-          type: "all", // 'active' | 'inactive' | 'all' — 'all' includes mounted and unmounted queries
-        });
-        toast.success(
-          `You successfully updated ${toKebabOrSpace(field, false)} field.`
-        );
-        toast.info(`Last updated: ${formatEntityLastUpdate(lastUpdated)}`);
-
-        // Return the updated value so parent can use it with reset()
-        return extractedValue;
+      if (isItemsField(field) && isItemsResponse(data)) {
+        extractedValue = data.items;
+        lastUpdated = data.lastUpdate;
       } else {
-        Sentry.captureMessage("Missing expected field in response", {
-          level: "warning",
-          extra: { field, data },
-        });
-        toast.error(`Response did not contain expected field: ${field}`);
+        const valueKey = Object.keys(data).find(
+          (k) => k !== "lastUpdateDate",
+        ) as keyof typeof data;
+
+        extractedValue = data[valueKey];
+        lastUpdated = data.lastUpdateDate;
       }
+
+      setLastUpdated(lastUpdated);
+
+      queryClient.setQueryData(["hike", String(hikeId)], (old: any) => {
+        let fieldValue = extractedValue;
+
+        if (field === "trail") {
+          const mapped = extractedValue.map((t: any) => ({
+            id: t.id,
+            trailName: t.name ?? t.trailName,
+          }));
+          fieldValue = mapped[0] ?? null; // ← single object or null, not array
+        }
+
+        console.log("fieldValue being set in cache", fieldValue);
+        console.log("raw extractedValue", extractedValue);
+
+        console.group(`🔧 Updating hike ${hikeId} field: ${field}`);
+
+        console.log("Old value:", old);
+        console.log("Extracted value:", fieldValue);
+        console.log("Last updated:", lastUpdated);
+
+        const updated = {
+          ...old,
+          [field]: fieldValue,
+          lastUpdateDate: lastUpdated,
+        };
+
+        console.log("New value:", updated);
+        console.groupEnd();
+
+        console.log("extractedValue from server", extractedValue);
+        console.log("fieldValue after mapping", fieldValue);
+
+        return updated;
+      });
+
+      toast.success(
+        `You successfully updated ${toKebabOrSpace(field, false)} field.`,
+      );
+      console.log("Extracted value " + extractedValue);
+
+      return extractedValue;
     },
     onError: (error: ApiError) => {
       Sentry.captureException(error, { extra: { hikeId, field } });

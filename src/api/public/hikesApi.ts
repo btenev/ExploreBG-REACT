@@ -1,4 +1,5 @@
 import { ApiClient } from "@api/base";
+import { ISelectableItem, UpdateItemsResponse } from "@api/public";
 import { PUBLIC_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import {
@@ -16,6 +17,7 @@ export type HikeFieldRequestMap = {
   hikeDate: { hikeDate: string };
   nextTo: { nextTo: string };
   hikeInfo: { hikeInfo: string };
+  trail: { items: { id: number }[] | [] };
 };
 
 export type HikeFieldResponseMap = {
@@ -24,6 +26,7 @@ export type HikeFieldResponseMap = {
   hikeDate: { hikeDate: string; lastUpdateDate: string };
   nextTo: { nextTo: string; lastUpdateDate: string };
   hikeInfo: { hikeInfo: string; lastUpdateDate: string };
+  trail: UpdateItemsResponse<ISelectableItem>;
 };
 
 type AllHikesResponse = {

@@ -32,13 +32,13 @@ const router = createBrowserRouter([
       { path: "/faq", element: <FAQ /> },
       { path: PUBLIC_ROUTES.user.myProfile, element: <MyProfile /> },
       { path: PUBLIC_ROUTES.user.getProfile.path, element: <UserProfile /> },
-      { path: PUBLIC_ROUTES.trail.create, element: <AllTrails /> },
-      { path: PUBLIC_ROUTES.destination.create, element: <AllDestinations /> },
+      { path: PUBLIC_ROUTES.trail.page, element: <AllTrails /> },
+      { path: PUBLIC_ROUTES.destination.page, element: <AllDestinations /> },
       {
-        path: PUBLIC_ROUTES.accommodation.create,
+        path: PUBLIC_ROUTES.accommodation.page,
         element: <AllAccommodations />,
       },
-      { path: PUBLIC_ROUTES.hike.create, element: <AllHikes /> },
+      { path: PUBLIC_ROUTES.hike.page, element: <AllHikes /> },
       { path: PUBLIC_ROUTES.hike.details.path, element: <HikeDetails /> },
       { path: PUBLIC_ROUTES.trail.details.path, element: <TrailDetails /> },
       {

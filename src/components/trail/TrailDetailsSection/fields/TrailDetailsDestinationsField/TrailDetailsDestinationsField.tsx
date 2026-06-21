@@ -1,6 +1,6 @@
 import { FcBinoculars } from "react-icons/fc";
 
-import EditFormInputSearch from "@components/common/fields/EditFormInputSearch";
+import { EditFormInputSearch } from "@components/common";
 import { useUpdateHikingTrailField } from "@hooks/dataHooks/trailHooks";
 import { useDestinationsForm } from "@hooks/formHooks/trailHooks";
 import { IPlace } from "@types";

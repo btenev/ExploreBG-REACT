@@ -1,6 +1,6 @@
 import { GiWoodCabin } from "react-icons/gi";
 
-import EditFormInputSearch from "@components/common/fields/EditFormInputSearch";
+import { EditFormInputSearch } from "@components/common";
 import { useUpdateHikingTrailField } from "@hooks/dataHooks/trailHooks";
 import { useAvailableAccommodationsForm } from "@hooks/formHooks/trailHooks";
 import { IHut } from "@types";

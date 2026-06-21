@@ -1,6 +1,6 @@
 import { IComment } from "../shared/comment";
 import { IOwner } from "../shared/owner";
-import { ITrail } from "../trail";
+import { ITrailIdentifier } from "../trail";
 
 export interface IHikeCard {
   id: number;
@@ -17,6 +17,7 @@ export interface IHike extends IHikeCard {
   endPoint: string;
   nextTo: string;
   createdBy: IOwner;
-  hikingTrail: ITrail | null;
+  lastUpdateDate: string;
+  trail: ITrailIdentifier | null;
   comments: IComment[];
 }
