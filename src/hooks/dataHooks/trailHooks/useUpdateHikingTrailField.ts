@@ -1,21 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
-import {
-  trailsApi,
-  HikingTraiFieldRequestMap,
-  HikingTraiFieldResponseMap,
-} from "@api/public";
+import { trailsApi, HikingTraiFieldRequestMap } from "@api/public";
 import { useLastUpdated } from "@context/LastUpdate";
-import { formatEntityLastUpdate } from "@utils/dateUtils";
 import { handleApiError } from "@utils/errorHandlers";
 import { capitalize, toKebabOrSpace } from "@utils/mixedUtils";
 
-type ExtractInnerValue<K extends keyof HikingTraiFieldResponseMap> =
-  HikingTraiFieldResponseMap[K][K extends keyof HikingTraiFieldResponseMap[K]
-    ? K
-    : never];
+const isItemsField = (
+  f: keyof HikingTraiFieldRequestMap,
+): f is "availableHuts" | "destinations" =>
+  f === "availableHuts" || f === "destinations";
 
+const isItemsResponse = (
+  data: any,
+): data is { items: any[]; lastUpdate: string } => {
+  return data && "items" in data && "lastUpdate" in data;
+};
 /**
  * Updated hook: pass React Hook Form's reset function instead of setState
  */
@@ -23,49 +23,96 @@ export const useUpdateHikingTrailField = <
   K extends keyof HikingTraiFieldRequestMap,
 >(
   field: K,
-  trailId: number
+  trailId: number,
 ) => {
   const queryClient = useQueryClient();
   const { setLastUpdated } = useLastUpdated();
 
   return useMutation({
     mutationKey: [`update${capitalize(field)}`],
+
     mutationFn: (data: HikingTraiFieldRequestMap[K]) =>
       trailsApi.updateHikingTrailField(field, trailId, data),
-    onSuccess: (data, variables, context) => {
+
+    onSuccess: (data) => {
       if (!data) {
-        toast.error(`Failed to update ${field}. Something went wrong.`);
+        toast.error(`Failed to update ${field}.`);
         return;
       }
 
-      if (field in data) {
-        const extractedValue = Object.values(data)[0] as ExtractInnerValue<K>;
-        const lastUpdated = data.lastUpdateDate;
+      let extractedValue: any;
+      let lastUpdated: string;
 
-        setLastUpdated(lastUpdated);
-
-        queryClient.invalidateQueries({
-          queryKey: ["trail", trailId],
-          exact: true,
-        });
-
-        // Refetch all queries matching the key, even if inactive
-        queryClient.refetchQueries({
-          queryKey: ["trail", trailId],
-          exact: true,
-          type: "all", // 'active' | 'inactive' | 'all' — 'all' includes mounted and unmounted queries
-        });
-        toast.success(
-          `You successfully updated ${toKebabOrSpace(field, false)} field.`
-        );
-        toast.info(`Last updated: ${formatEntityLastUpdate(lastUpdated)}`);
-
-        // Return the updated value so parent can use it with reset()
-        return extractedValue;
-      } else {
-        toast.error(`Response did not contain expected field: ${field}`);
+      // ---------------------------------------------------
+      // CASE 1: availableHuts / destinations (UpdateItemsResponse)
+      // ---------------------------------------------------
+      if (isItemsField(field) && isItemsResponse(data)) {
+        extractedValue = data.items;
+        lastUpdated = data.lastUpdate;
       }
+
+      // ---------------------------------------------------
+      // CASE 2: all other fields (simple key + lastUpdateDate)
+      // ---------------------------------------------------
+      else {
+        const valueKey = Object.keys(data).find(
+          (k) => k !== "lastUpdateDate",
+        ) as keyof typeof data;
+
+        extractedValue = data[valueKey];
+        lastUpdated = data.lastUpdateDate;
+      }
+
+      setLastUpdated(lastUpdated);
+
+      queryClient.setQueryData(["trail", String(trailId)], (old: any) => {
+        let fieldValue = extractedValue;
+
+        if (field === "availableHuts") {
+          fieldValue = extractedValue.map((h: any) => ({
+            id: h.id,
+            accommodationName: h.name ?? h.accommodationName,
+          }));
+        }
+
+        if (field === "destinations") {
+          fieldValue = extractedValue.map((d: any) => ({
+            id: d.id,
+            destinationName: d.name,
+          }));
+        }
+
+        console.log("fieldValue being set in cache", fieldValue);
+        console.log("raw extractedValue", extractedValue);
+
+        console.group(`🔧 Updating trail ${trailId} field: ${field}`);
+
+        console.log("Old value:", old);
+        console.log("Extracted value:", fieldValue);
+        console.log("Last updated:", lastUpdated);
+
+        const updated = {
+          ...old,
+          [field]: fieldValue,
+          lastUpdateDate: lastUpdated,
+        };
+
+        console.log("New value:", updated);
+        console.groupEnd();
+
+        console.log("extractedValue from server", extractedValue);
+        console.log("fieldValue after mapping", fieldValue);
+
+        return updated;
+      });
+      toast.success(
+        `You successfully updated ${toKebabOrSpace(field, false)} field.`,
+      );
+      console.log("Extracted value " + extractedValue);
+
+      return extractedValue;
     },
+
     onError: handleApiError,
   });
 };

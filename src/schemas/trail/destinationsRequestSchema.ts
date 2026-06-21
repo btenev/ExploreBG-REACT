@@ -1,5 +1,5 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const destinationsRequestSchema = z.object({
-  destinations: z.array(z.object({ id: z.number() })),
+  items: z.array(z.object({ id: z.number(), destinationName: z.string() })),
 });
