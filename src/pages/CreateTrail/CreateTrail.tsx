@@ -7,9 +7,9 @@ import { useTrailEnums } from "@hooks/dataHooks/utilityHooks";
 import "./CreateTrail.scss";
 
 const CreateTrail = () => {
-  const { data: enumData } = useTrailEnums(); /*TODO: Fix the logic*/
-  const { data: accommodationData } = useAvailableAccommodations();
-  const { data: destinationData } = useAvailableDestinations();
+  const { data: enumData } = useTrailEnums(true); /*TODO: Fix the logic*/
+  const { data: accommodationData } = useAvailableAccommodations(true);
+  const { data: destinationData } = useAvailableDestinations(true);
 
   return (
     <main className="form-container trail-form">

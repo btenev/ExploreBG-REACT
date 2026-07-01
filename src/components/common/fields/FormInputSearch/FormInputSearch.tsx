@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import { useCloseOnEscapeTabAndClickOutside } from "@hooks/uiHooks";
 
@@ -14,6 +14,7 @@ interface Props {
   value?: ISuggestion[];
   onChange: (newValues: ISuggestion[]) => void;
   suggestionName: string;
+  maxItems?: number;
 }
 
 const FormInputSearch = ({
@@ -21,12 +22,14 @@ const FormInputSearch = ({
   value,
   onChange,
   suggestionName,
+  maxItems,
 }: Props) => {
-  const selectedValue = value ?? [];
+  const selectedValue = useMemo(() => value ?? [], [value]);
+  const isAtLimit = maxItems !== undefined && selectedValue.length >= maxItems;
 
   const [search, setSearch] = useState<string>("");
   const [filteredSuggestions, setFilteredSuggestions] = useState<ISuggestion[]>(
-    []
+    [],
   );
   const [activeSuggestionIndex, setActiveSuggestionIndex] =
     useState<number>(-1);
@@ -48,7 +51,7 @@ const FormInputSearch = ({
     }
 
     const filtered = suggestions.filter((s) =>
-      s[suggestionName]?.toLowerCase().includes(inputValue.toLowerCase())
+      s[suggestionName]?.toLowerCase().includes(inputValue.toLowerCase()),
     );
 
     setFilteredSuggestions(filtered);
@@ -59,11 +62,12 @@ const FormInputSearch = ({
     (suggestion: ISuggestion) => {
       if (selectedValue.some((selected) => selected.id === suggestion.id))
         return;
+      if (maxItems !== undefined && selectedValue.length >= maxItems) return;
 
       onChange([...selectedValue, suggestion]);
       resetSuggestions();
     },
-    [value, onChange, resetSuggestions]
+    [onChange, resetSuggestions, selectedValue, maxItems],
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -74,7 +78,7 @@ const FormInputSearch = ({
     switch (e.key) {
       case "ArrowDown":
         setActiveSuggestionIndex((prev) =>
-          Math.min(prev + 1, filteredSuggestions.length - 1)
+          Math.min(prev + 1, filteredSuggestions.length - 1),
         );
         break;
       case "ArrowUp":
@@ -97,7 +101,7 @@ const FormInputSearch = ({
     (id: number) => {
       onChange(selectedValue.filter((v) => v.id !== id));
     },
-    [selectedValue, onChange]
+    [selectedValue, onChange],
   );
 
   useCloseOnEscapeTabAndClickOutside(suggestionsRef, resetSuggestions);
@@ -119,7 +123,8 @@ const FormInputSearch = ({
             : undefined
         }
       />
-      {filteredSuggestions.length > 0 && (
+
+      {!isAtLimit && filteredSuggestions.length > 0 && (
         <div ref={suggestionsRef} className="suggestions__wrapper">
           <ul className="suggestions__wrapper__matches">
             {filteredSuggestions.map((suggestion, index) => {
@@ -140,6 +145,7 @@ const FormInputSearch = ({
           </ul>
         </div>
       )}
+
       {selectedValue.map((value) => (
         <p key={value.id} className="suggestions__selected">
           {value[suggestionName]}

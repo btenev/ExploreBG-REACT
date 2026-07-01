@@ -18,7 +18,7 @@ export const createHikeSchema = z.object({
   hikeDate: hikeDateSchema,
   hikeInfo: hikeInfoSchema,
   nextTo: nextToSchema,
-  trailId: availableTrail.optional(),
+  trailId: z.array(availableTrail).optional(),
 });
 
 export type CreateHikeDto = z.infer<typeof createHikeSchema>;
