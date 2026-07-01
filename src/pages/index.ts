@@ -16,3 +16,4 @@ export { default as AllTrails } from "./AllTrails";
 export { default as AllDestinations } from "./AllDestinations";
 export { default as AllAccommodations } from "./AllAccommodations";
 export { default as AllHikes } from "./AllHikes";
+export { default as CreateHike } from "./CreateHike";
