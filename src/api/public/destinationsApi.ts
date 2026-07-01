@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import {
   DestinationTypeEnum,
@@ -41,16 +41,14 @@ type AllDestinationsResponse = {
 
 const apiClient = new ApiClient();
 
-const baseDestinationUrl = "/destinations";
-
 export const destinationsApi = {
   get4RandomDestinations: (): Promise<IDestinationCard[]> =>
-    apiClient.get(PUBLIC_ROUTES.destination.random),
+    apiClient.get(API_ROUTES.destination.random),
 
   getDestination: async (destinationId: string): Promise<IDestination> => {
     try {
       const response = await apiClient.get<IDestination>(
-        PUBLIC_ROUTES.destination.details.build(destinationId),
+        API_ROUTES.destination.byId(destinationId),
       );
       const detailsStatus = detailsStatusConverter(response.detailsStatus);
       return { ...response, detailsStatus };
@@ -64,66 +62,52 @@ export const destinationsApi = {
 
   getAllDestinations: (query: string): Promise<AllDestinationsResponse> => {
     return apiClient.get<AllDestinationsResponse>(
-      `${baseDestinationUrl}${query}`,
+      `${API_ROUTES.destination.root}${query}`,
     );
   },
 
   updateDestinationField: <K extends keyof DestinationFieldRequestMap>(
     field: K,
-    accommodationId: number,
+    destinationId: number,
     data: DestinationFieldRequestMap[K],
   ): Promise<DestinationFieldResponseMap[K]> => {
     const endPoint = toKebabOrSpace(field as string);
     return apiClient.patch(
-      `${baseDestinationUrl}/${accommodationId}/${endPoint}`,
+      `${API_ROUTES.destination.root}/${destinationId}/${endPoint}`,
       data,
     );
   },
 
   updateMainDestinationPhoto: (
-    destinationnId: string,
+    destinationId: string,
     data: { imageId: string },
   ): Promise<{ imageId: number }> =>
-    apiClient.patch(
-      PUBLIC_ROUTES.destination.updateMainDestinationPhoto(destinationnId),
-      data,
-    ),
+    apiClient.patch(API_ROUTES.destination.mainImage(destinationId), data),
 
   getAvailableDestinations: (): Promise<IPlace[]> =>
-    apiClient.get(PUBLIC_ROUTES.destination.availableDestination),
+    apiClient.get(API_ROUTES.destination.select),
 
   toggleFavoriteStatus: (
     destinationId: string,
     data: ToggleFavoriteRequest,
   ): Promise<ToggleFavoriteResponse> =>
-    apiClient.patch(
-      PUBLIC_ROUTES.destination.favoriteStatus(destinationId),
-      data,
-    ),
+    apiClient.patch(API_ROUTES.destination.like(destinationId), data),
 
   getDestinationComments: (destinationId: string): Promise<IComment[]> =>
-    apiClient.get<IComment[]>(
-      PUBLIC_ROUTES.destination.destinationComments(destinationId),
-    ),
+    apiClient.get<IComment[]>(API_ROUTES.destination.comments(destinationId)),
 
   createDestinationComment: (
     destinationId: string,
     data: CommentDataDto,
   ): Promise<IComment> =>
-    apiClient.post(
-      PUBLIC_ROUTES.destination.destinationComments(destinationId),
-      data,
-    ),
+    apiClient.post(API_ROUTES.destination.comments(destinationId), data),
 
   deleteDestinationComment: (
     destinationId: string,
     commentId: string,
   ): Promise<void> =>
     apiClient.delete(
-      PUBLIC_ROUTES.destination.deleteDestinationComment(
-        destinationId,
-        commentId,
-      ),
+      API_ROUTES.destination.deleteComment(destinationId, commentId),
     ),
 };
 

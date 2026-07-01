@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { trailReviewApi } from "@api/moderation";
-import { MODERATION_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 import { CreateTrailDto } from "@schemas/trail";
 import { ReviewStatusEnum } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
@@ -33,13 +33,13 @@ export const useApproveTrail = () => {
             detailsStatus: ReviewStatusEnum.approved,
             entityStatus: data.entityStatus ?? old.entityStatus,
           };
-        }
+        },
       );
 
       //Remove reviewer data cache to hide claim/review buttons immediately
       console.log(
         "Before removal:",
-        queryClient.getQueryData(["getTrailReviewer", trailId])
+        queryClient.getQueryData(["getTrailReviewer", trailId]),
       );
       queryClient.removeQueries({
         queryKey: ["getTrailReviewer", trailId],
@@ -47,7 +47,7 @@ export const useApproveTrail = () => {
       });
       console.log(
         "After removal:",
-        queryClient.getQueryData(["getTrailReviewer", trailId])
+        queryClient.getQueryData(["getTrailReviewer", trailId]),
       );
 
       toast.success("Trail details approved successfully!");
@@ -58,7 +58,7 @@ export const useApproveTrail = () => {
       });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(MODERATION_ROUTES.dashboard);
+        navigate(APP_ROUTES.moderation.dashboard);
       }
     },
 

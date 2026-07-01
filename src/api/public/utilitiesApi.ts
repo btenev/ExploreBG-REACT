@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 import { accommodationEnumsSchema } from "@schemas/accommodation";
 import { destinationEnumsSchema } from "@schemas/destination";
 import { trailEnumsSchema } from "@schemas/trail";
@@ -44,13 +44,13 @@ export interface DestinationEnumsResponse {
 export const utilitiesApi = {
   getGenderEnum: async (): Promise<RegisterEnumsResponse> => {
     const response = await apiClient.get<RegisterEnumsResponse>(
-      PUBLIC_ROUTES.utilities.registerEnums
+      API_ROUTES.utilities.registerEnums,
     );
 
     const parsed = safeParseOrThrow(
       registerEnumsSchema,
       response,
-      "Failed to load gender options. Please try again later."
+      "Failed to load gender options. Please try again later.",
     );
 
     return { gender: parsed.gender ?? [] };
@@ -58,34 +58,34 @@ export const utilitiesApi = {
 
   getTrailEnums: async (): Promise<TrailEnumsResponse> => {
     const response = await apiClient.get<TrailEnumsResponse>(
-      PUBLIC_ROUTES.utilities.trailEnums
+      API_ROUTES.utilities.trailEnums,
     );
     return safeParseOrThrow(
       trailEnumsSchema,
       response,
-      "Failed to load trail enums. Please try again later."
+      "Failed to load trail enums. Please try again later.",
     );
   },
 
   getAccommodationEnums: async (): Promise<AccommodationEnumResponse> => {
     const response = await apiClient.get<AccommodationEnumResponse>(
-      PUBLIC_ROUTES.utilities.accommodationEnums
+      API_ROUTES.utilities.accommodationEnums,
     );
     return safeParseOrThrow(
       accommodationEnumsSchema,
       response,
-      "Failed to load accommodation enums. Please try again later."
+      "Failed to load accommodation enums. Please try again later.",
     );
   },
 
   getDestinationEnums: async (): Promise<DestinationEnumsResponse> => {
     const response = await apiClient.get<DestinationEnumsResponse>(
-      PUBLIC_ROUTES.utilities.destinationEnums
+      API_ROUTES.utilities.destinationEnums,
     );
     return safeParseOrThrow(
       destinationEnumsSchema,
       response,
-      "Failed to load destination enums. Please try again later."
+      "Failed to load destination enums. Please try again later.",
     );
   },
 };

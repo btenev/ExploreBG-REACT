@@ -1,4 +1,4 @@
-import { MODERATION_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 import { IWaitingApproval, ReviewStatusEnum } from "@types";
 import { reviewStatusConverter } from "@utils/statusConverter";
 
@@ -13,38 +13,30 @@ export interface WaitingApprovalEntityResponse {
 
 export const accommodationReviewApi = {
   getWaitingApprovalAccommodations: (
-    query: string
+    query: string,
   ): Promise<WaitingApprovalEntityResponse> =>
-    apiClient.get(
-      MODERATION_ROUTES.accommodation.getWaitingApprovalAccommodations(query)
-    ),
+    apiClient.get(API_ROUTES.moderation.accommodation.waitingApproval(query)),
 
   claimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
     apiClient.patch(
-      MODERATION_ROUTES.accommodation.claimForReviewAccommodationImages(
-        accommodationId
-      )
+      API_ROUTES.moderation.accommodation.claimImages(accommodationId),
     ),
 
   unclaimForReviewAccommodationImages: (
-    accommodationId: string
+    accommodationId: string,
   ): Promise<void> =>
     apiClient.patch(
-      MODERATION_ROUTES.accommodation.unclaimForReviewAccommodationImages(
-        accommodationId
-      )
+      API_ROUTES.moderation.accommodation.unclaimImages(accommodationId),
     ),
 
   approveAccommodationImages: async (
     accommodationId: string,
-    imageIds: number[]
+    imageIds: number[],
   ): Promise<{ entityStatus: ReviewStatusEnum }> => {
     try {
       const response = await apiClient.patch<{ entityStatus: unknown }>(
-        MODERATION_ROUTES.accommodation.approveAccommodationImages(
-          accommodationId
-        ),
-        { imageIds }
+        API_ROUTES.moderation.accommodation.approveImages(accommodationId),
+        { imageIds },
       );
 
       const entityStatus = reviewStatusConverter(response.entityStatus);
@@ -52,7 +44,7 @@ export const accommodationReviewApi = {
     } catch (error) {
       console.error("Error approving accommodation images:", error);
       throw new Error(
-        "Failed to approve accommodation images due to invalid entity status"
+        "Failed to approve accommodation images due to invalid entity status",
       );
     }
   },

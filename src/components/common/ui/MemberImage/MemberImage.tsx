@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import defaultUserImg from "@assets/images/user-profile-pic.png";
-import { PUBLIC_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 
 import "./MemberImage.scss";
 
@@ -14,10 +14,7 @@ interface Props {
 const MemberImage = ({ ownerId, imageUrl, username }: Props) => {
   return (
     <>
-      <Link
-        className="member-link"
-        to={PUBLIC_ROUTES.user.getProfile.build(ownerId)}
-      >
+      <Link className="member-link" to={APP_ROUTES.user.profile.build(ownerId)}>
         <img
           src={imageUrl ?? defaultUserImg}
           width={40}

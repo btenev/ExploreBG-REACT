@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { authApi } from "@api/auth";
-import { PUBLIC_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 import { LoginDto } from "@schemas/user";
 import { useSessionStore } from "@store/sessionStore";
 import { handleApiError } from "@utils/errorHandlers";
@@ -23,7 +23,7 @@ export const useLogin = (redirectTo?: string) => {
         userRoles: data.roles,
       });
       toast.success(`Welcome ${data.username}!`);
-      navigate(redirectTo ?? PUBLIC_ROUTES.user.myProfile, { replace: true });
+      navigate(redirectTo ?? APP_ROUTES.user.myProfile, { replace: true });
     },
     onError: handleApiError,
   });

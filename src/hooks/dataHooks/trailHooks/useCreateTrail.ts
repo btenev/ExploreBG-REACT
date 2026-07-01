@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { trailsApi } from "@api/public";
-import { PUBLIC_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 import { CreateTrailDto } from "@schemas/trail";
 import { handleApiError } from "@utils/errorHandlers";
 
@@ -15,7 +15,7 @@ export const useCreateTrail = () => {
     mutationFn: (trailData: CreateTrailDto) => trailsApi.createTrail(trailData),
 
     onSuccess: (data) => {
-      navigate(PUBLIC_ROUTES.trail.details.build(data.id)); // Redirect to the created trail's page
+      navigate(APP_ROUTES.trail.detail.build(data.id)); // Redirect to the created trail's page
       toast.success(`Trail created successfully!`);
     },
 

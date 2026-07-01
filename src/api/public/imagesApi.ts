@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 
 import { ApiClient } from "../base";
 
@@ -11,21 +11,21 @@ interface UserPhotoResponse {
 
 export const imagesApi = {
   updateUserPhoto: (data: FormData): Promise<UserPhotoResponse> =>
-    apiClient.patch(PUBLIC_ROUTES.image.updateUserPhoto, data, true),
+    apiClient.patch(API_ROUTES.image.updateUserPhoto, data, true),
 
   deleteEntityPhotos: (
     entityId: string,
-    photos: { folder: string; ids: number[] }
+    photos: { folder: string; ids: number[] },
   ): Promise<void> =>
-    apiClient.delete(PUBLIC_ROUTES.image.deleteEntityPhotos(entityId), photos),
+    apiClient.delete(API_ROUTES.image.deleteEntityPhotos(entityId), photos),
 
   uploadEntityPhotos: (
     entityId: string,
-    photos: FormData
+    photos: FormData,
   ): Promise<{ id: number; imageUrl: string; isMain: boolean }[]> =>
     apiClient.patch(
-      PUBLIC_ROUTES.image.deleteEntityPhotos(entityId),
+      API_ROUTES.image.deleteEntityPhotos(entityId),
       photos,
-      true
+      true,
     ),
 };

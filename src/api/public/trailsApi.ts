@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import { CreateTrailDto } from "@schemas/trail";
 import {
@@ -67,19 +67,17 @@ export type HikingTraiFieldResponseMap = {
 
 const apiClient = new ApiClient();
 
-const baseTrailsUrl = "/trails";
-
 export const trailsApi = {
   get4RandomTrails: (): Promise<ITrailCard[]> =>
-    apiClient.get(PUBLIC_ROUTES.trail.random),
+    apiClient.get(API_ROUTES.trail.random),
 
   createTrail: (trailData: CreateTrailDto): Promise<{ id: string }> =>
-    apiClient.post(PUBLIC_ROUTES.trail.create, trailData),
+    apiClient.post(API_ROUTES.trail.root, trailData),
 
   getTrail: async (trailId: string): Promise<ITrail> => {
     try {
       const response = await apiClient.get<ITrail>(
-        PUBLIC_ROUTES.trail.details.build(trailId),
+        API_ROUTES.trail.byId(trailId),
       );
       const detailsStatus = detailsStatusConverter(response.detailsStatus);
       return { ...response, detailsStatus };
@@ -90,20 +88,20 @@ export const trailsApi = {
   },
 
   getAllTrails: (query: string): Promise<AllTrailsResponse> => {
-    return apiClient.get<AllTrailsResponse>(`${baseTrailsUrl}${query}`);
+    return apiClient.get<AllTrailsResponse>(`${API_ROUTES.trail.root}${query}`);
   },
 
   getAvailableTrails: (): Promise<ITrailIdentifier[]> =>
-    apiClient.get(PUBLIC_ROUTES.trail.availableTrails),
+    apiClient.get(API_ROUTES.trail.select),
 
   deleteTrail: (trailId: string): Promise<void> =>
-    apiClient.delete(PUBLIC_ROUTES.trail.details.build(trailId)),
+    apiClient.delete(API_ROUTES.trail.byId(trailId)),
 
   toggleFavoriteStatus: (
     trailId: string,
     data: ToggleFavoriteRequest,
   ): Promise<ToggleFavoriteResponse> =>
-    apiClient.patch(PUBLIC_ROUTES.trail.favoriteTrail(trailId), data),
+    apiClient.patch(API_ROUTES.trail.like(trailId), data),
 
   updateHikingTrailField: <K extends keyof HikingTraiFieldRequestMap>(
     field: K,
@@ -112,26 +110,27 @@ export const trailsApi = {
   ): Promise<HikingTraiFieldResponseMap[K]> => {
     const endPoint = toKebabOrSpace(field as string);
 
-    return apiClient.patch(`${baseTrailsUrl}/${trailId}/${endPoint}`, data);
+    return apiClient.patch(
+      `${API_ROUTES.trail.root}/${trailId}/${endPoint}`,
+      data,
+    );
   },
 
   updateMainTrailPhoto: (
     trailId: string,
     data: { imageId: string },
   ): Promise<{ imageId: number }> =>
-    apiClient.patch(PUBLIC_ROUTES.trail.updateMainTrailPhoto(trailId), data),
+    apiClient.patch(API_ROUTES.trail.mainImage(trailId), data),
 
   getTrailComments: (trailId: string): Promise<IComment[]> =>
-    apiClient.get<IComment[]>(PUBLIC_ROUTES.trail.trailComments(trailId)),
+    apiClient.get<IComment[]>(API_ROUTES.trail.comments(trailId)),
 
   createTrailComment: (
     trailId: string,
     data: CommentDataDto,
   ): Promise<IComment> =>
-    apiClient.post(PUBLIC_ROUTES.trail.trailComments(trailId), data),
+    apiClient.post(API_ROUTES.trail.comments(trailId), data),
 
   deleteTrailComment: (trailId: string, commentId: string): Promise<void> =>
-    apiClient.delete(
-      PUBLIC_ROUTES.trail.deleteTrailComment(trailId, commentId),
-    ),
+    apiClient.delete(API_ROUTES.trail.deleteComment(trailId, commentId)),
 };

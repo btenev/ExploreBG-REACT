@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
 import { Link } from "react-router-dom";
 
-import { PUBLIC_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 import { useCommentForm } from "@hooks/formHooks/commentHooks";
 import { IComment } from "@types";
 import { formatEntityLastUpdate } from "@utils/dateUtils";
@@ -65,7 +65,7 @@ const CommentItem = ({
 
   return (
     <div className="comments__wrapper__comment" ref={commentRef}>
-      <Link to={PUBLIC_ROUTES.user.getProfile.build(comment.owner.id)}>
+      <Link to={APP_ROUTES.user.profile.build(comment.owner.id)}>
         <span>
           <em>{comment.owner.username}</em>
         </span>

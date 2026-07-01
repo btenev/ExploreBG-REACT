@@ -7,7 +7,7 @@ import {
   destinationReviewApi,
   trailReviewApi,
 } from "@api/moderation";
-import { MODERATION_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 import { PhotoEntityType, ReviewStatusEnum } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 
@@ -32,12 +32,12 @@ export const useApproveEntityImages = () => {
         case "accommodation":
           return accommodationReviewApi.approveAccommodationImages(
             entityId,
-            imageIds
+            imageIds,
           );
         case "destination":
           return destinationReviewApi.approveDestinationImages(
             entityId,
-            imageIds
+            imageIds,
           );
         default:
           throw new Error(`Unsupported entity type: ${photoEntityType}`);
@@ -56,12 +56,12 @@ export const useApproveEntityImages = () => {
       });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(MODERATION_ROUTES.dashboard);
+        navigate(APP_ROUTES.moderation.dashboard);
       }
       toast.success(
         `${variables.imageIds.length} image${
           variables.imageIds.length > 1 ? "s" : ""
-        } approved successfully.`
+        } approved successfully.`,
       );
     },
 

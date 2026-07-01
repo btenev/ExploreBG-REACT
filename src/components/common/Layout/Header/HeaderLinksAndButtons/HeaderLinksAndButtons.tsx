@@ -4,7 +4,7 @@ import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 import defaultUserImg from "@assets/images/user-profile-pic.png";
-import { PUBLIC_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 import { useLogout } from "@hooks/dataHooks/authHooks";
 import useCloseOnEscapeTabAndClickOutside from "@hooks/uiHooks/useCloseOnEscapeTabAndClickOutside";
 import {
@@ -36,7 +36,7 @@ const HeaderLinksAndButtons = () => {
   };
 
   useCloseOnEscapeTabAndClickOutside(userNavLinksRef, () =>
-    setIsShownUserLinks(false)
+    setIsShownUserLinks(false),
   );
   useCloseOnEscapeTabAndClickOutside(navBarRef, () => setIsOpenNavbar(false));
 
@@ -77,7 +77,7 @@ const HeaderLinksAndButtons = () => {
         </ul>
 
         {!hasSession && (
-          <Link to={PUBLIC_ROUTES.authentication} className="glow-on-hover">
+          <Link to={APP_ROUTES.authentication} className="glow-on-hover">
             Login/Sign up
           </Link>
         )}
@@ -120,7 +120,7 @@ const HeaderLinksAndButtons = () => {
           </ul>
 
           {!hasSession && (
-            <Link to={PUBLIC_ROUTES.authentication} className="glow-on-hover">
+            <Link to={APP_ROUTES.authentication} className="glow-on-hover">
               Login/Sign up
             </Link>
           )}

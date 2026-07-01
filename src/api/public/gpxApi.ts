@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 
 import { ApiClient } from "../base";
 
@@ -7,10 +7,10 @@ const apiClient = new ApiClient();
 export const gpxApi = {
   uploadGpxFile: (
     trailId: string,
-    gpxFile: FormData
+    gpxFile: FormData,
   ): Promise<{ gpxUrl: string; creationDate: string }> =>
-    apiClient.patch(PUBLIC_ROUTES.gpx.gpxUpload(trailId), gpxFile, true),
+    apiClient.patch(API_ROUTES.gpx.root(trailId), gpxFile, true),
 
   removeGpxFile: (trailId: string): Promise<void> =>
-    apiClient.delete(PUBLIC_ROUTES.gpx.gpxUpload(trailId)),
+    apiClient.delete(API_ROUTES.gpx.root(trailId)),
 };

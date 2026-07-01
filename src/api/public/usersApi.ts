@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 import { genderEnumSchema } from "@schemas/user";
 import {
   IHikeCard,
@@ -67,7 +67,7 @@ export const usersApi = {
   getMyProfile: async (): Promise<UserOwnProfileResponse> => {
     try {
       const response = await apiClient.get<UserOwnProfileResponse>(
-        PUBLIC_ROUTES.user.myProfile
+        API_ROUTES.user.myProfile,
       );
       const gender = genderConverter(response.gender);
       return { ...response, gender };
@@ -80,7 +80,7 @@ export const usersApi = {
   getUserProfile: async (userId: string): Promise<UserProfileResponse> => {
     try {
       const response = await apiClient.get<UserProfileResponse>(
-        PUBLIC_ROUTES.user.getProfile.build(userId)
+        API_ROUTES.user.byId(userId),
       );
       const gender = genderConverter(response.gender);
       return { ...response, gender };
@@ -92,7 +92,7 @@ export const usersApi = {
 
   updateUserField: <K extends keyof UserFieldRequestMap>(
     field: K,
-    data: UserFieldRequestMap[K]
+    data: UserFieldRequestMap[K],
   ): Promise<UserFieldResponseMap[K]> => {
     const endpoint = field === "userInfo" ? "user-info" : field;
     return apiClient.patch(`${baseUrl}/${endpoint}`, data);
@@ -103,6 +103,6 @@ const genderConverter = (gender: unknown): GenderEnum => {
   return safeParseOrThrow(
     genderEnumSchema,
     gender,
-    `Invalid gender value: ${gender}`
+    `Invalid gender value: ${gender}`,
   );
 };

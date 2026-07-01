@@ -1,4 +1,4 @@
-import { MODERATION_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 import { ReviewStatusEnum } from "@types";
 import { reviewStatusConverter } from "@utils/statusConverter";
 
@@ -9,36 +9,30 @@ const apiClient = new ApiClient();
 
 export const destinationReviewApi = {
   getWaitingDestinations: (
-    query: string
+    query: string,
   ): Promise<WaitingApprovalEntityResponse> =>
-    apiClient.get(
-      MODERATION_ROUTES.destination.getWaitingApprovalDestinations(query)
-    ),
+    apiClient.get(API_ROUTES.moderation.destination.waitingApproval(query)),
 
   claimForReviewDestinationImages: (destinationId: string): Promise<void> =>
     apiClient.patch(
-      MODERATION_ROUTES.destination.claimForReviewDestinationImages(
-        destinationId
-      )
+      API_ROUTES.moderation.destination.claimImages(destinationId),
     ),
 
   unclaimForReviewDestinationImages: (destinationId: string): Promise<void> =>
     apiClient.patch(
-      MODERATION_ROUTES.destination.unclaimForReviewDestinationImages(
-        destinationId
-      )
+      API_ROUTES.moderation.destination.unclaimImages(destinationId),
     ),
 
   approveDestinationImages: async (
     destinationId: string,
-    imageIds: number[]
+    imageIds: number[],
   ): Promise<{ entityStatus: ReviewStatusEnum }> => {
     try {
       const response = await apiClient.patch<{ entityStatus: unknown }>(
-        MODERATION_ROUTES.destination.approveDestinationImages(destinationId),
+        API_ROUTES.moderation.destination.approveImages(destinationId),
         {
           imageIds,
-        }
+        },
       );
 
       const entityStatus = reviewStatusConverter(response.entityStatus);
@@ -46,7 +40,7 @@ export const destinationReviewApi = {
     } catch (error) {
       console.error("Error approving destination images:", error);
       throw new Error(
-        "Failed to approve destination images due to invalid entity status"
+        "Failed to approve destination images due to invalid entity status",
       );
     }
   },

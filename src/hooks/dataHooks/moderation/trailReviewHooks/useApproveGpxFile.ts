@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { trailReviewApi } from "@api/moderation";
-import { MODERATION_ROUTES } from "@constants";
+import { APP_ROUTES } from "@constants";
 import { ReviewStatusEnum, ApiError } from "@types";
 import { handleApiError } from "@utils/errorHandlers";
 
 export const useApproveGpxFile = (
-  setLoadingAction: Dispatch<"approve" | "reject" | null>
+  setLoadingAction: Dispatch<"approve" | "reject" | null>,
 ) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -41,13 +41,13 @@ export const useApproveGpxFile = (
       });
 
       if (data.entityStatus === ReviewStatusEnum.approved) {
-        navigate(MODERATION_ROUTES.dashboard);
+        navigate(APP_ROUTES.moderation.dashboard);
       }
 
       toast.success(
         variables.approved
           ? "GPX file approved successfully."
-          : "GPX file rejected successfully."
+          : "GPX file rejected successfully.",
       );
     },
 

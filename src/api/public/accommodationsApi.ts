@@ -1,4 +1,4 @@
-import { PUBLIC_ROUTES } from "@constants";
+import { API_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
 import {
   AccessibilityEnum,
@@ -49,18 +49,16 @@ type AllAccommodationsResponse = {
 
 const apiClient = new ApiClient();
 
-const baseAccommodationUrl = "/accommodations";
-
 export const accommodationsApi = {
   get4RandomAccommodations: (): Promise<IAccommodationCard[]> =>
-    apiClient.get(PUBLIC_ROUTES.accommodation.random),
+    apiClient.get(API_ROUTES.accommodation.random),
 
   getAccommodation: async (
     accommodationId: string,
   ): Promise<IAccommodation> => {
     try {
       const response = await apiClient.get<IAccommodation>(
-        PUBLIC_ROUTES.accommodation.details.build(accommodationId),
+        API_ROUTES.accommodation.byId(accommodationId),
       );
       const detailsStatus = detailsStatusConverter(response.detailsStatus);
       return { ...response, detailsStatus };
@@ -74,21 +72,18 @@ export const accommodationsApi = {
 
   getAllAccommodations: (query: string): Promise<AllAccommodationsResponse> => {
     return apiClient.get<AllAccommodationsResponse>(
-      `${baseAccommodationUrl}${query}`,
+      `${API_ROUTES.accommodation.root}${query}`,
     );
   },
 
   getAvailableAccommodations: (): Promise<IHut[]> =>
-    apiClient.get(PUBLIC_ROUTES.accommodation.availableAccommodation),
+    apiClient.get(API_ROUTES.accommodation.select),
 
   toggleFavoriteStatus: (
     accommodationId: string,
     data: ToggleFavoriteRequest,
   ): Promise<ToggleFavoriteResponse> =>
-    apiClient.patch(
-      PUBLIC_ROUTES.accommodation.favoriteStatus(accommodationId),
-      data,
-    ),
+    apiClient.patch(API_ROUTES.accommodation.like(accommodationId), data),
 
   updateAccommodationField: <K extends keyof AccommodationFieldRequestMap>(
     field: K,
@@ -97,7 +92,7 @@ export const accommodationsApi = {
   ): Promise<AccommodationFieldResponseMap[K]> => {
     const endPoint = toKebabOrSpace(field as string);
     return apiClient.patch(
-      `${baseAccommodationUrl}/${accommodationId}/${endPoint}`,
+      `${API_ROUTES.accommodation.root}/${accommodationId}/${endPoint}`,
       data,
     );
   },
@@ -106,33 +101,24 @@ export const accommodationsApi = {
     accommodationId: string,
     data: { imageId: string },
   ): Promise<{ imageId: number }> =>
-    apiClient.patch(
-      PUBLIC_ROUTES.accommodation.updateMainAccommodationPhoto(accommodationId),
-      data,
-    ),
+    apiClient.patch(API_ROUTES.accommodation.mainImage(accommodationId), data),
 
   getAccommodationComments: (accommodationId: string): Promise<IComment[]> =>
     apiClient.get<IComment[]>(
-      PUBLIC_ROUTES.accommodation.accommodationComments(accommodationId),
+      API_ROUTES.accommodation.comments(accommodationId),
     ),
 
   createAccommodationComment: (
     accommodationId: string,
     data: CommentDataDto,
   ): Promise<IComment> =>
-    apiClient.post(
-      PUBLIC_ROUTES.accommodation.accommodationComments(accommodationId),
-      data,
-    ),
+    apiClient.post(API_ROUTES.accommodation.comments(accommodationId), data),
 
   deleteAccommodationComment: (
     accommodationsId: string,
     commentId: string,
   ): Promise<void> =>
     apiClient.delete(
-      PUBLIC_ROUTES.accommodation.deleteAccommodationComment(
-        accommodationsId,
-        commentId,
-      ),
+      API_ROUTES.accommodation.deleteComment(accommodationsId, commentId),
     ),
 };
