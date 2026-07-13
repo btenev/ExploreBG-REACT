@@ -8,3 +8,4 @@ export * from "./useFoodAvailableForm";
 export * from "./useAccommodationAccessForm";
 export * from "./useAccommodationNextToForm";
 export * from "./useAccommodationInfoForm";
+export * from "./useAccommodationType";
