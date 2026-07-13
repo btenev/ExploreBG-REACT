@@ -1,7 +1,9 @@
 import { API_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
+import { CreateAccommodationDto } from "@schemas/accommodation";
 import {
   AccessibilityEnum,
+  AccommodationTypeEnum,
   FoodAvailabilityEnum,
   IAccommodation,
   IAccommodationCard,
@@ -25,6 +27,7 @@ export type AccommodationFieldRequestMap = {
   access: { access: AccessibilityEnum };
   nextTo: { nextTo: string };
   accommodationInfo: { accommodationInfo: string };
+  type: { type: AccommodationTypeEnum };
 };
 
 export type AccommodationFieldResponseMap = {
@@ -40,6 +43,7 @@ export type AccommodationFieldResponseMap = {
   access: { access: AccessibilityEnum; lastUpdateDate: string };
   nextTo: { nextTo: string; lastUpdateDate: string };
   accommodationInfo: { accommodationInfo: string; lastUpdateDate: string };
+  type: { type: AccommodationTypeEnum; lastUpdateDate: string };
 };
 
 type AllAccommodationsResponse = {
@@ -52,6 +56,11 @@ const apiClient = new ApiClient();
 export const accommodationsApi = {
   get4RandomAccommodations: (): Promise<IAccommodationCard[]> =>
     apiClient.get(API_ROUTES.accommodation.random),
+
+  createAccommodation: (
+    accommodationData: CreateAccommodationDto,
+  ): Promise<{ id: string }> =>
+    apiClient.post(API_ROUTES.accommodation.root, accommodationData),
 
   getAccommodation: async (
     accommodationId: string,

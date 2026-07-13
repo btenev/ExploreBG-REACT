@@ -3,3 +3,4 @@ export * from "./useAvailableAccommodations";
 export * from "./useGetAccommodation";
 export * from "./useUpdateAccommodationField";
 export * from "./useAccommodations";
+export * from "./useCreateAccommodation";
