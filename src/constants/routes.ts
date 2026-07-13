@@ -34,7 +34,11 @@ export const APP_ROUTES = {
   accommodation: {
     index: `${ACCOMMODATIONS}` as const,
     create: `${ACCOMMODATIONS}/create` as const,
-    detail: `${ACCOMMODATIONS}/:accommodationId` as const,
+    detail: {
+      path: `${ACCOMMODATIONS}/:accommodationId` as const,
+      build: (accommodationId: string | number) =>
+        `${ACCOMMODATIONS}/${accommodationId}`,
+    },
   },
 
   destination: {

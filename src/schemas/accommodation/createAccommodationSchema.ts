@@ -28,4 +28,4 @@ export const createAccommodationSchema = z.object({
   accommodationInfo: accommodationInfoSchema,
 });
 
-export type createAccommodationDto = z.infer<typeof createAccommodationSchema>;
+export type CreateAccommodationDto = z.infer<typeof createAccommodationSchema>;

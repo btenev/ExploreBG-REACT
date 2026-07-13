@@ -20,7 +20,7 @@ export const useUpdateAccommodationField = <
   K extends keyof AccommodationFieldRequestMap,
 >(
   field: K,
-  accommodationId: number
+  accommodationId: number,
 ) => {
   const queryClient = useQueryClient();
   const { setLastUpdated } = useLastUpdated();
@@ -38,22 +38,34 @@ export const useUpdateAccommodationField = <
       if (field in data) {
         const extractedValue = Object.values(data)[0] as ExtractInnerValue<K>;
         const lastUpdated = data.lastUpdateDate;
-
+        console.log(`Successfully updated ${field} to:`, extractedValue);
+        console.log(`Last updated date:`, lastUpdated);
+        console.log("Accommodation ID:", accommodationId);
+        console.log("Field:", field);
         setLastUpdated(lastUpdated);
 
-        queryClient.invalidateQueries({
-          queryKey: ["accommodation", accommodationId],
-          exact: true,
-        });
+        // queryClient.invalidateQueries({
+        //   queryKey: ["accommodation", accommodationId],
+        //   exact: true,
+        // });
 
-        // Refetch all queries matching the key, even if inactive
-        queryClient.refetchQueries({
-          queryKey: ["accommodation", accommodationId],
-          exact: true,
-          type: "all", // 'active' | 'inactive' | 'all' — 'all' includes mounted and unmounted queries
-        });
+        // // Refetch all queries matching the key, even if inactive
+        // queryClient.refetchQueries({
+        //   queryKey: ["accommodation", accommodationId],
+        //   exact: true,
+        //   type: "all", // 'active' | 'inactive' | 'all' — 'all' includes mounted and unmounted queries
+        // });
+        queryClient.setQueryData(
+          ["accommodation", String(accommodationId)],
+          (old: any) => ({
+            ...old,
+            [field]: extractedValue,
+            lastUpdateDate: lastUpdated,
+          }),
+        );
+
         toast.success(
-          `You successfully updated ${toKebabOrSpace(field, false)} field.`
+          `You successfully updated ${toKebabOrSpace(field, false)} field.`,
         );
         toast.info(`Last updated: ${formatEntityLastUpdate(lastUpdated)}`);
 

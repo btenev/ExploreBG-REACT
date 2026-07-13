@@ -31,7 +31,7 @@ export const emailSchema = z
   .nonempty("Please enter your email address.")
   .regex(
     /[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,4}/,
-    "The email format is incorrect."
+    "The email format is incorrect.",
   );
 
 export const usernameSchema = z
@@ -40,15 +40,15 @@ export const usernameSchema = z
   .regex(/^[A-Za-z]/, "Your username must start with an English letter.")
   .regex(
     /^[A-Za-z_\d]+$/,
-    "Your username can only contain English letters, numbers, and underscores."
+    "Your username can only contain English letters, numbers, and underscores.",
   )
   .min(
     USERNAME_MIN_LENGTH,
-    `Your username must be at least ${USERNAME_MIN_LENGTH} characters long.`
+    `Your username must be at least ${USERNAME_MIN_LENGTH} characters long.`,
   )
   .max(
     USERNAME_MAX_LENGTH,
-    `Your username can be a maximum of ${USERNAME_MAX_LENGTH} characters.`
+    `Your username can be a maximum of ${USERNAME_MAX_LENGTH} characters.`,
   );
 
 export const passwordSchema = z
@@ -59,23 +59,23 @@ export const passwordSchema = z
   .regex(/\d/, "Your password must contain at least one number.")
   .regex(
     /[!@#$%^&*(),.?":{}|<>]/,
-    "Your password must contain at least one special character."
+    "Your password must contain at least one special character.",
   )
   .regex(/^\S*$/, "Your password cannot contain spaces.")
   .min(
     PASSWORD_MIN_LENGTH,
-    `Your password must be at least ${PASSWORD_MIN_LENGTH} characters long.`
+    `Your password must be at least ${PASSWORD_MIN_LENGTH} characters long.`,
   )
   .max(
     PASSWORD_MAX_LENGTH,
-    `Your password must be at most ${PASSWORD_MAX_LENGTH} characters long.`
+    `Your password must be at most ${PASSWORD_MAX_LENGTH} characters long.`,
   );
 
 const createPlaceSchema = (
   fieldName: string,
   minLength: number,
   maxLength: number,
-  requiredLabel?: string
+  requiredLabel?: string,
 ) =>
   z
     .string()
@@ -83,46 +83,46 @@ const createPlaceSchema = (
     .regex(placeRegex, TEXT_PATTERN_GENERIC)
     .min(
       minLength,
-      `Your ${fieldName} must be at least ${minLength} characters long.`
+      `Your ${fieldName} must be at least ${minLength} characters long.`,
     )
     .max(
       maxLength,
-      `Your ${fieldName} must be at most ${maxLength} characters long.`
+      `Your ${fieldName} must be at most ${maxLength} characters long.`,
     );
 
 /*Trail*/
 export const startPointSchema = createPlaceSchema(
   "start point",
   TRAIL_PLACE_MIN_LENGTH,
-  TRAIL_PLACE_MAX_LENGTH
+  TRAIL_PLACE_MAX_LENGTH,
 );
 export const endPointSchema = createPlaceSchema(
   "end point",
   TRAIL_PLACE_MIN_LENGTH,
-  TRAIL_PLACE_MAX_LENGTH
+  TRAIL_PLACE_MAX_LENGTH,
 );
 /*Accommodation*/
 export const accommodationNameSchema = createPlaceSchema(
   "accommodation name",
   ACCOMMODATION_PLACE_MIN_LENGTH,
-  ACCOMMODATION_PLACE_MAX_LENGTH
+  ACCOMMODATION_PLACE_MAX_LENGTH,
 );
 /*Destination*/
 export const destinationNameSchema = createPlaceSchema(
   "destination name",
   DESTINATION_PLACE_MIN_LENGTH,
-  DESTINATION_PLACE_MAX_LENGTH
+  DESTINATION_PLACE_MAX_LENGTH,
 );
 export const nextToSchema = createPlaceSchema(
   "nearby village, town, or city",
   NEXT_TO_MIN_LENGTH,
-  NEXT_TO_MAX_LENGTH
+  NEXT_TO_MAX_LENGTH,
 );
 export const locationSchema = createPlaceSchema(
   "location",
   2,
   30,
-  "the location of your destination."
+  "the location of your destination.",
 );
 
 export const totalDistanceSchema = z
@@ -160,11 +160,11 @@ const infoSchema = (maxLength: number) =>
     .nonempty("Please provide your description.")
     .regex(
       /^[a-zA-Z0-9\-.,\s\n()'`":;?!@]*$/,
-      "Your description can only contain letters (A-Z, a-z), numbers (0-9), spaces, new lines, and these symbols: - . , ( ) ' ` \" : ; ? ! @"
+      "Your description can only contain letters (A-Z, a-z), numbers (0-9), spaces, new lines, and these symbols: - . , ( ) ' ` \" : ; ? ! @",
     )
     .max(
       maxLength,
-      `Your description must not exceed ${maxLength} characters.`
+      `Your description must not exceed ${maxLength} characters.`,
     );
 
 export const trailInfoSchema = infoSchema(TRAIL_INFO_MAX_LENGTH);
@@ -177,7 +177,7 @@ export const messageSchema = z
   .nonempty("Please enter your comment.")
   .max(
     COMMENT_MAX_LENGTH,
-    `Your comment must not exceed ${COMMENT_MAX_LENGTH} characters.`
+    `Your comment must not exceed ${COMMENT_MAX_LENGTH} characters.`,
   );
 
 /*Accommodation*/
@@ -231,31 +231,23 @@ export const phoneNumberSchema = z
   });
 
 export const bedCapacitySchema = z
-  .string() // accept string input from form
-  .transform((val) => (val === "" ? null : Number(val))) // convert empty string to null, others to number
+  .union([z.number(), z.null()])
   .refine((val) => val === null || (Number.isInteger(val) && val >= 0), {
-    message: "Your bed capacity must be a non-negative integer.",
-  })
-  .nullable();
+    message: "Your bed capacity must be 0 or greater.",
+  });
 
 export const pricePerBedSchema = z
-  .string() // input comes as string from form
-  .trim()
-  .transform((val) => (val === "" ? null : Number(val))) // empty -> null, otherwise convert to number
-  .refine((val) => val === null || (typeof val === "number" && !isNaN(val)), {
-    message: "Your price per bed must be a valid number.",
-  })
+  .union([z.number(), z.null()])
   .refine((val) => val === null || val > 0.01, {
-    message: "Your price per bed must be greater than 0.",
-  })
-  .nullable();
+    message: "Your price per bed must be greater than 0.01.",
+  });
 
 export const siteUrlSchema = z
   .string()
   .trim()
   .nullable()
   .transform((val) => {
-    if (!val) return val; // keep null/empty
+    if (!val) return null; // keep null/empty
     // Prepend https:// if missing
     return val.startsWith("http://") || val.startsWith("https://")
       ? val
@@ -279,7 +271,7 @@ export const siteUrlSchema = z
     },
     {
       message: "Please provide a valid URL (e.g. https://example.com).",
-    }
+    },
   );
 
 export const longitudeSchema = z.preprocess((val) => {

@@ -4,7 +4,7 @@ import { ZodTypeAny, infer as zodInfer } from "zod";
 
 export const useFormWithSchema = <Schema extends ZodTypeAny>(
   schema: Schema,
-  defaultValues?: DefaultValues<zodInfer<Schema>>
+  defaultValues?: DefaultValues<zodInfer<Schema>>,
 ): UseFormReturn<zodInfer<Schema>> => {
   return useForm<zodInfer<Schema>>({
     resolver: zodResolver(schema),

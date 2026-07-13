@@ -33,7 +33,7 @@ const CustomSelect = <T extends string | number>({
       const index = options.findIndex((opt) => opt === value);
       setCurrentIndex(index >= 0 ? index : 0);
     }
-  }, [isOpen, options, options]);
+  }, [isOpen, options, value]);
 
   const handleSelect = (selectedValue: T) => {
     onChange(selectedValue);
@@ -54,7 +54,7 @@ const CustomSelect = <T extends string | number>({
       case "ArrowDown":
         e.preventDefault();
         setCurrentIndex((prev) =>
-          prev < options.length - 1 ? prev + 1 : prev
+          prev < options.length - 1 ? prev + 1 : prev,
         );
         break;
 

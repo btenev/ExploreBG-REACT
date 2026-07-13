@@ -12,7 +12,7 @@ import "./EditableFieldForm.scss";
 interface Mutation<FormValues> {
   mutate: (
     data: FormValues,
-    options?: { onSuccess?: (response: any) => void }
+    options?: { onSuccess?: (response: any) => void },
   ) => void;
   isPending: boolean;
 }
@@ -28,7 +28,7 @@ interface Props<FormValues extends Record<string, any>> {
   renderValue: (value: FormValues, label: string) => ReactElement;
   renderInput: (
     register: UseFormReturn<FormValues>["register"],
-    inputId: string
+    inputId: string,
   ) => ReactElement;
   helperMessage?: string;
 }
@@ -52,6 +52,7 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
   // Initialize form with defaultValues
   const { register, handleSubmit, formState, reset, getValues, trigger } =
     useFormHook(initialValue);
+
   const { isDirty } = formState;
 
   const handleSubmitMutation = (data: FormValues) => {
@@ -75,7 +76,7 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
                   ? toDatetimeLocal(value)
                   : value
                 : value,
-            ])
+            ]),
           ),
         };
         //  2. { ...getValues(), ...response } merges the new backend response into that object.
@@ -87,12 +88,13 @@ const EditableFieldForm = <FormValues extends Record<string, any>>({
 
   useEffect(() => {
     if (isEditing && formRef.current) {
+      reset(initialValue);
       const input = formRef.current.querySelector<HTMLInputElement>("input");
       input?.focus();
-
       trigger(); // validate on opening
     }
-  }, [isEditing, trigger]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only run when entering edit mode, not on every initialValue identity change
+  }, [isEditing, trigger, reset]);
 
   const discardChanges = () => {
     if (isDirty) {
