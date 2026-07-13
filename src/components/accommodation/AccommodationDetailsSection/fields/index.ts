@@ -7,3 +7,4 @@ export { default as AccommodationDetailsFood } from "./AccommodationDetailsFood"
 export { default as AccommodationDetailsAccess } from "./AccommodationDetailsAccess";
 export { default as AccommodationDetailsNextTo } from "./AccommodationDetailsNextTo";
 export { default as AccommodationDetailsInfo } from "./AccommodationDetailsInfo";
+export { default as AccommodationDetailsType } from "./AccommodationDetailsType";

@@ -18,6 +18,7 @@ import {
   AccommodationDetailsPhoneNumber,
   AccommodationDetailsPricePerBed,
   AccommodationDetailsSite,
+  AccommodationDetailsType,
 } from "./fields";
 
 import "./AccommodationDetailsSection.scss";
@@ -63,11 +64,21 @@ const AccommodationDetailsSection = ({
               canEdit={candEdit}
             />
 
-            <AccommodationDetailsNextTo
-              accommodationId={id}
-              initialValue={accommodation.nextTo}
-              canEdit={candEdit}
-            />
+            <FieldPair>
+              <AccommodationDetailsType
+                accommodationId={id}
+                initialValue={accommodation.type}
+                canEdit={candEdit}
+                formEnums={accommodationEnums?.type ?? []}
+                isLoadingEnums={isLoadingEnums}
+              />
+
+              <AccommodationDetailsNextTo
+                accommodationId={id}
+                initialValue={accommodation.nextTo}
+                canEdit={candEdit}
+              />
+            </FieldPair>
 
             <FieldPair>
               <AccommodationDetailsSite
