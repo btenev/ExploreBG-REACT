@@ -24,25 +24,28 @@ const AccommodationDetailsPricePerBed = ({
       useFormHook={usePricePerBedForm}
       mutation={mutation}
       renderValue={(val, label) => {
-        const numericVal =
-          val?.pricePerBed !== null ? Number(val.pricePerBed) : null;
-
         return (
           <p>
             <FaMoneyBillWave />
             &nbsp; {label}: &nbsp;
-            {numericVal !== null && !isNaN(numericVal)
-              ? `${numericVal.toFixed(2)} BGN`
+            {val?.pricePerBed != null
+              ? `${val.pricePerBed.toFixed(2)} BGN`
               : "Not available"}
           </p>
         );
       }}
-      renderInput={(register) => (
+      renderInput={(register, id) => (
         <input
-          {...register("pricePerBed")}
+          id={id}
+          {...register("pricePerBed", {
+            setValueAs: (v) => {
+              return v === "" ? null : Number(v);
+            },
+          })}
           type="number"
-          step={0.01}
-          placeholder="0.00"
+          step="0.01"
+          placeholder="Not set"
+          min="0"
         />
       )}
     />

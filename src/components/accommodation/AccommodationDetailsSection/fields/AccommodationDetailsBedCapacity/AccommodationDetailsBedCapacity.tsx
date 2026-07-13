@@ -34,7 +34,16 @@ const AccommodationDetailsBedCapacity = ({
         </p>
       )}
       renderInput={(register, id) => (
-        <input id={id} {...register("bedCapacity")} type="number" step="1" />
+        <input
+          id={id}
+          {...register("bedCapacity", {
+            setValueAs: (v) => (v === "" ? null : Number(v)),
+          })}
+          type="number"
+          step="1"
+          min="0"
+          placeholder="Not set"
+        />
       )}
     />
   );
