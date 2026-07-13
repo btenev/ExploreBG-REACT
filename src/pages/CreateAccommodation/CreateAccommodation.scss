@@ -1,0 +1,20 @@
+@use "../../global-styles/main.scss" as gs;
+
+.accommodation-form {
+  background-image: url("../../assets/images/accommodation-create-hike-backgr.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+
+  @include gs.display(tablet) {
+    background-image: url("../../assets/images/vitosha-create-trail-backgr-org.avif");
+  }
+
+  @media (max-height: 35rem) and (orientation: landscape) {
+    background-image: url("../../assets/images/accommodation-create-hike-backgr.jpg");
+  }
+
+  & > .small-footer {
+    color: white;
+  }
+}

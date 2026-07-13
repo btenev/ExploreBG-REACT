@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
+import CreateAccommodation from "pages/CreateAccommodation";
+
 import { Layout } from "./components/common";
 import { APP_ROUTES } from "./constants";
 import {
@@ -43,7 +45,7 @@ const router = createBrowserRouter([
       { path: APP_ROUTES.hike.detail.path, element: <HikeDetails /> },
       { path: APP_ROUTES.trail.detail.path, element: <TrailDetails /> },
       {
-        path: APP_ROUTES.accommodation.detail,
+        path: APP_ROUTES.accommodation.detail.path,
         element: <AccommodationDetails />,
       },
       {
@@ -56,6 +58,7 @@ const router = createBrowserRouter([
   { path: APP_ROUTES.authentication, element: <Authentication /> },
   { path: APP_ROUTES.trail.create, element: <CreateTrail /> },
   { path: APP_ROUTES.hike.create, element: <CreateHike /> },
+  { path: APP_ROUTES.accommodation.create, element: <CreateAccommodation /> },
   { path: APP_ROUTES.moderation.users, element: <AllUsers /> },
   { path: APP_ROUTES.moderation.dashboard, element: <WaitingApproval /> },
   {
