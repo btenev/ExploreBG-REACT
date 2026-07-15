@@ -44,7 +44,11 @@ export const APP_ROUTES = {
   destination: {
     index: `${DESTINATIONS}` as const,
     create: `${DESTINATIONS}/create` as const,
-    detail: `${DESTINATIONS}/:destinationId` as const,
+    detail: {
+      path: `${DESTINATIONS}/:destinationId` as const,
+      build: (destinationId: string | number) =>
+        `${DESTINATIONS}/${destinationId}`,
+    },
   },
 
   trail: {
