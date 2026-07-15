@@ -1,12 +1,12 @@
 import { DefaultValues } from "react-hook-form";
 
 import {
-  createDestinationDto,
+  CreateDestinationDto,
   createDestinationSchema,
 } from "@schemas/destination";
 
 import { useFormWithSchema } from "../base";
 
 export const useCreateDestinationForm = (
-  defaultValues?: DefaultValues<createDestinationDto>
+  defaultValues?: DefaultValues<CreateDestinationDto>,
 ) => useFormWithSchema(createDestinationSchema, defaultValues);

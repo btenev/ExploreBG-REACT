@@ -18,4 +18,4 @@ export const createDestinationSchema = z.object({
   type: destinationTypeSchema,
 });
 
-export type createDestinationDto = z.infer<typeof createDestinationSchema>;
+export type CreateDestinationDto = z.infer<typeof createDestinationSchema>;

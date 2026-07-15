@@ -1,5 +1,6 @@
 import { API_ROUTES } from "@constants";
 import { CommentDataDto } from "@hooks/formHooks/commentHooks";
+import { CreateDestinationDto } from "@schemas/destination";
 import {
   DestinationTypeEnum,
   IComment,
@@ -59,6 +60,11 @@ export const destinationsApi = {
       );
     }
   },
+
+  createDestination: (
+    destinationData: CreateDestinationDto,
+  ): Promise<{ id: string }> =>
+    apiClient.post(API_ROUTES.destination.root, destinationData),
 
   getAllDestinations: (query: string): Promise<AllDestinationsResponse> => {
     return apiClient.get<AllDestinationsResponse>(
