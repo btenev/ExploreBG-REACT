@@ -34,6 +34,18 @@ export const accommodationReviewApi = {
       API_ROUTES.moderation.accommodation.reviewer(accommodationId),
     ),
 
+  claimForReviewAccommodationDetails: (
+    accommodationId: string,
+  ): Promise<void> =>
+    apiClient.patch(API_ROUTES.moderation.accommodation.claim(accommodationId)),
+
+  unclaimForReviewAccommodationDetails: (
+    accommodationId: string,
+  ): Promise<void> =>
+    apiClient.patch(
+      API_ROUTES.moderation.accommodation.unclaim(accommodationId),
+    ),
+
   claimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
     apiClient.patch(
       API_ROUTES.moderation.accommodation.claimImages(accommodationId),
