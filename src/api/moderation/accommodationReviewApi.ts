@@ -46,6 +46,26 @@ export const accommodationReviewApi = {
       API_ROUTES.moderation.accommodation.unclaim(accommodationId),
     ),
 
+  approveAccommodationDetails: async (
+    accommodationId: string,
+    accommodationData: CreateAccommodationDto,
+  ): Promise<{ entityStatus: ReviewStatusEnum }> => {
+    try {
+      const response = await apiClient.patch<{ entityStatus: unknown }>(
+        API_ROUTES.moderation.accommodation.approve(accommodationId),
+        accommodationData,
+      );
+
+      const entityStatus = reviewStatusConverter(response.entityStatus);
+      return { entityStatus };
+    } catch (error) {
+      console.error("Error approving accommodation details:", error);
+      throw new Error(
+        "Failed to approve accommodation details due to invalid entity status",
+      );
+    }
+  },
+
   claimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
     apiClient.patch(
       API_ROUTES.moderation.accommodation.claimImages(accommodationId),
