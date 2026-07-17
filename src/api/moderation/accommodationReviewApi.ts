@@ -27,6 +27,13 @@ export const accommodationReviewApi = {
       ),
     ),
 
+  getAccommodationReviewer: (
+    accommodationId: string,
+  ): Promise<{ reviewerId: number }> =>
+    apiClient.get(
+      API_ROUTES.moderation.accommodation.reviewer(accommodationId),
+    ),
+
   claimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
     apiClient.patch(
       API_ROUTES.moderation.accommodation.claimImages(accommodationId),
