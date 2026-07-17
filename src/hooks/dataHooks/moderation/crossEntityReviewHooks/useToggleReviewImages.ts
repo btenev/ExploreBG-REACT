@@ -34,7 +34,7 @@ export const useToggleReviewImages = () => {
           return shouldClaim
             ? accommodationReviewApi.claimForReviewAccommodationImages(entityId)
             : accommodationReviewApi.unclaimForReviewAccommodationImages(
-                entityId
+                entityId,
               );
         case "destination":
           return shouldClaim
@@ -53,7 +53,7 @@ export const useToggleReviewImages = () => {
       toast.success(
         variables.shouldClaim
           ? `Images successfully claimed for review.`
-          : "Image review claim removed."
+          : "Image review claim removed.",
       );
     },
 

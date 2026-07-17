@@ -29,7 +29,7 @@ export const useToggleReviewTrailDetails = () => {
       toast.success(
         variables.shouldClaim
           ? `Trail successfully claimed for review.`
-          : "Trail review claim removed."
+          : `Trail review claim removed.`,
       );
     },
 

@@ -1,5 +1,6 @@
 import { API_ROUTES } from "@constants";
-import { IWaitingApproval, ReviewStatusEnum } from "@types";
+import { CreateAccommodationDto } from "@schemas/accommodation";
+import { IAccommodation, IWaitingApproval, ReviewStatusEnum } from "@types";
 import { reviewStatusConverter } from "@utils/statusConverter";
 
 import { ApiClient } from "../base";
@@ -16,6 +17,15 @@ export const accommodationReviewApi = {
     query: string,
   ): Promise<WaitingApprovalEntityResponse> =>
     apiClient.get(API_ROUTES.moderation.accommodation.waitingApproval(query)),
+
+  getCreatedAccommodationForReview: (
+    accommodationId: string,
+  ): Promise<IAccommodation> =>
+    apiClient.get(
+      API_ROUTES.moderation.accommodation.getCreatedAccommodationForReview.build(
+        accommodationId,
+      ),
+    ),
 
   claimForReviewAccommodationImages: (accommodationId: string): Promise<void> =>
     apiClient.patch(
