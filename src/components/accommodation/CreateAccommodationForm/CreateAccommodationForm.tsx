@@ -8,6 +8,11 @@ import {
   SubmitButton,
 } from "@components/common";
 import { useCreateAccommodation } from "@hooks/dataHooks/accommodationHooks";
+import {
+  useApproveAccommodation,
+  useGetAccommodationReviewer,
+  useToggleReviewAccommodationDetails,
+} from "@hooks/dataHooks/moderation/accommodationReviewHooks";
 import { useCreateAccommodationForm } from "@hooks/formHooks/accommodationHooks";
 import { useSession } from "@hooks/sessionHooks";
 import { CreateAccommodationDto } from "@schemas/accommodation";
@@ -15,35 +20,88 @@ import {
   AccessibilityEnum,
   AccommodationTypeEnum,
   FoodAvailabilityEnum,
+  IAccommodation,
+  StatusEnum,
 } from "@types";
 
 const ACCOMMODATION_INFO =
   "Provide information about the accommodation, such as amenities, services, and any other relevant details that would help potential guests make an informed decision.";
 
 interface Props {
-  enumData: AccommodationEnumResponse;
+  formEnums: AccommodationEnumResponse;
+  dataForReview?: IAccommodation;
 }
 
-const CreateAccommodationForm = ({ enumData }: Props) => {
+const CreateAccommodationForm = ({ formEnums, dataForReview }: Props) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useCreateAccommodationForm();
+  } = useCreateAccommodationForm(dataForReview);
   const { userId } = useSession();
+
+  const accommodationId = dataForReview?.id;
+  const detailsStatus = dataForReview?.detailsStatus !== StatusEnum.approved;
+  const enabled = Boolean(accommodationId && detailsStatus);
+
+  const { data: reviewerData } = useGetAccommodationReviewer(
+    String(accommodationId!),
+    enabled,
+  );
 
   const { mutate: createAccommodation, isPending: creating } =
     useCreateAccommodation();
+  const { mutate: approveAccommodation, isPending: approving } =
+    useApproveAccommodation();
+  const toggleReview = useToggleReviewAccommodationDetails();
 
-  const onSubmit = (accommodationData: CreateAccommodationDto) =>
+  const forReview =
+    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== userId;
+
+  const onSubmit = (accommodationData: CreateAccommodationDto) => {
+    if (dataForReview && !forReview) {
+      // Approve the accommodation details
+      approveAccommodation({
+        accommodationData,
+        accommodationId: String(dataForReview.id),
+      });
+      return;
+    }
+
     createAccommodation(accommodationData);
+  };
+
+  const handleReviewClick = () => {
+    if (!dataForReview) return;
+
+    if (forReview) {
+      // Claim the accommodation for review
+      toggleReview.mutate({
+        accommodationId: String(dataForReview.id),
+        shouldClaim: true,
+      });
+    } else {
+      // Unclaim the accommodation from review
+      toggleReview.mutate({
+        accommodationId: String(dataForReview.id),
+        shouldClaim: false,
+      });
+    }
+  };
 
   return (
     <>
       {!userId && (
         <RequireAuthModal message="Only logged-in users can access this page." />
       )}
+
+      {dataForReview &&
+        dataForReview?.detailsStatus !== StatusEnum.approved && (
+          <button onClick={handleReviewClick} className="review-btn">
+            {forReview ? "review" : "cancel"}
+          </button>
+        )}
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -74,7 +132,7 @@ const CreateAccommodationForm = ({ enumData }: Props) => {
               defaultValue={AccommodationTypeEnum.hut}
               render={({ field }) => (
                 <CustomSelect
-                  options={enumData.type}
+                  options={formEnums.type}
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
                 />
@@ -169,7 +227,7 @@ const CreateAccommodationForm = ({ enumData }: Props) => {
               defaultValue={FoodAvailabilityEnum.no_information}
               render={({ field }) => (
                 <CustomSelect
-                  options={enumData.availableFood}
+                  options={formEnums.availableFood}
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
                 />
@@ -185,7 +243,7 @@ const CreateAccommodationForm = ({ enumData }: Props) => {
               defaultValue={AccessibilityEnum.on_foot}
               render={({ field }) => (
                 <CustomSelect
-                  options={enumData.access}
+                  options={formEnums.access}
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
                 />
@@ -212,10 +270,21 @@ const CreateAccommodationForm = ({ enumData }: Props) => {
           )}
         </div>
 
-        <SubmitButton
-          isSubmitting={creating}
-          buttonName="Create accommodation"
-        />
+        {!dataForReview && (
+          <p style={{ color: "black" }}>
+            * You can add photos after create this accommodation.
+          </p>
+        )}
+
+        {(!dataForReview || (dataForReview && !forReview)) &&
+          dataForReview?.detailsStatus !== StatusEnum.approved && (
+            <SubmitButton
+              isSubmitting={dataForReview && !forReview ? approving : creating}
+              buttonName={
+                dataForReview && !forReview ? "Approve" : "Create accommodation"
+              }
+            />
+          )}
       </form>
     </>
   );

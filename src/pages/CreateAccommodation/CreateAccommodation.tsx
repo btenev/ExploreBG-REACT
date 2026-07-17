@@ -12,7 +12,7 @@ const CreateAccommodation = () => {
       <SmallHeader />
 
       <h1>Create accommodation</h1>
-      {enumData && <CreateAccommodationForm enumData={enumData} />}
+      {enumData && <CreateAccommodationForm formEnums={enumData} />}
 
       <SmallFooter />
     </main>
