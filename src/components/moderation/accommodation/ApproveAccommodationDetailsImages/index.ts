@@ -1,0 +1,2 @@
+import ApproveAccommodationDetailsImages from "./ApproveAccommodationDetailsImages";
+export default ApproveAccommodationDetailsImages;
