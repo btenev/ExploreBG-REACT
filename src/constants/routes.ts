@@ -73,6 +73,8 @@ export const APP_ROUTES = {
     dashboard: `${BASE}/dashboard/entities/waiting-approval/count` as const,
     users: `${MOD_USERS}` as const,
     trailReview: `${MOD_TRAILS}/:trailId/review` as const,
+    accommodationReview:
+      `${MOD_ACCOMMODATIONS}/:accommodationId/review` as const,
   },
 };
 
@@ -167,6 +169,24 @@ export const API_ROUTES = {
     accommodation: {
       waitingApproval: (query?: string) =>
         `${MOD_ACCOMMODATIONS}/waiting-approval${query ? `?${query}` : ""}`,
+
+      getCreatedAccommodationForReview: {
+        path: `${MOD_ACCOMMODATIONS}/:accommodationId/review` as const, // pattern for React Router
+        build: (accommodationId: string | number) =>
+          `${MOD_ACCOMMODATIONS}/${accommodationId}/review`,
+      },
+
+      reviewer: (accommodationId: string | number) =>
+        `${MOD_ACCOMMODATIONS}/${accommodationId}/reviewer`,
+
+      claim: (accommodationId: string | number) =>
+        `${MOD_ACCOMMODATIONS}/${accommodationId}/claim`,
+
+      unclaim: (accommodationId: string | number) =>
+        `${MOD_ACCOMMODATIONS}/${accommodationId}/unclaim`,
+
+      approve: (accommodationId: string | number) =>
+        `${MOD_ACCOMMODATIONS}/${accommodationId}/approve`,
 
       claimImages: (accommodationId: string) =>
         `${MOD_ACCOMMODATIONS}/${accommodationId}/images/claim`,

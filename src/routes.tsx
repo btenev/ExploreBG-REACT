@@ -24,6 +24,7 @@ import {
   CreateHike,
   CreateAccommodation,
   CreateDestination,
+  AccommodationReview,
 } from "./pages";
 
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
   {
     path: APP_ROUTES.moderation.trailReview,
     element: <TrailReview />,
+  },
+  {
+    path: APP_ROUTES.moderation.accommodationReview,
+    element: <AccommodationReview />,
   },
   { path: "*", element: <NotFound /> },
 ]);
