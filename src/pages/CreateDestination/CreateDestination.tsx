@@ -12,7 +12,7 @@ const CreateDestination = () => {
       <SmallHeader />
 
       <h1>Create destination</h1>
-      {enumData && <CreateDestinationForm enumData={enumData} />}
+      {enumData && <CreateDestinationForm formEnums={enumData} />}
 
       <SmallFooter />
     </main>

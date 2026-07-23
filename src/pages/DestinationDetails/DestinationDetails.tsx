@@ -38,8 +38,8 @@ const DestinationDetails = () => {
 
             <EntityDetailsNav
               canEdit={canEdit}
-              deletionObj="this accommodation"
-              entity="accommodation"
+              deletionObj="this destination"
+              entity="destination"
               entityId={destination.id.toString()}
               imageAvailable={photoCount > 0}
               gpxFileAvailable={false}

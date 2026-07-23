@@ -8,39 +8,93 @@ import {
   SubmitButton,
 } from "@components/common";
 import { useCreateDestination } from "@hooks/dataHooks/destinationHooks";
-import { useCreateDestinationForm } from "@hooks/formHooks/destinationHooks/useCreateDestinationForm";
+import {
+  useApproveDestination,
+  useGetDestinationReviewer,
+} from "@hooks/dataHooks/moderation/destinationReviewHooks";
+import { useToggleReviewDestinationDetails } from "@hooks/dataHooks/moderation/destinationReviewHooks";
+import { useCreateDestinationForm } from "@hooks/formHooks/destinationHooks";
 import { useSession } from "@hooks/sessionHooks";
 import { CreateDestinationDto } from "@schemas/destination";
-import { DestinationTypeEnum } from "types/shared/enums/DestinationTypeEnum";
+import { IDestination, DestinationTypeEnum, StatusEnum } from "@types";
 
 const DESTINATION_INFO =
   "Provide information about the destination, such as amenities, services, and any other relevant details that would help potential visitors make an informed decision.";
 
 interface Props {
-  enumData: DestinationEnumsResponse;
+  formEnums: DestinationEnumsResponse;
+  dataForReview?: IDestination;
 }
 
-const CreateDestinationForm = ({ enumData }: Props) => {
+const CreateDestinationForm = ({ formEnums, dataForReview }: Props) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useCreateDestinationForm();
-
+  } = useCreateDestinationForm(dataForReview);
   const { userId } = useSession();
+
+  const destinationId = dataForReview?.id;
+  const detailsStatus = dataForReview?.detailsStatus !== StatusEnum.approved;
+  const enabled = Boolean(destinationId && detailsStatus);
+
+  const { data: reviewerData } = useGetDestinationReviewer(
+    String(destinationId!),
+    enabled,
+  );
 
   const { mutate: createDestination, isPending: creating } =
     useCreateDestination();
+  const { mutate: approveDestination, isPending: approving } =
+    useApproveDestination();
+  const toggleReview = useToggleReviewDestinationDetails();
 
-  const onSubmit = (destinationData: CreateDestinationDto) =>
+  const forReview =
+    reviewerData?.reviewerId === null || reviewerData?.reviewerId !== userId;
+
+  const onSubmit = (destinationData: CreateDestinationDto) => {
+    if (dataForReview && !forReview) {
+      // Approve the destination details
+      approveDestination({
+        destinationData,
+        destinationId: String(dataForReview.id),
+      });
+      return;
+    }
     createDestination(destinationData);
+  };
+
+  const handleReviewClick = () => {
+    if (!dataForReview) return;
+
+    if (forReview) {
+      // Claim the destination for review
+      toggleReview.mutate({
+        destinationId: String(dataForReview.id),
+        shouldClaim: true,
+      });
+    } else {
+      // Unclaim the destination from review
+      toggleReview.mutate({
+        destinationId: String(dataForReview.id),
+        shouldClaim: false,
+      });
+    }
+  };
 
   return (
     <>
       {!userId && (
         <RequireAuthModal message="Only logged-in users can access this page." />
       )}
+
+      {dataForReview &&
+        dataForReview?.detailsStatus !== StatusEnum.approved && (
+          <button onClick={handleReviewClick} className="review-btn">
+            {forReview ? "review" : "cancel"}
+          </button>
+        )}
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -71,7 +125,7 @@ const CreateDestinationForm = ({ enumData }: Props) => {
               defaultValue={DestinationTypeEnum.natural_attraction}
               render={({ field }) => (
                 <CustomSelect
-                  options={enumData.type}
+                  options={formEnums.type}
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
                 />
@@ -141,7 +195,21 @@ const CreateDestinationForm = ({ enumData }: Props) => {
           )}
         </div>
 
-        <SubmitButton isSubmitting={creating} buttonName="Create destination" />
+        {!dataForReview && (
+          <p style={{ color: "black" }}>
+            * You can add photos after create this destination.
+          </p>
+        )}
+
+        {(!dataForReview || (dataForReview && !forReview)) &&
+          dataForReview?.detailsStatus !== StatusEnum.approved && (
+            <SubmitButton
+              isSubmitting={dataForReview && !forReview ? approving : creating}
+              buttonName={
+                dataForReview && !forReview ? "Approve" : "Create destination"
+              }
+            />
+          )}
       </form>
     </>
   );
