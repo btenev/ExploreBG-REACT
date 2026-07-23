@@ -22,6 +22,11 @@ export const destinationReviewApi = {
       ),
     ),
 
+  getDestinationReviewer: (
+    destinationId: string,
+  ): Promise<{ reviewerId: number }> =>
+    apiClient.get(API_ROUTES.moderation.destination.reviewer(destinationId)),
+
   claimForReviewDestinationImages: (destinationId: string): Promise<void> =>
     apiClient.patch(
       API_ROUTES.moderation.destination.claimImages(destinationId),
