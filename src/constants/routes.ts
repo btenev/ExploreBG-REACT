@@ -75,6 +75,7 @@ export const APP_ROUTES = {
     trailReview: `${MOD_TRAILS}/:trailId/review` as const,
     accommodationReview:
       `${MOD_ACCOMMODATIONS}/:accommodationId/review` as const,
+    destinationReview: `${MOD_DESTINATIONS}/:destinationId/review` as const,
   },
 };
 
@@ -201,6 +202,24 @@ export const API_ROUTES = {
     destination: {
       waitingApproval: (query?: string) =>
         `${MOD_DESTINATIONS}/waiting-approval${query ? `?${query}` : ""}`,
+
+      getCreatedDestinationForReview: {
+        path: `${MOD_DESTINATIONS}/:destinationId/review` as const, // pattern for React Router
+        build: (destinationId: string | number) =>
+          `${MOD_DESTINATIONS}/${destinationId}/review`,
+      },
+
+      reviewer: (destinationId: string | number) =>
+        `${MOD_DESTINATIONS}/${destinationId}/reviewer`,
+
+      claim: (destinationId: string | number) =>
+        `${MOD_DESTINATIONS}/${destinationId}/claim`,
+
+      unclaim: (destinationId: string | number) =>
+        `${MOD_DESTINATIONS}/${destinationId}/unclaim`,
+
+      approve: (destinationId: string | number) =>
+        `${MOD_DESTINATIONS}/${destinationId}/approve`,
 
       claimImages: (destinationId: string) =>
         `${MOD_DESTINATIONS}/${destinationId}/images/claim`,
