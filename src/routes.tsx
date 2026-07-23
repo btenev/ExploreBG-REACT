@@ -25,6 +25,7 @@ import {
   CreateAccommodation,
   CreateDestination,
   AccommodationReview,
+  DestinationReview,
 } from "./pages";
 
 const router = createBrowserRouter([
@@ -71,6 +72,11 @@ const router = createBrowserRouter([
     path: APP_ROUTES.moderation.accommodationReview,
     element: <AccommodationReview />,
   },
+  {
+    path: APP_ROUTES.moderation.destinationReview,
+    element: <DestinationReview />,
+  },
+
   { path: "*", element: <NotFound /> },
 ]);
 

@@ -20,3 +20,4 @@ export { default as CreateHike } from "./CreateHike";
 export { default as CreateAccommodation } from "./CreateAccommodation";
 export { default as CreateDestination } from "./CreateDestination";
 export { default as AccommodationReview } from "./AccommodationReview";
+export { default as DestinationReview } from "./DestinationReview";
